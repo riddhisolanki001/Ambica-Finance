@@ -1,0 +1,178 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Invoice",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.490613",
+  "module": "Ambica Finance",
+  "name": "Attachments Mandatory",
+  "script": "frappe.ui.form.on('Purchase Invoice', {\n    before_submit: function(frm) {\n            \n            var files = cur_frm.get_docinfo().attachments\n            var length = files.length\n            console.log(length)\n            console.log(files)\n            \n            if(length === 0) {\n              frappe.throw(__('Please Attach Documents First'))\n            \n            }\n            if(length > 0) {\n              frm.reload_doc()\n             \n            \n            }\n            \n           \n        \n    }\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Reconciliation",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.469833",
+  "module": "Ambica Finance",
+  "name": "force closing even outstanding in PR",
+  "script": "frappe.ui.form.on('Payment Reconciliation', {\n\trefresh(frm){\n   \n    \n         var company = frm.doc.company\n\t     frappe.db.get_value('Company', company, 'abbr', function(data) {\n         var abr = data.abbr;\n         console.log('Company:', company);\n         console.log(abr);\n\n    // Rest of your code here...\n\n\t     console.log(company)\n\t     console.log(abr)\n\t    \n\t    console.log('Payment Reconciliation document:', frm.doc);\n\t    \n\t   \n\t    var party_account = frm.doc.receivable_payable_account\n\t    var party_type = frm.doc.party_type\n\t    var party = frm.doc.party\n\t    var posting_date = '';\n\t    \n\t   \n\t    var invoice_total =0\n\t    var payment_total=0\n\n\t    if (frm.doc.invoices && frm.doc.invoices.length > 0) {\n\t        $.each(frm.doc.invoices, function(i, d) {\n\t            var amt = d.amount;\n\t            invoice_total += amt\n\t            \n\t           // console.log(amt);\n\t        });\n\t        console.log(invoice_total)\n\t        \n\t        if (frm.doc.payments && frm.doc.payments.length > 0) {\n\t         $.each(frm.doc.payments, function(i, d) {\n\t            var amount = d.amount;\n\t                posting_date = d.posting_date\n\t            payment_total += amount\n\t           // console.log(amount);\n\t        });\n\t        console.log(payment_total)\n\t        if(payment_total < invoice_total){\n\t        var difference = parseInt(invoice_total) - parseInt(payment_total)\n\t        console.log(difference)\n\t        if(difference > 0){\n\t          \n\t           \n\t            frappe.confirm('Do you want to make Difference Entry',\n                () => {\n                    console.log(\"yes selected\")\n                    var newJvEntry = frappe.model.get_new_doc('Journal Entry');\n                            \t\tnewJvEntry.voucher_type = \"Journal Entry\";\n                            \t\tnewJvEntry.company = company;\n                            \t\tnewJvEntry.docstatus = 0;\n                            \t\tnewJvEntry.posting_date = posting_date;\n                            \t\n                            \t\tnewJvEntry.accounts = [];\n                 \n                            \t\t\t// console.log(description_of_goods, source_warehouse)\n                            \t\t\tnewJvEntry.accounts.push({\n                            \t\t\t\t\"account\": party_account,\n                            \t\t\t\t\"debit_in_account_currency\": difference,\n                            \t\t\t\t\"party_type\":party_type,\n                            \t\t\t\t\"party\":party\n                            \t\t\t\t\n                            \t\t\t\n                            \t\t\t});\n                            \t\t\t\tnewJvEntry.accounts.push({\n                            \t\t\t\t\"account\": 'Write Off'+\" - \"+abr,\n                            \t\t\t\t\"credit_in_account_currency\": difference,\n                            \t\t\t\t\n                            \t\t\t\t\n                            \t\t\t\n                            \t\t\t});console.log(\"New Journal Entry:\", newJvEntry);\n\n                                         // Save the Journal Entry\n                                        frappe.call({\n                                            method: 'frappe.client.save',\n                                            args: {\n                                                doc: newJvEntry\n                                            },\n                                            callback: function (r) {\n                                                if (r.message) {\n                                                    console.log(\"Journal Entry saved successfully:\", r.message);\n                                                } else {\n                                                    console.error(\"Error saving Journal Entry:\", r.exc);\n                                                }\n                                        }\n                                });\n                    }, () => {\n                            console.log(\"No selected\")\n                    \n        // action to perform if No is selected\n                })\n\t            \n\t            \n\t        }\n\t   }\n\t        \n\t        \n\t        \n\t    } \n\t    }\n\t     });\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.335847",
+  "module": "Ambica Finance",
+  "name": "Prepaid Expence Auto entry",
+  "script": "frappe.ui.form.on('Journal Entry', {\n\trefresh:function(frm) {\n\t    \n\t    var today = frappe.datetime.nowdate();\n\t    \n        frm.add_custom_button(__('Prepaid Entry'), function() {\n            let d = new frappe.ui.Dialog({\n                    title: 'Enter details',\n                    fields: [\n                        {\n                            label: 'Amount',\n                            fieldname: 'amount',\n                            fieldtype: 'Currency'\n                        },\n                        {\n                            label: 'From Date',\n                            fieldname: 'from_date',\n                            fieldtype: 'Date'\n                        },\n                        {\n                            label: 'To Date',\n                            fieldname: 'to_date',\n                            fieldtype: 'Date'\n                        },\n                         {\n                            label: 'Credit Account',\n                            fieldname: 'credit_account',\n                            fieldtype: 'Link',\n                            options:'Account'\n                        },\n                        \n                        {\n                            label: 'User Remarks',\n                            fieldname: 'user_remark',\n                            fieldtype: 'Small Text',\n                            \n                        }\n                    ],\n                    size: 'small', // small, large, extra-large \n                    primary_action_label: 'Submit',\n                    primary_action(values) {\n                        console.log(values);\n                        var from_date = values.from_date\n                        var to_date = values.to_date\n                        var debit_account = values.debit_account\n                        var credit_account = values.credit_account\n                        var amount = values.amount\n                        var user_remarks = values.user_remark;\n                        console.log(user_remarks)\n                        \n                       \n                        \n                            \n                            \n                            var newJvEntry = frappe.model.get_new_doc('Journal Entry');\n                            \t\tnewJvEntry.voucher_type = \"Journal Entry\";\n                            // \t\tnewJvEntry.company = company;\n                            \t\tnewJvEntry.docstatus = 0;\n                            \t\tnewJvEntry.posting_date = today;\n                            \t\tnewJvEntry.from_date = from_date;\n                            \t\tnewJvEntry.to_date = to_date;\n                            \t\tnewJvEntry.user_remark = user_remarks\n                            \t\t\n                            \t\t\n                            \t\t\n                            \t\n                            \t\tnewJvEntry.accounts = [];\n                 \n                            \t\t\t// console.log(description_of_goods, source_warehouse)\n                            \t\t\tnewJvEntry.accounts.push({\n                            \t\t\t\t\"account\":'Prepaid Expense - SD',\n                            \t\t\t\t\"debit_in_account_currency\": amount,\n                            \t\t\t\t\n                            \t\t\t\n                            \t\t\t});\n                            \t\t\t\tnewJvEntry.accounts.push({\n                            \t\t\t\t\"account\": credit_account,\n                            \t\t\t\t\"credit_in_account_currency\": amount,\n                            \t\t\t\t\n                            \t\t\t\t\n                            \t\t\t\n                            \t\t\t});console.log(\"New Journal Entry:\", newJvEntry);\n\n                                         // Save the Journal Entry\n                                        frappe.call({\n                                            method: 'frappe.client.save',\n                                            args: {\n                                                doc: newJvEntry\n                                            },\n                                            callback: function (r) {\n                                                if (r.message) {\n                                                    console.log(\"Journal Entry saved successfully:\", r.message);\n                                                } else {\n                                                    console.error(\"Error saving Journal Entry:\", r.exc);\n                                                }\n                                        }\n                                });\n                        \n                        \n                        \n                        d.hide();\n                    }\n                });\n                \n                d.show();\n\n\t         \n\t     })\n//               let d = new frappe.ui.Dialog({\n//     title: 'Enter details',\n//     fields: [\n//         {\n//             label: 'First Name',\n//             fieldname: 'first_name',\n//             fieldtype: 'Data'\n//         },\n//         {\n//             label: 'Last Name',\n//             fieldname: 'last_name',\n//             fieldtype: 'Data'\n//         },\n//         {\n//             label: 'Age',\n//             fieldname: 'age',\n//             fieldtype: 'Int'\n//         }\n//     ],\n//     size: 'small', // small, large, extra-large \n//     primary_action_label: 'Submit',\n//     primary_action(values) {\n//         console.log(values);\n//         d.hide();\n//     }\n// });\n\n// d.show();\n\n    \n\n\t \n            \n\t    \n\t\t// your code here\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.432851",
+  "module": "Ambica Finance",
+  "name": "TCS Logics",
+  "script": "frappe.ui.form.on('Customer', {\n\trefresh:function(frm) {\n\t    var answer = frm.doc.custom_turn_over_more_then_10cr\n\t    var declaration = frm.doc.custom_tds_declaration\n\t    var files = cur_frm.get_docinfo().attachments\n        var length = files.length\n\t    console.log(declaration)\n\t    console.log(\".................\")\n\t    console.log(answer)\n\t    if (cur_frm.fields_dict['tax_withholding_category']) {\n\t    if (answer ===  'Yes' && length === 0){\n\t        \n\t       frm.set_value('tax_withholding_category','TCS @ 0.1%')\n\t       frm.refresh_field('tax_withholding_category')\n\t    }\n\t    \n\t    else if(answer === 'Yes' && length > 0){\n\t        frm.set_value('tax_withholding_category','')\n\t         frm.refresh_field('tax_withholding_category')\n\t        \n\t    }\n\t    \n\t   else  if(answer === 'No'){\n\t        frm.set_value('tax_withholding_category','')\n\t         frm.refresh_field('tax_withholding_category')\n\t        \n\t    }\n\t    }\n\t    \n\t\t// your code here\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Invoice",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.374833",
+  "module": "Ambica Finance",
+  "name": "Payment Terms Due Date Chane in Pi",
+  "script": "frappe.ui.form.on('Purchase Invoice', {\n\tsupplier(frm) {\n\t    var supplier = frm.doc.supplier\n\t    frappe.db.get_list('Supplier',{\n\t        fields:['payment_terms'],\n\t        filters:{\n\t            name:supplier\n\t        }\n\t       \n\t    }).then(rec => {\n\t        for (var d in rec){\n\t            var payment_term_template = rec[d].payment_terms\n\t        }\n\t        console.log(payment_term_template)\n\t        frappe.call({\n                    method: 'frappe.client.get',\n                    args: {\n                        doctype: 'Payment Terms Template', // Replace with your actual parent doctype name\n                        filters: {\n                            name: payment_term_template\n                        }\n                    },\n                    callback: function (response) {\n                        var parentRecord = response.message;\n                        console.log(parentRecord)\n\n                        // Access child table data from the parent record\n                        var childTableData = parentRecord.terms // Replace with your actual child table fieldname\n                        var due_date_based_on = childTableData[0].due_date_based_on\n                        var custom_supplier_invoice = childTableData[0].custom_supplier_invoice\n                        var supplier_invoice = frm.doc.bill_date\n                        console.log(childTableData);\n                        console.log(due_date_based_on);\n                        console.log(custom_supplier_invoice)\n                        \n                        if (due_date_based_on == 'Day(s) after invoice date'){\n                            console.log(\"yes condition checked\")\n                            \n                            if(custom_supplier_invoice == 0){\n                                console.log(\"checkebox unchecked\")\n                            \n                                frm.set_df_property('custom_supplier_invoice_date', 'hidden', 0)\n                                frm.set_df_property('bill_date', 'hidden', 1)\n                                \n                            }\n                            else if(custom_supplier_invoice == 1){\n                                console.log(\"checkebox checked\")\n                                frm.set_df_property('custom_supplier_invoice_date', 'hidden', 1)\n                                frm.set_df_property('bill_date', 'hidden', 0)\n                            }\n                        }\n\n                        // Handle child table data here\n                        \n                    }\n                });\n\t       \n\t        \n\t        \n\t    })\n\t\t// your code here\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.389680",
+  "module": "Ambica Finance",
+  "name": "Dialog Box",
+  "script": "frappe.ui.form.on('Payment Entry', {\n    onload: function(frm) {\n        frm.add_custom_button(__('Purchase Order'), function() {\n            var d = new frappe.ui.form.MultiSelectDialog({\n                doctype: \"Purchase Order\",\n                target: frm,\n                setters: {\n                    supplier_name: null,\n                    schedule_date: null\n                },\n                action(selections, args) {\n                    // Extract the selected Purchase Order names\n                    var selectedPurchaseOrders = selections.map(item => `${item.name} (Supplier: ${item.supplier_name})`);\n                    console.log(selectedPurchaseOrders);\n                    frappe.msgprint(\"Selected Purchase Orders: \" + selectedPurchaseOrders.join(', '));\n                    // Make an HTTP request to the server script\n                    frappe.call({\n                        method: 'API',\n                        args: {\n                            selected_purchase_orders: selections\n                        },\n                        callback: function(response) {\n                            if (!response.exc) {\n                                // Successfully received a response from the server\n                                frappe.msgprint(response.message);\n                            }\n                        }\n                    });\n                }\n            });\n            d.show();\n        }, __(\"Get Items From\"));\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.509024",
+  "module": "Ambica Finance",
+  "name": "Attachments",
+  "script": "frappe.ui.form.on('Journal Entry', {\n    before_submit: function(frm) {\n            \n            var files = cur_frm.get_docinfo().attachments\n            var length = files.length\n            console.log(length)\n            console.log(files)\n            \n            if(length === 0) {\n              frappe.throw(__('Please Attach Documents First'))\n            \n            }\n            if(length > 0) {\n              frm.reload_doc()\n             \n            \n            }\n            \n           \n        \n    }\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.417509",
+  "module": "Ambica Finance",
+  "name": "Pay Receipt",
+  "script": "frappe.ui.form.on('Payment Entry', {\n\tonload:function(frm) {\n\t    if(frm.is_new()){\n\t        frappe.msgprint({\n    title: __('Notification'),\n    indicator: 'green',\n    message: __('Please Select Payment type First')\n});\n\t    }\n\t\t// your code here\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Supplier",
+  "enabled": 0,
+  "modified": "2023-12-25 18:32:38.450182",
+  "module": "Ambica Finance",
+  "name": "Pan Number",
+  "script": "frappe.ui.form.on('Supplier', {\n    refresh(frm) {\n        // Access the value of the \"pan\" field\n        var panValue = frm.doc.pan;\n\n        // Check if the pan number has at least 4 characters and the fourth character is 'p'\n        if (panValue && panValue.length >= 4 && panValue[3].toLowerCase() === 'p') {\n            // Set the value of the \"custom_sub_category_\" field to \"Propritorship\"\n            frappe.model.set_value(frm.doctype, frm.docname, 'custom_sub_category_', 'Propritorship');\n            \n            // Set the value of the \"custom_company_status\" field to \"2\"\n            frappe.model.set_value(frm.doctype, frm.docname, 'custom_company_status', '2');\n        } else {\n            // If the condition is not met, set the value to \"Other\" for \"custom_sub_category_\"\n            frappe.model.set_value(frm.doctype, frm.docname, 'custom_sub_category_', 'Other');\n            \n            // Set the value of the \"custom_company_status\" field to a default value (e.g., \"1\")\n            frappe.model.set_value(frm.doctype, frm.docname, 'custom_company_status', '1');\n        }\n\n        \n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Auto Outstanding",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.527685",
+  "module": "Ambica Finance",
+  "name": "Auto Outstanding",
+  "script": "frappe.ui.form.on('Auto Outstanding', {\n\trefresh(frm) {\n\t   \n    set_css(frm)\t\n    \n\n\t}\n})\n\nfrappe.ui.form.on('Outstanding Child', {\n\toutstandings_add:function(frm) {\n\t     frm.add_custom_button(__('Payment'), function() {\n\t         \n\t     }).css({\"color\":\"blue\"});\n\t     \n\t     frm.add_custom_button(__('Export Unadjusted'), function() {\n\t         \n\t     })\n\t\t// your code here\n\t}\n})\n\nfunction set_css(frm){\n    console.log(\"hello\");\n\tdocument.querySelectorAll(\"[data-fieldname = 'get_invoices']\")[1].style.backgroundColor = 'black';\n    document.querySelectorAll(\"[data-fieldname = 'get_invoices']\")[1].style.marginTop = '5px    ';\n\tdocument.querySelectorAll(\"[data-fieldname = 'get_invoices']\")[1].style.color = 'white';\n\t\n\t\n\tdocument.querySelectorAll(\"[data-fieldname = 'not_due']\")[1].style.backgroundColor = 'black';\n    document.querySelectorAll(\"[data-fieldname = 'not_due']\")[1].style.marginTop = '5px    ';\n\tdocument.querySelectorAll(\"[data-fieldname = 'not_due']\")[1].style.color = 'white';\n\n\t\n\t\n}\n\n\n\n\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Bill Purchase",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.613732",
+  "module": "Ambica Finance",
+  "name": "Bill Purchase",
+  "script": "// frappe.ui.form.on('Bill Purchase', {\n// \trefresh(frm) {\n// \t    frm.add_custom_button(__('Export Invoice'), function() { })\n// \t\t// your code here\n// \t}\n// })\n\n\n\n\nfrappe.ui.form.on('Bill Purchase', {\n    refresh(frm) {\n        // Add a custom button for exporting Sales Invoice List\n        frm.add_custom_button(__('Export Invoice'), function() {\n            // Fetch all Sales Invoices\n            \n        });\n\n        // Your existing code...\n    }\n});\n\n\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Bill Purchase",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.548153",
+  "module": "Ambica Finance",
+  "name": "Crystalization",
+  "script": "frappe.listview_settings['Bill Purchase'] = {\r\n    \r\n        \r\n      onload:function(listview) {\r\n          console.log('Custom script executed');\r\n\t        listview.page.add_action_item('Crystalization', () => my_action());\r\n      \r\n\t\t}\r\n\t\t\r\n\t\r\n\r\n    \r\n};\r\n\r\n",
+  "view": "List"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.562353",
+  "module": "Ambica Finance",
+  "name": "Pay Recipt",
+  "script": "frappe.ui.form.on('Payment Entry', {\r\n\tonload:function(frm) {\r\n\t    console.log('script is working')\r\n\tlet d = new frappe.ui.Dialog({\r\n    title: 'Enter details',\r\n    fields: [\r\n        \r\n        {\r\n            label: 'Payment Type',\r\n            fieldname: 'payment_type',\r\n            fieldtype: 'Data'\r\n            \r\n        }\r\n    ],\r\n    size: 'small', // small, large, extra-large \r\n    primary_action_label: 'Submit',\r\n    primary_action(values) {\r\n        console.log(values);\r\n        d.hide();\r\n    }\r\n});\r\n\t    // your code here\r\n\t}\r\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.576028",
+  "module": "Ambica Finance",
+  "name": "Customer Tax Category",
+  "script": "frappe.ui.form.on('Customer', {\n    refresh(frm) {\n        var GstValue = frm.doc.gstin;\n\n        if (GstValue && GstValue.length >= 2 && GstValue.substring(0, 2) === '24') {\n            frappe.model.set_value(frm.doctype, frm.docname, 'tax_category', 'IN-State');\n        } else {\n            frappe.model.set_value(frm.doctype, frm.docname, 'tax_category', 'Out-State');\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Supplier",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.587757",
+  "module": "Ambica Finance",
+  "name": "Tax Category Supplier",
+  "script": "frappe.ui.form.on('Supplier', {\n    refresh(frm) {\n        var GstValue = frm.doc.gstin;\n\n        if (GstValue && GstValue.length >= 2 && GstValue.substring(0, 2) === '24') {\n            frappe.model.set_value(frm.doctype, frm.docname, 'tax_category', 'IN-State');\n        } else {\n            frappe.model.set_value(frm.doctype, frm.docname, 'tax_category', 'Out-State');\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 1,
+  "modified": "2023-12-25 18:32:38.600537",
+  "module": "Ambica Finance",
+  "name": "Payment entry epc dialogbox",
+  "script": "frappe.ui.form.on('Payment Entry', {\n    refresh(frm) {\n        frm.add_custom_button(__('Get Items From EPC'), function() {\n            new frappe.ui.form.MultiSelectDialog({\n                doctype: \"EPC PCFC Entry\",\n                target: frm,\n                setters: {\n                    // schedule_date: null,\n                    // status: null\n                    bank_name: null,\n                    amount:null,\n                    date:null,\n                    due_date:null\n                },\n                size: 'large', \n                add_filters_group: 1,\n                date_field: \"date\",\n                // allow_child_item_selection: 1,\n                // child_fieldname: \"items\", // child table fieldname, whose records will be shown &amp; can be filtered\n                // child_columns: [\"item_code\", \"qty\"], // child item columns to be displayed\n                get_query() {\n                    return {\n                        // filters: { docstatus: ['!=', 2] }\n                    };\n                },\n                action(selections, args) {\n                    // console.log(args.filtered_children); // list of selected item names\n                }\n            });\n        });\n    }\n});\n",
+  "view": "Form"
+ }
+]

@@ -219,3 +219,55 @@ app_license = "mit"
 # auth_hooks = [
 #	"ambica_finance.auth.validate"
 # ]
+fixtures=[
+    "Custom DocPerm",   
+    
+    {"dt":"Report","filters":[
+        [
+            "module","in",[
+               "Ambica Finance"
+            ]
+        ]
+    ]},
+    
+    {"dt":"Property Setter","filters":[
+        [
+            "module","in",[
+               "Ambica Finance"
+            ]
+        ]
+    ]},
+    {"dt":"Client Script","filters":[
+        [
+            "module","in",[
+               "Ambica Finance"
+            ]
+        ]
+    ]},
+    {"dt":"Server Script","filters":[
+        [
+            "module","in",[
+               "Ambica Finance"
+            ]
+        ]
+    ]},
+    {"dt":"Custom Field","filters":[
+        [
+            "module","in",[
+               "Ambica Finance"
+            ]
+        ]
+    ]},
+     {"dt":"Workspace","filters":[
+        [
+            "name","in",[
+               "Ambika Accounts",
+               
+            ]
+        ]
+    ]},
+    
+    
+    
+        
+]

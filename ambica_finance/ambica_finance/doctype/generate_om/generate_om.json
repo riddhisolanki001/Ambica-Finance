@@ -1,0 +1,52 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-25 11:48:02.999668",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "exchange_rate",
+  "fc_amount",
+  "inr_amount",
+  "outstanding"
+ ],
+ "fields": [
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Exchange Rate"
+  },
+  {
+   "fieldname": "fc_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "FC Amount"
+  },
+  {
+   "fieldname": "inr_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "INR Amount"
+  },
+  {
+   "fieldname": "outstanding",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Outstanding"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:35.180215",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Generate Om",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

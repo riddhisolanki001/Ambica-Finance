@@ -1,0 +1,29 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-12-25 18:07:58.958081",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2023-12-25 18:33:35.631179",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "NEFT RTGS",
+ "prepared_report": 0,
+ "query": "select \n\"N\" as \"Transaction Type\",\n\nNULL as \"Blank\",\n\nnr.party_bank_account as \"Beneficiary Account Number\",\n\nnr.paid_amount as \"Instrument Amount\",\n\nnr.party_name as \"Beneficiary Name\",\n\nNULL as \"Blank\",\n\nNULL as \"Blank\",\n\nNULL as \"Beneficiary Address 1\",\nNULL as \"Beneficiary Address 2\",\nNULL as \"Beneficiary Address 3\",\nNULL as \"Beneficiary Address 4\",\nNULL as \"Beneficiary Address 5\",\n\nNULL as \"Instruction Reference Number\",\n\nNULL as \"Customer Reference Number\",\n\nNULL as \"Payment Details 1\",\n\nNULL as \"Payment Details 2\",\nNULL as \"Payment Details 3\",\nNULL as \"Payment Details 4\",\nNULL as \"Payment Details 5\",\nNULL as \"Payment Details 6\",\nNULL as \"Payment Details 7\",\n\nNULL as \"Blank\",\n\nnr.posting_date as \"Transaction Date\",\n\nNULL as \"Blank\",\n\nNULL as \"IFSC Code\",\n\nNULL as \"Bank Name\",\n\nNULL as \"Branch Name\",\n \nNULL as \"Email ID\"\n\nfrom `tabPayment Entry` nr where nr.neft_rtgs != \"Fund Transfer\" AND docstatus != 2  AND  docstatus != 0 \n",
+ "ref_doctype": "Payment Entry",
+ "report_name": "NEFT RTGS",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Accounts Manager"
+  }
+ ]
+}

@@ -1,0 +1,81 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-18 11:00:34.267302",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "shipping_bill_no",
+  "shipping_bill_date",
+  "shipping_bill_amount",
+  "port_of_loading_code",
+  "firc_no",
+  "available_amt",
+  "amount_to_be_adjusted_in_this_bill",
+  "carry_forwarded_in_this_bill",
+  "foreign_bank_charges"
+ ],
+ "fields": [
+  {
+   "fieldname": "shipping_bill_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shipping Bill No."
+  },
+  {
+   "fieldname": "shipping_bill_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Shipping Bill Date."
+  },
+  {
+   "fieldname": "shipping_bill_amount",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shipping Bill Amount"
+  },
+  {
+   "fieldname": "port_of_loading_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Port Of Loading Code"
+  },
+  {
+   "fieldname": "firc_no",
+   "fieldtype": "Data",
+   "label": "FIRC No"
+  },
+  {
+   "fieldname": "available_amt",
+   "fieldtype": "Data",
+   "label": "Available Amt."
+  },
+  {
+   "fieldname": "amount_to_be_adjusted_in_this_bill",
+   "fieldtype": "Data",
+   "label": "Amount to be Adjusted in this bill"
+  },
+  {
+   "fieldname": "carry_forwarded_in_this_bill",
+   "fieldtype": "Data",
+   "label": "Carry forwarded in this bill"
+  },
+  {
+   "fieldname": "foreign_bank_charges",
+   "fieldtype": "Data",
+   "label": "Foreign Bank Charges"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:37.321566",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Shipping Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

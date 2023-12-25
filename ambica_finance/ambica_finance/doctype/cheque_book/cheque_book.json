@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2023-11-16 13:29:26.500806",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "bank_code",
+  "section_break_dlka5",
+  "cheque_book_code",
+  "column_break_qnpqq",
+  "pre_cheque_book_code",
+  "section_break_0fw02",
+  "from_no",
+  "column_break_cc1et",
+  "last_no",
+  "section_break_bivxq",
+  "issue_date",
+  "column_break_stk2y",
+  "no_of_cheques",
+  "section_break_jhcyz",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "bank_code",
+   "fieldtype": "Link",
+   "label": "Bank Code",
+   "options": "Bank"
+  },
+  {
+   "fieldname": "section_break_dlka5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cheque_book_code",
+   "fieldtype": "Data",
+   "label": "Cheque Book Code"
+  },
+  {
+   "fieldname": "column_break_qnpqq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pre_cheque_book_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Pre. Cheque book Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_0fw02",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from_no",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "From No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_cc1et",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_no",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Last No.",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_bivxq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "label": "Issue Date"
+  },
+  {
+   "fieldname": "column_break_stk2y",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_cheques",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Number of cheques"
+  },
+  {
+   "fieldname": "section_break_jhcyz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:37.756711",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Cheque Book",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,142 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-18 10:53:29.329962",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "address",
+  "column_break_iwxl",
+  "dated",
+  "section_break_ppgq",
+  "subject",
+  "section_break_mpwd",
+  "bill_currency_and_amount",
+  "section_break_mrvd",
+  "invoice_details",
+  "section_break_nyss",
+  "shipping_detail",
+  "section_break_83mb",
+  "delay_reason",
+  "column_break_e2w7",
+  "account_no",
+  "column_break_hedl",
+  "branch",
+  "section_break_ojhb",
+  "importer_exporter_code"
+ ],
+ "fields": [
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "column_break_iwxl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dated",
+   "fieldtype": "Date",
+   "label": "Dated"
+  },
+  {
+   "fieldname": "section_break_ppgq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject"
+  },
+  {
+   "fieldname": "section_break_mpwd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bill_currency_and_amount",
+   "fieldtype": "Data",
+   "label": "Bill Currency and Amount"
+  },
+  {
+   "fieldname": "section_break_mrvd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "invoice_details",
+   "fieldtype": "Table",
+   "label": "Invoice Details",
+   "options": "Invoice Detail"
+  },
+  {
+   "fieldname": "section_break_nyss",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "shipping_detail",
+   "fieldtype": "Table",
+   "label": "Shipping Detail",
+   "options": "Shipping Detail"
+  },
+  {
+   "fieldname": "section_break_83mb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "delay_reason",
+   "fieldtype": "Data",
+   "label": "Delay Reason"
+  },
+  {
+   "fieldname": "column_break_e2w7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account_no",
+   "fieldtype": "Data",
+   "label": "Account No"
+  },
+  {
+   "fieldname": "column_break_hedl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Branch"
+  },
+  {
+   "fieldname": "section_break_ojhb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "importer_exporter_code",
+   "fieldtype": "Data",
+   "label": "Importer Exporter Code "
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:37.184428",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Inward Remitance",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

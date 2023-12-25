@@ -1,0 +1,281 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-15 12:36:58.732664",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "address",
+  "section_break_bfrs",
+  "dated",
+  "section_break_qltc",
+  "invoice_no",
+  "column_break_dgm4",
+  "date_invoice",
+  "section_break_mnvn",
+  "letter_of_credit",
+  "section_break_umrc",
+  "letter_of_credit_no",
+  "column_break_7sxz",
+  "date_letter_of_credit_no",
+  "section_break_nniz",
+  "letter_of_credit_amount",
+  "column_break_n8wf",
+  "date_letter_of_credit_amount",
+  "section_break_cp1q",
+  "buyer",
+  "section_break_1fqx",
+  "currency_and_amount",
+  "column_break_pj4r",
+  "tenor",
+  "section_break_3v6h",
+  "acceptancepayment",
+  "section_break_h6ru",
+  "original_bill",
+  "section_break_pkxz",
+  "lc_terms",
+  "section_break_rn3o",
+  "bank_name",
+  "bank_swift_code",
+  "column_break_s26w",
+  "bank_address",
+  "section_break_clx9",
+  "shipment_detail",
+  "section_break_gu8n",
+  "bank_account_number",
+  "column_break_hrjz",
+  "phone_number",
+  "column_break_ovkx",
+  "email_address",
+  "section_break_dzwy",
+  "importer_exporter_code"
+ ],
+ "fields": [
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "section_break_bfrs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dated",
+   "fieldtype": "Date",
+   "label": "Dated"
+  },
+  {
+   "fieldname": "section_break_qltc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "invoice_no",
+   "fieldtype": "Data",
+   "label": "Invoice No"
+  },
+  {
+   "fieldname": "column_break_dgm4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_invoice",
+   "fieldtype": "Date",
+   "label": "Dated"
+  },
+  {
+   "fieldname": "section_break_mnvn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "letter_of_credit",
+   "fieldtype": "Data",
+   "label": "Letter Of Credit"
+  },
+  {
+   "fieldname": "section_break_umrc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "letter_of_credit_no",
+   "fieldtype": "Data",
+   "label": "Letter Of Credit No"
+  },
+  {
+   "fieldname": "column_break_7sxz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_letter_of_credit_no",
+   "fieldtype": "Date",
+   "label": "Dated"
+  },
+  {
+   "fieldname": "section_break_nniz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "letter_of_credit_amount",
+   "fieldtype": "Data",
+   "label": "Letter Of Credit Amount"
+  },
+  {
+   "fieldname": "column_break_n8wf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_letter_of_credit_amount",
+   "fieldtype": "Date",
+   "label": "Dated"
+  },
+  {
+   "fieldname": "section_break_cp1q",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "buyer",
+   "fieldtype": "Data",
+   "label": "Buyer"
+  },
+  {
+   "fieldname": "section_break_1fqx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "currency_and_amount",
+   "fieldtype": "Data",
+   "label": "Currency And Amount"
+  },
+  {
+   "fieldname": "column_break_pj4r",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tenor",
+   "fieldtype": "Data",
+   "label": "Tenor"
+  },
+  {
+   "fieldname": "section_break_3v6h",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "acceptancepayment",
+   "fieldtype": "Data",
+   "label": "Acceptance/Payment"
+  },
+  {
+   "fieldname": "section_break_h6ru",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "original_bill",
+   "fieldtype": "Table",
+   "label": "Original Bill",
+   "options": "Original Bill Detail"
+  },
+  {
+   "fieldname": "section_break_pkxz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "lc_terms",
+   "fieldtype": "Table",
+   "label": "LC Terms",
+   "options": "LC Terms"
+  },
+  {
+   "fieldname": "section_break_rn3o",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Bank Name"
+  },
+  {
+   "fieldname": "bank_swift_code",
+   "fieldtype": "Data",
+   "label": "Bank Swift Code"
+  },
+  {
+   "fieldname": "column_break_s26w",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bank_address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "section_break_clx9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "shipment_detail",
+   "fieldtype": "Table",
+   "label": "Shipment Detail",
+   "options": "Shipment Details"
+  },
+  {
+   "fieldname": "section_break_gu8n",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bank_account_number",
+   "fieldtype": "Data",
+   "label": "Bank Account Number"
+  },
+  {
+   "fieldname": "column_break_hrjz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "fieldname": "column_break_ovkx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email_address",
+   "fieldtype": "Data",
+   "label": "Email Address"
+  },
+  {
+   "fieldname": "section_break_dzwy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "importer_exporter_code",
+   "fieldtype": "Data",
+   "label": "Importer Exporter Code"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:36.600974",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Bank To Bank Cover Latter",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

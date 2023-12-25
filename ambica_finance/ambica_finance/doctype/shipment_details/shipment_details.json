@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-15 13:53:08.002662",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "gr_shipping_bill",
+  "date",
+  "port_code",
+  "ad_code",
+  "shipment_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "gr_shipping_bill",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "GR / Shipping Bill"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date"
+  },
+  {
+   "fieldname": "port_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Port Code"
+  },
+  {
+   "fieldname": "ad_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "AD Code"
+  },
+  {
+   "fieldname": "shipment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Shipment Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:36.871664",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Shipment Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

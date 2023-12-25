@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-22 16:19:16.435553",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "type_section",
+  "epcpcfc",
+  "days",
+  "value_date",
+  "amount",
+  "subsequent",
+  "spread",
+  "interest",
+  "column_break_nweb",
+  "date",
+  "due_date",
+  "bank_name",
+  "reference_number",
+  "treasury_bill_",
+  "month",
+  "finance_effect"
+ ],
+ "fields": [
+  {
+   "fieldname": "type_section",
+   "fieldtype": "Section Break",
+   "label": "Type",
+   "options": "EPC\nPCFC"
+  },
+  {
+   "fieldname": "epcpcfc",
+   "fieldtype": "Select",
+   "label": "EPC/PCFC",
+   "options": "EPC\nPCFC"
+  },
+  {
+   "fieldname": "days",
+   "fieldtype": "Data",
+   "label": "Days"
+  },
+  {
+   "fieldname": "value_date",
+   "fieldtype": "Date",
+   "label": "Value Date"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "subsequent",
+   "fieldtype": "Float",
+   "label": "Subsequent(%)"
+  },
+  {
+   "fieldname": "spread",
+   "fieldtype": "Float",
+   "label": "Spread(%)"
+  },
+  {
+   "fieldname": "interest",
+   "fieldtype": "Float",
+   "label": "Interest(%)"
+  },
+  {
+   "fieldname": "column_break_nweb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Link",
+   "label": "Bank Name",
+   "options": "Account"
+  },
+  {
+   "fieldname": "reference_number",
+   "fieldtype": "Data",
+   "label": "Reference Number"
+  },
+  {
+   "fieldname": "treasury_bill_",
+   "fieldtype": "Float",
+   "label": "Treasury Bill (%)"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "label": "Month",
+   "options": "1\n2\n3"
+  },
+  {
+   "fieldname": "finance_effect",
+   "fieldtype": "Button",
+   "label": "Finance Effect"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:36.045988",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "EPC PCFC Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

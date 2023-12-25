@@ -1,0 +1,195 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-25 12:13:29.976864",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "type",
+  "date",
+  "bank_account",
+  "customer",
+  "amount",
+  "column_break_igft",
+  "no",
+  "spread",
+  "subsequent",
+  "interest",
+  "total",
+  "section_break_dtmz",
+  "table_vnvs",
+  "section_break_jhis",
+  "currier_details",
+  "receipt_no",
+  "column_break_qqy1",
+  "currier_date",
+  "currier_name",
+  "section_break_tmzw",
+  "currency",
+  "column_break_p5mj",
+  "amount_in_currency",
+  "column_break_qjic",
+  "exchange_rate",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "FBP/FCBD"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer ",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "column_break_igft",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no",
+   "fieldtype": "Data",
+   "label": "No"
+  },
+  {
+   "fieldname": "spread",
+   "fieldtype": "Float",
+   "label": "Spread(%)"
+  },
+  {
+   "fieldname": "subsequent",
+   "fieldtype": "Float",
+   "label": "Subsequent(%)"
+  },
+  {
+   "fieldname": "interest",
+   "fieldtype": "Float",
+   "label": "Interest(%)"
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Float",
+   "label": "Total"
+  },
+  {
+   "fieldname": "section_break_dtmz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "table_vnvs",
+   "fieldtype": "Table",
+   "options": "Bill Purchase Child"
+  },
+  {
+   "fieldname": "section_break_jhis",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "currier_details",
+   "fieldtype": "Select",
+   "label": "Currier Details",
+   "options": "Yes\nNo"
+  },
+  {
+   "fieldname": "receipt_no",
+   "fieldtype": "Data",
+   "label": "Receipt No."
+  },
+  {
+   "fieldname": "column_break_qqy1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currier_date",
+   "fieldtype": "Date",
+   "label": "Currier Date"
+  },
+  {
+   "fieldname": "currier_name",
+   "fieldtype": "Data",
+   "label": "Currier Name"
+  },
+  {
+   "fieldname": "section_break_tmzw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_p5mj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amount_in_currency",
+   "fieldtype": "Currency",
+   "label": "Amount in Currency"
+  },
+  {
+   "fieldname": "column_break_qjic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange rate"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Bill Purchase",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:35.873208",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Bill Purchase",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

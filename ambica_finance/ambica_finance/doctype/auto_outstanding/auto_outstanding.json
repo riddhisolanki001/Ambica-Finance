@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-25 13:44:56.175599",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_htvm",
+  "party_name",
+  "column_break_af8r",
+  "due_date",
+  "column_break_s8h8",
+  "payment_date",
+  "section_break_znip",
+  "not_due",
+  "column_break_lvsz",
+  "get_invoices",
+  "column_break_b9pf",
+  "msme",
+  "section_break_qxps",
+  "outstandings"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_htvm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "party_name",
+   "fieldtype": "Link",
+   "label": "Party Name",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "column_break_af8r",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "column_break_s8h8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "label": "Payment Date"
+  },
+  {
+   "fieldname": "section_break_znip",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "not_due",
+   "fieldtype": "Button",
+   "label": "Not Due"
+  },
+  {
+   "fieldname": "column_break_lvsz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "get_invoices",
+   "fieldtype": "Button",
+   "label": "Get Invoices"
+  },
+  {
+   "fieldname": "column_break_b9pf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "msme",
+   "fieldtype": "Check",
+   "label": "MSME"
+  },
+  {
+   "fieldname": "section_break_qxps",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "outstandings",
+   "fieldtype": "Table",
+   "options": "Outstanding Child"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-12-25 18:23:35.642134",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Auto Outstanding",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
