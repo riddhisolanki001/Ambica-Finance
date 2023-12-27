@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:section",
  "creation": "2023-11-29 13:39:29.552055",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -22,15 +23,17 @@
   {
    "fieldname": "section",
    "fieldtype": "Data",
-   "label": "Section"
+   "label": "Section",
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-25 18:23:37.652969",
+ "modified": "2023-12-27 13:52:35.320348",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "TDS Master",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
