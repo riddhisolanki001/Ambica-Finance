@@ -9,5 +9,27 @@
   "name": "Tax Withholding Category Name",
   "script": "frappe.ui.form.on('Tax Withholding Category', {\n    refresh: function(frm) {\n        // Your script logic here\n    },\n    onload: function(frm) {\n        // Check if the document is in Draft state (new form)\n        if (frm.doc.docstatus === 0) {\n            // Set a default value for the __newname field during onload for new forms\n            frm.set_value('__newname', frm.doc.custom_type + '-' + frm.doc.custom_sub_category);\n        }\n    },\n    custom_section: function(frm) {\n        if (frm.doc.category_name) {\n            // Update the __newname field when custom_section changes and category_name is not null\n            frm.set_value('__newname', frm.doc.custom_type + '-' + frm.doc.custom_section + '-' + frm.doc.category_name + '-' + frm.doc.custom_sub_category);\n        } else {\n            // Handle the case when category_name is null\n            // You can run another query or set a different value as needed\n            frm.set_value('__newname', frm.doc.custom_type + '-' + frm.doc.custom_section + '-' + frm.doc.custom_sub_category);\n        }\n        \n    },\n    custom_sub_category: function(frm) {\n        // Set a default value for the __newname field by concatenating custom_type and custom_section\n        frm.set_value('__newname', frm.doc.custom_type + '-' + frm.doc.custom_section + '-' + frm.doc.category_name + '-' + frm.doc.custom_sub_category);\n    },\n    custom_type: function(frm) {\n        // Set a default value for the __newname field by concatenating custom_type and custom_section\n        frm.set_value('__newname', frm.doc.custom_type + '-' + frm.doc.custom_section + '-' + frm.doc.category_name + '-' + frm.doc.custom_sub_category);\n    }\n});\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Memorandum Invoice",
+  "enabled": 1,
+  "modified": "2023-12-28 15:04:52.331089",
+  "module": "Ambica Finance",
+  "name": "Get full address from address name",
+  "script": "frappe.ui.form.on(\"Memorandum Invoice\", \"company_address_name\", function(frm, cdt, cdn) {\n    if(frm.doc.company_address_name){\n      return frm.call({\n      method: \"frappe.contacts.doctype.address.address.get_address_display\",\n      args: {\n         \"address_dict\": frm.doc.company_address_name\n      },\n      callback: function(r) {\n        if(r.message)\n            frm.set_value(\"company_address\", r.message);\n        \n      }\n     });\n    }\n    else{\n        frm.set_value(\"company_address\", \"\");\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 1,
+  "modified": "2023-12-28 18:58:06.660697",
+  "module": "Ambica Finance",
+  "name": "Set Cheque/Reference No",
+  "script": "frappe.ui.form.on('Payment Entry', {\n    onload: function(frm) {\n        // Fetch the list of Cheque Books\n        frappe.call({\n            method: 'frappe.client.get_list',\n            args: {\n                doctype: 'Cheque Book',\n                fields: ['name', 'from_no', 'last_no'],\n                filters: {\n                    // Add any additional filters if needed\n                },\n                order_by: 'creation desc',  // Order by creation date in descending order\n                limit: 1  // Fetch only the latest Cheque Book\n            },\n            callback: function(response) {\n                if (response.message && response.message.length > 0) {\n                    // Store the Cheque Books list in the global variable\n                    chequeBooksList = response.message;\n\n                    // Access from_no and last_no of the latest Cheque Book\n                    var fromNo = chequeBooksList[0].from_no;\n                    var lastNo = chequeBooksList[0].last_no;\n\n                    // Log the range of numbers from from_no to last_no\n                    console.log('Cheque Book Number Range:');\n\n                    for (var i = fromNo; i <= lastNo; i++) {\n                        console.log(i);\n                    }\n                }\n            }\n        });\n    }\n});\n\n",
+  "view": "Form"
  }
 ]

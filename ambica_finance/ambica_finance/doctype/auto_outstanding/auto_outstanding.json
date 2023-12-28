@@ -6,7 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_htvm",
-  "party_name",
+  "bank_income",
   "column_break_af8r",
   "due_date",
   "column_break_s8h8",
@@ -24,12 +24,6 @@
   {
    "fieldname": "section_break_htvm",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "party_name",
-   "fieldtype": "Link",
-   "label": "Party Name",
-   "options": "Supplier"
   },
   {
    "fieldname": "column_break_af8r",
@@ -85,12 +79,18 @@
    "fieldname": "outstandings",
    "fieldtype": "Table",
    "options": "Outstanding Child"
+  },
+  {
+   "fieldname": "bank_income",
+   "fieldtype": "Link",
+   "label": "Bank Name",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-12-25 18:23:35.642134",
+ "modified": "2023-12-28 11:51:37.674973",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "Auto Outstanding",

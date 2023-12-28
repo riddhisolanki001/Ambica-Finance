@@ -1,1 +1,69 @@
-[]
+[
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": null,
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Export order in Hand2",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": null,
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Export order in Hand2",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-12-28 19:08:36.062944",
+  "module": "Ambica Finance",
+  "name": "Export order in Hand2",
+  "prepared_report": 0,
+  "query": "SELECT \n  po.supplier_name AS 'Name Of the Party',\n  po.name AS 'P.O.No',\n  po.transaction_date AS 'P.O.Date',\n  po.total AS 'P.O.Amount(FC)',\n  '10.00' as 'Freight',\n  '650.00' as 'Insurance',\n  po.payment_terms_template AS 'Terms',\n  (\n    SELECT \n      exchange_rate\n    FROM `tabCurrency Exchange`\n    WHERE from_currency = po.currency\n      AND date = po.transaction_date\n    LIMIT 1\n  ) AS 'Exchange Rate',\n  po.currency AS 'Currency',\n  po.base_net_total AS 'Amount Rs.'\nFROM `tabPurchase Order` po\nLEFT JOIN `tabPurchase Invoice` pi ON po.name = pi.custom_purchase_order\nWHERE po.currency != 'INR' \n  AND pi.name IS NULL\n  AND (\n    (%(from_date)s IS NULL AND %(to_date)s IS NULL) \n    OR (po.transaction_date BETWEEN %(from_date)s AND %(to_date)s)  \n  );\n",
+  "ref_doctype": "Purchase Order",
+  "reference_report": null,
+  "report_name": "Export order in Hand2",
+  "report_script": "frappe.query_reports['new report'] = {\n  filters: [\n    {\n      fieldname: \"name\",\n      label: \"Sales Order ID\",\n      fieldtype: \"Link\",\n      options: \"Sales Order\"\n    },\n     {\n      fieldname: \"from_date\",\n      label: \"From Date\",\n      fieldtype: \"Date\",\n    },\n     {\n      fieldname: \"to_date\",\n      label: \"To Date\",\n      fieldtype: \"Date\",\n    }\n   \n  ]\n};",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Export order in Hand2",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Export order in Hand2",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Export order in Hand2",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   }
+  ]
+ }
+]
