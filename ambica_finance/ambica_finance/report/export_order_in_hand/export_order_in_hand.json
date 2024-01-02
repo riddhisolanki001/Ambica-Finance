@@ -1,0 +1,46 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-12-27 18:44:52.451610",
+ "disabled": 1,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "mandatory": 0,
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory": 0,
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "mandatory": 0,
+   "options": "Company",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2024-01-02 16:22:42.270402",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Export order in Hand",
+ "prepared_report": 0,
+ "query": "SELECT \n  po.supplier_name AS 'Name Of the Party',\n  po.name AS 'P.O.No',\n  po.transaction_date AS 'P.O.Date',\n  po.total AS 'P.O.Amount(FC)',\n  po.terms AS 'Terms',\n  po.conversion_rate AS 'Exchange Rate',\n  po.currency AS 'Currency',\n  po.base_net_total AS 'Amount Rs.'\nFROM `tabPurchase Order` po\nLEFT JOIN `tabPurchase Invoice` pi ON po.name = pi.custom_purchase_order\nWHERE po.currency != 'INR' \n  AND pi.name IS NULL\n  AND (\n    (%(from_date)s IS NULL AND %(to_date)s IS NULL) \n    OR (po.transaction_date BETWEEN %(from_date)s AND %(to_date)s)  \n  )\n  AND po.company = %(company)s\n;\n",
+ "ref_doctype": "Purchase Order",
+ "report_name": "Export order in Hand",
+ "report_script": "",
+ "report_type": "Query Report",
+ "roles": []
+}

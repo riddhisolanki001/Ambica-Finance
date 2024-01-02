@@ -1,34 +1,30 @@
 {
  "add_total_row": 0,
  "columns": [],
- "creation": "2023-12-27 18:44:52.497227",
+ "creation": "2024-01-02 18:26:06.300156",
  "disabled": 0,
  "docstatus": 0,
  "doctype": "Report",
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
+ "json": "{}",
  "letterhead": null,
- "modified": "2024-01-02 16:22:42.184999",
+ "modified": "2024-01-02 18:26:08.871565",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
- "name": "TDS Payable Monthly",
+ "name": "Advance Given To vendores",
+ "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "Purchase Invoice",
- "report_name": "TDS Payable Monthly",
+ "ref_doctype": "Payment Entry",
+ "report_name": "Advance Given To vendores",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "Accounts User"
   },
   {
-   "role": "Purchase User"
-  },
-  {
    "role": "Accounts Manager"
-  },
-  {
-   "role": "Auditor"
   }
  ]
 }

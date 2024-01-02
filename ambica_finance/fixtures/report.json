@@ -1,6 +1,167 @@
 [
  {
   "add_total_row": 0,
+  "columns": [
+   {
+    "fieldname": "ratio",
+    "fieldtype": "Float",
+    "label": "Ratio",
+    "options": null,
+    "parent": "Ratio Anlysis",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   }
+  ],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.304335",
+  "module": "Ambica Finance",
+  "name": "Ratio Anlysis",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Account",
+  "reference_report": null,
+  "report_name": "Ratio Anlysis",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Ratio Anlysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Ratio Anlysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Ratio Anlysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Ratio Anlysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Ratio Anlysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.010445",
+  "module": "Ambica Finance",
+  "name": "NEFT RTGS",
+  "prepared_report": 0,
+  "query": "select \n\"N\" as \"Transaction Type\",\n\nNULL as \"Blank\",\n\nnr.party_bank_account as \"Beneficiary Account Number\",\n\nnr.paid_amount as \"Instrument Amount\",\n\nnr.party_name as \"Beneficiary Name\",\n\nNULL as \"Blank\",\n\nNULL as \"Blank\",\n\nNULL as \"Beneficiary Address 1\",\nNULL as \"Beneficiary Address 2\",\nNULL as \"Beneficiary Address 3\",\nNULL as \"Beneficiary Address 4\",\nNULL as \"Beneficiary Address 5\",\n\nNULL as \"Instruction Reference Number\",\n\nNULL as \"Customer Reference Number\",\n\nNULL as \"Payment Details 1\",\n\nNULL as \"Payment Details 2\",\nNULL as \"Payment Details 3\",\nNULL as \"Payment Details 4\",\nNULL as \"Payment Details 5\",\nNULL as \"Payment Details 6\",\nNULL as \"Payment Details 7\",\n\nNULL as \"Blank\",\n\nnr.posting_date as \"Transaction Date\",\n\nNULL as \"Blank\",\n\nNULL as \"IFSC Code\",\n\nNULL as \"Bank Name\",\n\nNULL as \"Branch Name\",\n \nNULL as \"Email ID\"\n\nfrom `tabPayment Entry` nr where nr.custom_neftrtgs != \"Fund Transfer\" AND docstatus != 2  AND  docstatus != 0 \n",
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "NEFT RTGS",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "NEFT RTGS",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "NEFT RTGS",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": null,
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Export order in Hand",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": null,
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Export order in Hand",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": null,
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 0,
+    "options": "Company",
+    "parent": "Export order in Hand",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.270402",
+  "module": "Ambica Finance",
+  "name": "Export order in Hand",
+  "prepared_report": 0,
+  "query": "SELECT \n  po.supplier_name AS 'Name Of the Party',\n  po.name AS 'P.O.No',\n  po.transaction_date AS 'P.O.Date',\n  po.total AS 'P.O.Amount(FC)',\n  po.terms AS 'Terms',\n  po.conversion_rate AS 'Exchange Rate',\n  po.currency AS 'Currency',\n  po.base_net_total AS 'Amount Rs.'\nFROM `tabPurchase Order` po\nLEFT JOIN `tabPurchase Invoice` pi ON po.name = pi.custom_purchase_order\nWHERE po.currency != 'INR' \n  AND pi.name IS NULL\n  AND (\n    (%(from_date)s IS NULL AND %(to_date)s IS NULL) \n    OR (po.transaction_date BETWEEN %(from_date)s AND %(to_date)s)  \n  )\n  AND po.company = %(company)s\n;\n",
+  "ref_doctype": "Purchase Order",
+  "reference_report": null,
+  "report_name": "Export order in Hand",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": []
+ },
+ {
+  "add_total_row": 0,
   "columns": [],
   "disabled": 0,
   "docstatus": 0,
@@ -63,6 +224,348 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Purchase User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": "frappe.query_reports['Entry Reports'] = {\n    filters: [\n        {\n            fieldname: \"from_date\",\n            label: \"From Date\",\n            fieldtype: \"Date\",\n        },\n        {\n            fieldname: \"to_date\",\n            label: \"To Date\",\n            fieldtype: \"Date\",\n        },\n        {\n            fieldname: \"status\",\n            label: \"status\",\n            fieldtype: \"Data\",\n        }\n    ]\n};\n",
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.040515",
+  "module": "Ambica Finance",
+  "name": "Entry Reports",
+  "prepared_report": 0,
+  "query": "columns = [\n    {\n        'fieldname': 'today_date',\n        'label': _('Date'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    },\n    {\n        'fieldname': 'document_type',\n        'label': _('Order'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    },\n    {\n        'fieldname': 'creation_count',\n        'label': _('Number'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    }\n    \n    \n]\n\nfilter_values = ()  # Initialize the filter_values tuple\n\nif filters.get('from_date') and filters.get('to_date'):\n    mysql = \"\"\"\n        SELECT 'Sales Order' AS document_type, transaction_date AS today_date, COUNT(name) AS creation_count\n        FROM `tabSales Order`\n        WHERE DATE(transaction_date) BETWEEN %s AND %s\n        UNION ALL\n        SELECT 'Sales Invoice' AS document_type, posting_date AS today_date, COUNT(name) AS creation_count\n        FROM `tabSales Invoice`\n        WHERE DATE(posting_date) BETWEEN %s AND %s\n        UNION ALL\n        SELECT 'Purchase Invoice' AS document_type, posting_date AS today_date, COUNT(name) AS creation_count\n        FROM `tabPurchase Invoice`\n        WHERE DATE(posting_date) BETWEEN %s AND %s\n        UNION ALL\n        SELECT 'Purchase Order' AS document_type, transaction_date AS today_date, COUNT(name) AS creation_count\n        FROM `tabPurchase Order`\n        WHERE DATE(transaction_date) BETWEEN %s AND %s\n    \"\"\"\n\n    filter_values = (\n        filters.get('from_date'),  # From Date\n        filters.get('to_date'),    # To Date\n        filters.get('from_date'),  # From Date (Sales Invoice)\n        filters.get('to_date'),    # To Date (Sales Invoice)\n        filters.get('from_date'),  # From Date (Purchase Invoice)\n        filters.get('to_date'),    # To Date (Purchase Invoice)\n        filters.get('from_date'),  # From Date (Purchase Order)\n        filters.get('to_date'),    # To Date (Purchase Order)\n    )\n\nelse:\n    mysql = \"\"\"\n       SELECT 'Sales Order' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count\n        FROM `tabSales Order`\n        WHERE DATE(transaction_date) = CURDATE()\n        UNION ALL\n        SELECT 'Sales Invoice' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count\n        FROM `tabSales Invoice`\n        WHERE DATE(posting_date) = CURDATE()\n        UNION ALL\n        SELECT 'Purchase Invoice' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count\n        FROM `tabPurchase Invoice`\n        WHERE DATE(posting_date) = CURDATE()\n        UNION ALL\n        SELECT 'Purchase Order' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count\n        FROM `tabPurchase Order`\n        WHERE DATE(transaction_date) = CURDATE()\n    \"\"\"\n\n# Execute the SQL query with the filter values\nmydata = frappe.db.sql(mysql, filter_values, as_dict=True)\n\ndata = (columns, mydata, \"entry reports\", None, None)\n",
+  "ref_doctype": "Sales Order",
+  "reference_report": null,
+  "report_name": "Entry Reports",
+  "report_script": "columns = [\n    {\n        'fieldname': 'today_date',\n        'label': _('Date'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    },\n    {\n        'fieldname': 'document_type',\n        'label': _('Order'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    },\n    {\n        'fieldname': 'creation_count',\n        'label': _('Number'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    },{\n        'fieldname': 'status',\n        'label': _('Status'),\n        'fieldtype': 'Data',\n        'options': '',\n        'width': 300\n    }\n    \n    \n]\n\nfilter_values = ()  # Initialize the filter_values tuple\n\nif filters.get('from_date') and filters.get('to_date'):\n    mysql = \"\"\"\n        SELECT 'Sales Order' AS document_type, transaction_date AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabSales Order`\n        WHERE DATE(transaction_date) BETWEEN %s AND %s\n        UNION ALL\n        SELECT 'Sales Invoice' AS document_type, posting_date AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabSales Invoice`\n        WHERE DATE(posting_date) BETWEEN %s AND %s\n        UNION ALL\n        SELECT 'Purchase Invoice' AS document_type, posting_date AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabPurchase Invoice`\n        WHERE DATE(posting_date) BETWEEN %s AND %s\n        UNION ALL\n        SELECT 'Purchase Order' AS document_type, transaction_date AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabPurchase Order`\n        WHERE DATE(transaction_date) BETWEEN %s AND %s\n    \"\"\"\n\n    filter_values = (\n        filters.get('from_date'),  # From Date\n        filters.get('to_date'),    # To Date\n        filters.get('from_date'),  # From Date (Sales Invoice)\n        filters.get('to_date'),    # To Date (Sales Invoice)\n        filters.get('from_date'),  # From Date (Purchase Invoice)\n        filters.get('to_date'),    # To Date (Purchase Invoice)\n        filters.get('from_date'),  # From Date (Purchase Order)\n        filters.get('to_date'),    # To Date (Purchase Order)\n    )\n\nelse:\n    mysql = \"\"\"\n       SELECT 'Sales Order' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabSales Order`\n        WHERE DATE(transaction_date) = CURDATE()\n        UNION ALL\n        SELECT 'Sales Invoice' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabSales Invoice`\n        WHERE DATE(posting_date) = CURDATE()\n        UNION ALL\n        SELECT 'Purchase Invoice' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabPurchase Invoice`\n        WHERE DATE(posting_date) = CURDATE()\n        UNION ALL\n        SELECT 'Purchase Order' AS document_type, CURDATE() AS today_date, COUNT(name) AS creation_count,status\n        FROM `tabPurchase Order`\n        WHERE DATE(transaction_date) = CURDATE()\n    \"\"\"\n\n# Execute the SQL query with the filter values\nmydata = frappe.db.sql(mysql, filter_values, as_dict=True)\n\ndata = (columns, mydata, \"entry reports\", None, None)\n",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Entry Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Entry Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Entry Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Maintenance User"
+   },
+   {
+    "parent": "Entry Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Entry Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.184999",
+  "module": "Ambica Finance",
+  "name": "TDS Payable Monthly",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": null,
+  "report_name": "TDS Payable Monthly",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "TDS Payable Monthly",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "TDS Payable Monthly",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "TDS Payable Monthly",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "TDS Payable Monthly",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.144529",
+  "module": "Ambica Finance",
+  "name": "HSN Wise Summery Detailed",
+  "prepared_report": 0,
+  "query": "SELECT\n    NULL AS Type_Cd,\n    si.name AS Invoice_Number,\n    si.posting_date AS Invoice_Date,\n    siuom.gst_hsn_code AS HSN,\n    i.item_group AS Make,\n    gst_uom_map.uqc AS UQC,\n    siuom.item_name AS Item_Name,\n    siuom.qty AS Qty,\n    siuom.rate AS Rate,\n    siuom.amount AS Amount,\n    si.currency AS Currency,\n    NULL AS Bond_Rebate,\n    si.total AS Basic_Value,\n    NULL AS Other_Charge,\n    NULL AS Bill_Value,\n    si.total AS Taxable_Value,\n    \n    CASE\n        WHEN si.tax_category = 'Out-State' THEN stc.base_tax_amount\n        ELSE NULL\n    END AS IGST,\n    CASE\n        WHEN si.tax_category = 'In-State' THEN stc.base_tax_amount\n        ELSE NULL\n    END AS CGST,\n    CASE\n        WHEN si.tax_category = 'In-State' THEN stc.base_tax_amount\n        ELSE NULL\n    END AS SGST,\n    \n    CASE\n        WHEN si.disable_rounded_total = 1 THEN si.grand_total\n        ELSE si.rounded_total\n    END AS Inv_Value,\n    \n    SUM(stc.rate) AS GST_total\n    \nFROM\n    `tabSales Invoice Item` siuom\nJOIN\n    `tabSales Invoice` si ON siuom.parent = si.name\nLEFT JOIN\n    `tabSales Taxes and Charges` stc ON si.name = stc.parent\nLEFT JOIN\n    `tabItem` i ON siuom.item_code = i.item_code\nLEFT JOIN\n    (SELECT\n        parent,\n        uom,\n        gst_uom AS uqc\n    FROM\n        `tabGST UOM Map`) gst_uom_map ON siuom.uom = gst_uom_map.uom\nWHERE\n    si.docstatus = 1\n\nGROUP BY\n    si.name,\n    si.posting_date,\n    siuom.gst_hsn_code,\n    i.item_group,\n    siuom.uom,\n    siuom.item_name,\n    gst_uom_map.uqc,\n    siuom.rate,\n    siuom.amount,\n    si.currency,\n    si.total,\n    si.tax_category,\n    si.disable_rounded_total;",
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "HSN Wise Summery Detailed",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "HSN Wise Summery Detailed",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "HSN Wise Summery Detailed",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.107080",
+  "module": "Ambica Finance",
+  "name": "HSN Wise Summery Detailed From Purchase Invoice",
+  "prepared_report": 0,
+  "query": "SELECT\n    NULL AS Type_Cd,\n    pi.name AS Invoice_Number,\n    pi.posting_date AS Invoice_Date,\n    piuom.gst_hsn_code AS HSN,\n    i.item_group AS Make,\n    gst_uom_map.uqc AS UQC,\n    piuom.item_name AS Item_Name,\n    piuom.qty AS Qty,\n    piuom.rate AS Rate,\n    piuom.amount AS Amount,\n    pi.currency AS Currency,\n    NULL AS Bond_Rebate,\n    pi.total AS Basic_Value,\n    NULL AS Other_Charge,\n    NULL AS Bill_Value,\n    pi.total AS Taxable_Value,\n    \n    CASE\n        WHEN pi.tax_category = 'Out-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS IGST,\n    CASE\n        WHEN pi.tax_category = 'In-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS CGST,\n    CASE\n        WHEN pi.tax_category = 'In-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS SGST,\n    \n    CASE\n        WHEN pi.disable_rounded_total = 1 THEN pi.grand_total\n        ELSE pi.rounded_total\n    END AS Inv_Value,\n    \n    SUM(ptc.rate) AS GST_total\n    \nFROM\n    `tabPurchase Invoice Item` piuom\nJOIN\n    `tabPurchase Invoice` pi ON piuom.parent = pi.name\nLEFT JOIN\n    `tabPurchase Taxes and Charges` ptc ON pi.name = ptc.parent\nLEFT JOIN\n    `tabItem` i ON piuom.item_code = i.item_code\nLEFT JOIN\n    (SELECT\n        parent,\n        uom,\n        gst_uom AS uqc\n    FROM\n        `tabGST UOM Map`) gst_uom_map ON piuom.uom = gst_uom_map.uom\nWHERE\n    pi.docstatus = 1 AND piuom.gst_hsn_code != \"\"\nGROUP BY\n    pi.name,\n    pi.posting_date,\n    piuom.gst_hsn_code,\n    i.item_group,\n    gst_uom_map.uqc,\n    piuom.item_name,\n    piuom.qty,\n    piuom.rate,\n    piuom.amount,\n    pi.currency,\n    pi.total,\n    pi.tax_category,\n    pi.disable_rounded_total;\n",
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": null,
+  "report_name": "HSN Wise Summery Detailed From Purchase Invoice",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "HSN Wise Summery Detailed From Purchase Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "HSN Wise Summery Detailed From Purchase Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "HSN Wise Summery Detailed From Purchase Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "HSN Wise Summery Detailed From Purchase Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:22:42.070285",
+  "module": "Ambica Finance",
+  "name": "HSN Wise Inward Summery",
+  "prepared_report": 0,
+  "query": "SELECT\n    NULL AS Type_Cd,\n    pi.name AS Invoice_Number,\n    pi.posting_date AS Invoice_Date,\n    piuom.gst_hsn_code AS HSN,\n    i.item_group AS Make,\n    gst_uom_map.uqc AS UQC,\n    piuom.item_name AS Item_Name,\n    piuom.qty AS Qty,\n    piuom.rate AS Rate,\n    piuom.amount AS Amount,\n    pi.currency AS Currency,\n    NULL AS Bond_Rebate,\n    pi.total AS Basic_Value,\n    NULL AS Other_Charge,\n    NULL AS Bill_Value,\n    pi.total AS Taxable_Value,\n    \n    CASE\n        WHEN pi.tax_category = 'Out-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS IGST,\n    CASE\n        WHEN pi.tax_category = 'In-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS CGST,\n    CASE\n        WHEN pi.tax_category = 'In-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS SGST,\n    \n    CASE\n        WHEN pi.disable_rounded_total = 1 THEN pi.grand_total\n        ELSE pi.rounded_total\n    END AS Inv_Value,\n    \n    SUM(ptc.rate) AS GST_total\n    \nFROM\n    `tabPurchase Invoice Item` piuom\nJOIN\n    `tabPurchase Invoice` pi ON piuom.parent = pi.name\nLEFT JOIN\n    `tabPurchase Taxes and Charges` ptc ON pi.name = ptc.parent\nLEFT JOIN\n    `tabItem` i ON piuom.item_code = i.item_code\nLEFT JOIN\n    (SELECT\n        parent,\n        uom,\n        gst_uom AS uqc\n    FROM\n        `tabGST UOM Map`) gst_uom_map ON piuom.uom = gst_uom_map.uom\nWHERE\n    pi.docstatus = 1 AND piuom.gst_hsn_code != \"\"\nGROUP BY\n    pi.name,\n    pi.posting_date,\n    piuom.gst_hsn_code,\n    i.item_group,\n    gst_uom_map.uqc,\n    piuom.item_name,\n    piuom.qty,\n    piuom.rate,\n    piuom.amount,\n    pi.currency,\n    pi.total,\n    pi.tax_category,\n    pi.disable_rounded_total;\n",
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": null,
+  "report_name": "HSN Wise Inward Summery",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "HSN Wise Inward Summery",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "HSN Wise Inward Summery",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "HSN Wise Inward Summery",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "HSN Wise Inward Summery",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 16:49:42.701355",
+  "module": "Ambica Finance",
+  "name": "HSN Wise Summery Detailed Script",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "HSN Wise Summery Detailed Script",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "HSN Wise Summery Detailed Script",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "HSN Wise Summery Detailed Script",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-02 17:11:28.385431",
+  "module": "Ambica Finance",
+  "name": "Party Wise Sales Comparision",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Party Wise Sales Comparision",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Party Wise Sales Comparision",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Party Wise Sales Comparision",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": null,
+  "modified": "2024-01-02 18:26:08.871565",
+  "module": "Ambica Finance",
+  "name": "Advance Given To vendores",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "Advance Given To vendores",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Advance Given To vendores",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Advance Given To vendores",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
    }
   ]
  }
