@@ -171,29 +171,35 @@ def get_items(filters):
     items = frappe.db.sql(
         f"""
         SELECT
-            `tabSales Invoice Item`.gst_hsn_code,
-            `tabSales Invoice Item`.stock_uom as uqc,
-            sum(`tabSales Invoice Item`.stock_qty) AS stock_qty,
-            sum(`tabSales Invoice Item`.taxable_value) AS taxable_value,
-            `tabSales Invoice Item`.parent,
-            `tabSales Invoice Item`.item_code,
-            `tabGST HSN Code`.description
+            si_item.gst_hsn_code,
+            gst_uom_map.gst_uom AS uqc,
+            SUM(si_item.stock_qty) AS stock_qty,
+            SUM(si_item.taxable_value) AS taxable_value,
+            si_item.parent,
+            si_item.item_code,
+            MAX(hsn.description) AS description
         FROM
-            `tabSales Invoice`
-            INNER JOIN `tabSales Invoice Item` ON `tabSales Invoice`.name = `tabSales Invoice Item`.parent
-            INNER JOIN `tabGST HSN Code` ON `tabSales Invoice Item`.gst_hsn_code = `tabGST HSN Code`.name
+            `tabSales Invoice` si
+        INNER JOIN
+            `tabSales Invoice Item` si_item ON si.name = si_item.parent
+        INNER JOIN
+            `tabGST HSN Code` hsn ON si_item.gst_hsn_code = hsn.name
+        LEFT JOIN
+            `tabGST UOM Map` gst_uom_map ON si_item.stock_uom = gst_uom_map.uom
         WHERE
-            `tabSales Invoice`.docstatus = 1
-            AND `tabSales Invoice`.company_gstin != IFNULL(`tabSales Invoice`.billing_address_gstin, '')
-            AND `tabSales Invoice Item`.gst_hsn_code IS NOT NULL {conditions}
+            si.docstatus = 1
+            AND si.company_gstin != IFNULL(si.billing_address_gstin, '')
+            AND si_item.gst_hsn_code IS NOT NULL {conditions}
         GROUP BY
-            `tabSales Invoice Item`.parent,
-            `tabSales Invoice Item`.item_code
+            si_item.parent,
+            si_item.item_code,
+            si_item.stock_uom;
+
         """,
         filters,
         as_dict=1,
     )
-
+    
     return items
 
 
