@@ -1,14 +1,16 @@
 // Copyright (c) 2024, riddhi and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["HSN Wise Summery Detailed Script"] = {
-    filters: [],
+frappe.query_reports["NEFT RTGS1"] = {
+	filters: [],
     onload: function(report) {
+        $('[data-label="Export"]').parent().hide();
         report.page.add_inner_button(__('Export File'), function() {
             exportHSNWiseSummaryCsv();
         });
     }
 };
+
 
 function exportHSNWiseSummaryCsv() {
     // Fetch HSN Wise Summary data
@@ -35,7 +37,7 @@ function exportHSNWiseSummaryCsv() {
             // Create a link element and trigger a click to download the file
             var link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
-            link.download = "hsn_wise_summary_report.csv";
+            link.download = "neft_rtgs1.csv";
             link.click();
         } else {
             console.error("Failed to fetch HSN Wise Summary data.");
@@ -47,7 +49,7 @@ function fetchHSNWiseSummaryData(callback) {
     // Fetch data from the report API endpoint or use your custom method to fetch data
     // Adjust the URL accordingly based on your Frappe application structure
     var apiUrl = "/api/method/frappe.desk.query_report.run";
-    var reportName = "HSN Wise Summery Detailed Script";
+    var reportName = "NEFT RTGS1";
 
     frappe.call({
         method: "frappe.desk.query_report.run",

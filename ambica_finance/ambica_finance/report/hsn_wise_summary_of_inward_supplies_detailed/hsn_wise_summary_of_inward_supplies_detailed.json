@@ -1,35 +1,28 @@
 {
  "add_total_row": 0,
  "columns": [],
- "creation": "2023-12-27 18:44:52.518039",
+ "creation": "2024-01-03 17:49:47.818559",
  "disabled": 0,
  "docstatus": 0,
  "doctype": "Report",
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
+ "json": "{}",
  "letterhead": null,
- "modified": "2024-01-02 16:22:42.107080",
+ "modified": "2024-01-03 17:49:58.110933",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
- "name": "HSN Wise Summery Detailed From Purchase Invoice",
+ "name": "HSN Wise Summary of Inward Supplies Detailed",
+ "owner": "Administrator",
  "prepared_report": 0,
  "query": "SELECT\n    NULL AS Type_Cd,\n    pi.name AS Invoice_Number,\n    pi.posting_date AS Invoice_Date,\n    piuom.gst_hsn_code AS HSN,\n    i.item_group AS Make,\n    gst_uom_map.uqc AS UQC,\n    piuom.item_name AS Item_Name,\n    piuom.qty AS Qty,\n    piuom.rate AS Rate,\n    piuom.amount AS Amount,\n    pi.currency AS Currency,\n    NULL AS Bond_Rebate,\n    pi.total AS Basic_Value,\n    NULL AS Other_Charge,\n    NULL AS Bill_Value,\n    pi.total AS Taxable_Value,\n    \n    CASE\n        WHEN pi.tax_category = 'Out-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS IGST,\n    CASE\n        WHEN pi.tax_category = 'In-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS CGST,\n    CASE\n        WHEN pi.tax_category = 'In-State' THEN ptc.base_tax_amount\n        ELSE NULL\n    END AS SGST,\n    \n    CASE\n        WHEN pi.disable_rounded_total = 1 THEN pi.grand_total\n        ELSE pi.rounded_total\n    END AS Inv_Value,\n    \n    SUM(ptc.rate) AS GST_total\n    \nFROM\n    `tabPurchase Invoice Item` piuom\nJOIN\n    `tabPurchase Invoice` pi ON piuom.parent = pi.name\nLEFT JOIN\n    `tabPurchase Taxes and Charges` ptc ON pi.name = ptc.parent\nLEFT JOIN\n    `tabItem` i ON piuom.item_code = i.item_code\nLEFT JOIN\n    (SELECT\n        parent,\n        uom,\n        gst_uom AS uqc\n    FROM\n        `tabGST UOM Map`) gst_uom_map ON piuom.uom = gst_uom_map.uom\nWHERE\n    pi.docstatus = 1 AND piuom.gst_hsn_code != \"\"\nGROUP BY\n    pi.name,\n    pi.posting_date,\n    piuom.gst_hsn_code,\n    i.item_group,\n    gst_uom_map.uqc,\n    piuom.item_name,\n    piuom.qty,\n    piuom.rate,\n    piuom.amount,\n    pi.currency,\n    pi.total,\n    pi.tax_category,\n    pi.disable_rounded_total;\n",
  "ref_doctype": "Purchase Invoice",
- "report_name": "HSN Wise Summery Detailed From Purchase Invoice",
+ "report_name": "HSN Wise Summary of Inward Supplies Detailed",
  "report_type": "Query Report",
  "roles": [
   {
-   "role": "Accounts User"
-  },
-  {
-   "role": "Purchase User"
-  },
-  {
    "role": "Accounts Manager"
-  },
-  {
-   "role": "Auditor"
   }
  ]
 }

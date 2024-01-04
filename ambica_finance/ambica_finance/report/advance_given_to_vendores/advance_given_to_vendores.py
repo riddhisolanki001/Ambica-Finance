@@ -35,7 +35,7 @@ def execute(filters=None):
         },
         {
             "fieldname": "tentative_date",
-            "fieldtype": "Data",
+            "fieldtype": "Date",
             "label": "Tentative Date",
         },
         {
@@ -46,7 +46,7 @@ def execute(filters=None):
     ]
 
     sql = """
-        SELECT 
+       SELECT 
             pe.party_name,
             pe.name,
             pe.posting_date,
@@ -57,7 +57,7 @@ def execute(filters=None):
                 WHEN per.reference_doctype = 'Purchase Order' THEN
                     (SELECT so.schedule_date FROM `tabPurchase Order` so WHERE so.name = per.reference_name)
                 ELSE
-                    NULL
+                    pe.reference_date
             END as tentative_date,
             pe.remarks
         FROM 
@@ -68,7 +68,8 @@ def execute(filters=None):
             `tabDocType` as dt ON dt.name = per.reference_doctype
         WHERE
             pe.payment_type = "Pay" and pe.party_type = "Supplier"
-    """
+            
+        """
 
     conditions = []
 

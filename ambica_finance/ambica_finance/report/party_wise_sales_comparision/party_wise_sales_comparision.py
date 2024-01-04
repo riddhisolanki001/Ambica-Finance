@@ -1,8 +1,3 @@
-# Copyright (c) 2024, riddhi and contributors
-# For license information, please see license.txt
-
-
-
 import frappe
 
 def get_columns(filters, trans):
@@ -27,7 +22,7 @@ def get_columns(filters, trans):
     # Concatenate basic columns and month-wise columns
     columns = month_columns
 
-    # Prepare a dictionary of conditions to be returned	
+    # Prepare a dictionary of conditions to be returned
     conditions = {
         "columns": columns,
         "trans": trans,
@@ -100,8 +95,8 @@ def execute(filters=None):
             `tabSales Invoice` as si
         LEFT JOIN
             `tabSales Invoice Item` as sii ON sii.parent = si.name
-        WHERE
-            YEAR(si.posting_date) = '{filters.get('fiscal_year')}'
+        
+            
         GROUP BY si.customer
     """
 
