@@ -5,10 +5,13 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "to",
+  "column_break_xcld",
   "address",
   "section_break_lg2y",
   "contact_no",
   "email",
+  "country",
   "column_break_har8",
   "invoice_no",
   "invoice_date",
@@ -19,6 +22,14 @@
   "section_break_bzuo",
   "exporters_ref",
   "declaration",
+  "autocomplete_lhdc",
+  "place_of_receipt_by_pre_carrier",
+  "vasselflight_no",
+  "port_of_discharge",
+  "port_of_loading",
+  "final_destination",
+  "country_of_final_destination",
+  "gst_no",
   "column_break_kxvi",
   "company_address_name",
   "company_address"
@@ -27,7 +38,7 @@
   {
    "fieldname": "address",
    "fieldtype": "Small Text",
-   "label": "Address"
+   "label": "Consignee"
   },
   {
    "fieldname": "contact_no",
@@ -103,11 +114,66 @@
    "fieldtype": "Link",
    "label": "Company Address Name",
    "options": "Address"
+  },
+  {
+   "fieldname": "column_break_xcld",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Small Text",
+   "label": "To"
+  },
+  {
+   "fieldname": "autocomplete_lhdc",
+   "fieldtype": "Autocomplete"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "place_of_receipt_by_pre_carrier",
+   "fieldtype": "Data",
+   "label": "Place of Receipt by pre Carrier"
+  },
+  {
+   "fieldname": "vasselflight_no",
+   "fieldtype": "Data",
+   "label": "Vassel/Flight no"
+  },
+  {
+   "fieldname": "port_of_discharge",
+   "fieldtype": "Data",
+   "label": "Port of Discharge"
+  },
+  {
+   "fieldname": "port_of_loading",
+   "fieldtype": "Data",
+   "label": "Port of Loading"
+  },
+  {
+   "fieldname": "final_destination",
+   "fieldtype": "Data",
+   "label": "Final Destination"
+  },
+  {
+   "fieldname": "country_of_final_destination",
+   "fieldtype": "Link",
+   "label": "Country of Final Destination",
+   "options": "Country"
+  },
+  {
+   "fieldname": "gst_no",
+   "fieldtype": "Data",
+   "label": "GST No"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-28 11:32:36.386282",
+ "modified": "2024-01-05 19:16:14.483947",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "Memorandum Invoice",
