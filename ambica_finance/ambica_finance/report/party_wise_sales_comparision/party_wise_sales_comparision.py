@@ -95,10 +95,16 @@ def execute(filters=None):
             `tabSales Invoice` as si
         LEFT JOIN
             `tabSales Invoice Item` as sii ON sii.parent = si.name
-        WHERE
-            YEAR(si.posting_date) = '{filters.get('fiscal_year')}'
-        GROUP BY si.customer
     """
+    if filters:
+        company = filters.get("company")
+        from_date = filters.get("from_date")
+        to_date = filters.get("to_date")
+        sql += f"""
+        		WHERE si.company = '{company}'
+        		AND si.posting_date BETWEEN '{from_date}' AND '{to_date}'
+        	"""
+    sql += "GROUP BY si.customer"
 
     data = frappe.db.sql(sql, as_dict=True)
 

@@ -1,29 +1,30 @@
 {
  "add_total_row": 0,
  "columns": [],
- "creation": "2024-01-01 11:01:44.093567",
+ "creation": "2024-01-02 18:26:06.300156",
  "disabled": 0,
  "docstatus": 0,
  "doctype": "Report",
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
+ "json": "{}",
  "letterhead": null,
- "modified": "2024-01-01 11:01:44.093567",
+ "modified": "2024-01-23 13:21:07.965301",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
- "name": "Party Wise Sales Comparison",
+ "name": "Advance Given To vendores",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "Sales Invoice",
- "report_name": "Party Wise Sales Comparison",
+ "ref_doctype": "Payment Entry",
+ "report_name": "Advance Given To vendores",
  "report_type": "Script Report",
  "roles": [
   {
-   "role": "Accounts Manager"
+   "role": "Accounts User"
   },
   {
-   "role": "Accounts User"
+   "role": "Accounts Manager"
   }
  ]
 }

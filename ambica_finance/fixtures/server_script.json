@@ -1,1 +1,40 @@
-[]
+[
+ {
+  "allow_guest": 0,
+  "api_method": "email_in_supplier",
+  "cron_format": null,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2024-01-17 17:42:51.362382",
+  "module": "Ambica Finance",
+  "name": "email_in_supplier",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": null,
+  "script": "name = frappe.form_dict['name']\n\n# Assuming the 'tabContact' table has a field 'email_id'\nemail_id = frappe.db.get_value('Contact', {'name': f'-{name}'}, 'email_id')\n\nif email_id is not None:\n    frappe.msgprint(email_id)\n    doc = frappe.get_doc(\"Supplier\", name)\n    doc.custom_email = email_id\n    doc.save()\nelse:\n    frappe.msgprint(f\"No email found for contact: {name}\")\n",
+  "script_type": "API"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Submit",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2024-01-23 12:49:23.346694",
+  "module": "Ambica Finance",
+  "name": "Creation of Purchase Invoice after Purchase Receipt is Submitted",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Purchase Receipt",
+  "script": "if doc.docstatus == 1:\n    purchase_invoice = frappe.new_doc(\"Purchase Invoice\")\n    \n    # Set relevant fields from the Purchase Receipt\n    purchase_invoice.supplier = doc.supplier\n    purchase_invoice.posting_date = doc.posting_date\n    purchase_invoice.company = doc.company\n    \n    # Set other fields as needed\n    frappe.msgprint(\"Purchase Invoice is Created\")\n    # Add items from the Purchase Receipt to the Purchase Invoice\n    for item in doc.items:\n        invoice_item = purchase_invoice.append('items')\n        invoice_item.item_code = item.item_code\n        invoice_item.qty = item.qty\n        invoice_item.rate = item.rate\n        # Add other item details as needed\n    \n    # Save the Purchase Invoice\n    purchase_invoice.insert()",
+  "script_type": "DocType Event"
+ }
+]
