@@ -1,7 +1,7 @@
-// Copyright (c) 2024, riddhi and contributors
+// Copyright (c) 2023, riddhi and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Advance Given To vendores"] = {
+frappe.query_reports["Advance given to Vendors"] = {
 	"filters": [
 		{
             "fieldname": "from_date",

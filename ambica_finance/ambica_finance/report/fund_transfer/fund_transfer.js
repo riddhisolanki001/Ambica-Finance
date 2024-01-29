@@ -1,15 +1,5 @@
-// Copyright (c) 2024, riddhi and contributors
-// For license information, please see license.txt
-
-frappe.query_reports["party wise sales comparison"] = {
+frappe.query_reports["Fund Transfer"] = {
 	"filters": [
-		{
-			"fieldname":"company",
-			"label": __("Company"),
-			"fieldtype": "Link",
-			"options": "Company",
-			"default": frappe.defaults.get_default('company')
-		},
 		{
 			"fieldname":"from_date",
 			"label": __("From Date"),
@@ -26,5 +16,11 @@ frappe.query_reports["party wise sales comparison"] = {
 			"reqd": 1,
 			"width": "60px"
 		}
-	]
+	],
+	// "onload": function (report) {
+    //     setTimeout(function () {
+    //         report.set_filter_value('from_date', null);
+    //         report.set_filter_value('to_date', null);
+    //     }, 1000); 
+    // }
 };
