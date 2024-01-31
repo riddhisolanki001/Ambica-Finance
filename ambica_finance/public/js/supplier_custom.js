@@ -171,5 +171,13 @@ frappe.ui.form.on("Supplier", {
 			primary_action_label: __('Create Link')
 		});
 		dialog.show();
+	},
+	custom_block_supplier(frm) {
+        if (frm.doc.custom_block_supplier){
+            frm.set_value('custom_hold_type', "All");
+        }
+        else{
+            frm.set_value('custom_hold_type', "");
+        }
 	}
 });

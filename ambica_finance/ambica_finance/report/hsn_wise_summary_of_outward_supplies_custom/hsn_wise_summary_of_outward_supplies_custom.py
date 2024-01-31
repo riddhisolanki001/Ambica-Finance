@@ -11,7 +11,6 @@ from frappe.utils import cstr, flt, getdate
 import erpnext
 
 from india_compliance.gst_india.constants import GST_ACCOUNT_FIELDS
-from india_compliance.gst_india.report.gstr_1.gstr_1 import get_company_gstin_number
 from india_compliance.gst_india.utils import get_gst_accounts_by_type, get_gst_uom
 
 
@@ -24,6 +23,12 @@ def execute(filters=None):
     columns = get_columns()
     output_gst_accounts_dict = get_gst_accounts_by_type(filters.company, "Output")
 
+    data = get_hsn_data(filters, columns, output_gst_accounts_dict)
+
+    return columns, data
+
+
+def get_hsn_data(filters, columns, output_gst_accounts_dict):
     output_gst_accounts = set()
     non_cess_accounts = set()
     for account_type, account_name in output_gst_accounts_dict.items():
@@ -70,7 +75,7 @@ def execute(filters=None):
             d.description,
             d.uqc,
             d.stock_qty,
-            str("tax_rate")+" %",
+            str(tax_rate)+" %",
             d.taxable_value + total_tax,
             d.taxable_value,
         ]
@@ -84,7 +89,7 @@ def execute(filters=None):
     if data:
         data = get_merged_data(columns, data)  # merge same hsn code data
 
-    return columns, data
+    return data
 
 
 def validate_filters(filters):
@@ -124,7 +129,7 @@ def get_columns():
         {
             "fieldname": "tax_rate",
             "label": _("Tax Rate"),
-            "fieldtype": "Percent",
+            "fieldtype": "Data",
             "width": 90,
         },
         {
@@ -171,35 +176,29 @@ def get_items(filters):
     items = frappe.db.sql(
         f"""
         SELECT
-            si_item.gst_hsn_code,
-            gst_uom_map.gst_uom AS uqc,
-            SUM(si_item.stock_qty) AS stock_qty,
-            SUM(si_item.taxable_value) AS taxable_value,
-            si_item.parent,
-            si_item.item_code,
-            MAX(hsn.description) AS description
+            `tabSales Invoice Item`.gst_hsn_code,
+            `tabSales Invoice Item`.stock_uom as uqc,
+            sum(`tabSales Invoice Item`.stock_qty) AS stock_qty,
+            sum(`tabSales Invoice Item`.taxable_value) AS taxable_value,
+            `tabSales Invoice Item`.parent,
+            `tabSales Invoice Item`.item_code,
+            COALESCE(`tabGST HSN Code`.description, 'NA') AS description
         FROM
-            `tabSales Invoice` si
-        INNER JOIN
-            `tabSales Invoice Item` si_item ON si.name = si_item.parent
-        INNER JOIN
-            `tabGST HSN Code` hsn ON si_item.gst_hsn_code = hsn.name
-        LEFT JOIN
-            `tabGST UOM Map` gst_uom_map ON si_item.stock_uom = gst_uom_map.uom
+            `tabSales Invoice`
+            INNER JOIN `tabSales Invoice Item` ON `tabSales Invoice`.name = `tabSales Invoice Item`.parent
+            LEFT JOIN `tabGST HSN Code` ON `tabSales Invoice Item`.gst_hsn_code = `tabGST HSN Code`.name
         WHERE
-            si.docstatus = 1
-            AND si.company_gstin != IFNULL(si.billing_address_gstin, '')
-            AND si_item.gst_hsn_code IS NOT NULL {conditions}
+            `tabSales Invoice`.docstatus = 1
+            AND `tabSales Invoice`.company_gstin != IFNULL(`tabSales Invoice`.billing_address_gstin, '')
+            AND `tabSales Invoice Item`.gst_hsn_code IS NOT NULL {conditions}
         GROUP BY
-            si_item.parent,
-            si_item.item_code,
-            si_item.stock_uom;
-
+            `tabSales Invoice Item`.parent,
+            `tabSales Invoice Item`.item_code
         """,
         filters,
         as_dict=1,
     )
-    
+
     return items
 
 
@@ -302,6 +301,8 @@ def get_merged_data(columns, data):
 
 @frappe.whitelist()
 def get_json(filters, report_name, data):
+    from india_compliance.gst_india.report.gstr_1.gstr_1 import get_company_gstin_number
+
     filters = json.loads(filters)
     report_data = json.loads(data)
     gstin = filters.get("company_gstin") or get_company_gstin_number(filters["company"])
@@ -316,7 +317,7 @@ def get_json(filters, report_name, data):
 
     gst_json = {"version": "GST3.1.2", "hash": "hash", "gstin": gstin, "fp": fp}
 
-    gst_json["hsn"] = {"data": get_hsn_wise_json_data(filters, report_data)}
+    gst_json["hsn"] = get_hsn_wise_json_data(filters, report_data)
 
     return {"report_name": report_name, "data": gst_json}
 
@@ -377,4 +378,4 @@ def get_hsn_wise_json_data(filters, report_data):
         data.append(row)
         count += 1
 
-    return data
+    return {"data": data}
