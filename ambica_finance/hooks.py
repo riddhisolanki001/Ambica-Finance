@@ -264,7 +264,30 @@ fixtures=[
             ]
         ]
     ]},
-    
+        {
+        "dt": "Workflow",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Purchase Invoice Workflow",
+                ],
+            ]
+        ],
+    },
+    {
+        "dt": "Workflow State",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Draft",
+                ],
+            ]
+        ],
+    },
     
     
         
