@@ -1,0 +1,102 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-30 17:24:46.849308",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "deleted_doctype",
+  "deleted_name",
+  "created_by",
+  "remark",
+  "column_break_woug",
+  "dr_acocunt_name",
+  "cr_acocunt_name",
+  "date_time_stamp_of_entry",
+  "voucher_date",
+  "dr_amount",
+  "cr_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "deleted_doctype",
+   "fieldtype": "Link",
+   "label": "Deleted DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "deleted_name",
+   "fieldtype": "Data",
+   "label": "Deleted Name"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Small Text",
+   "label": "Remark"
+  },
+  {
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_woug",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dr_acocunt_name",
+   "fieldtype": "Data",
+   "label": "Dr Acocunt Name"
+  },
+  {
+   "fieldname": "cr_acocunt_name",
+   "fieldtype": "Data",
+   "label": "Cr Acocunt Name"
+  },
+  {
+   "fieldname": "date_time_stamp_of_entry",
+   "fieldtype": "Datetime",
+   "label": "Date && Time Stamp of Entry"
+  },
+  {
+   "fieldname": "voucher_date",
+   "fieldtype": "Date",
+   "label": "Voucher Date"
+  },
+  {
+   "fieldname": "dr_amount",
+   "fieldtype": "Currency",
+   "label": "Dr Amount"
+  },
+  {
+   "fieldname": "cr_amount",
+   "fieldtype": "Data",
+   "label": "Cr Amount"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-01-31 12:26:03.490290",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Deleted Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
