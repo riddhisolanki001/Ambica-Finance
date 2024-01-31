@@ -92,10 +92,28 @@ def create_payment_entry(selected_rows, bank_name, payment_date):
         payment_entry.remarks = remarkstext
         payment_entry.flags.ignore_permissions = True         
         payment_entry.save()
+        frappe.db.commit()
 
         name = payment_entry.name  # Get the name of the newly created Payment Entry
 
-        # Iterate through references and create entries in the child table
+        # parent = frappe.get_doc("Payment Entry", name)
+
+        # # Iterate through references and create entries in the child table
+        # for invoice_row in selected_rows:
+        #     if invoice_row['party_name'] == party_name:
+        #         frappe.msgprint(f"Adding reference for {party_name}, invoice_number: {invoice_row['invoice_number']}")
+
+        #         reference = parent.append("references", {
+        #             'reference_doctype': 'Purchase Invoice',
+        #             'reference_name': invoice_row['invoice_number'],
+        #         })
+        #         frappe.msgprint(f"Reference added: {reference.as_dict()}")
+                
+        #         frappe.db.commit()  # Commit after each iteration
+
+        # parent.save()
+        # frappe.db.commit()  # Commit after the loop completes
+ 
         for invoice_row in selected_rows:
             if invoice_row['party_name'] == party_name:
                 reference_entry = frappe.new_doc('Payment Entry Reference')
@@ -105,10 +123,30 @@ def create_payment_entry(selected_rows, bank_name, payment_date):
                 reference_entry.reference_doctype = 'Purchase Invoice'
                 reference_entry.reference_name = invoice_row['invoice_number']
                 reference_entry.total_amount = invoice_row['amount']
-            
-                # Trigger the before_save method of the child table
-                reference_entry.run_method('before_save')                
-                reference_entry.insert()
-                # payment_entry.save()
+                reference_entry.save()
 
-    frappe.db.commit()
+                frappe.db.commit()
+        # frappe.db.commit()
+
+
+
+
+
+
+
+
+
+
+
+                # reference_entry = frappe.new_doc('Payment Entry Reference')
+                # reference_entry.parent = name
+                # reference_entry.parentfield = 'references'
+                # reference_entry.parenttype = 'Payment Entry'
+                # reference_entry.reference_doctype = 'Purchase Invoice'
+                # reference_entry.reference_name = invoice_row['invoice_number']
+                # reference_entry.total_amount = invoice_row['amount']
+            
+                # # Trigger the before_save method of the child table
+                # reference_entry.run_method('before_save')                
+                # reference_entry.insert()
+                # payment_entry.save()

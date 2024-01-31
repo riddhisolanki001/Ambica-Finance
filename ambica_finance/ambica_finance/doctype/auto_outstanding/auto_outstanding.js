@@ -1,4 +1,3 @@
-
 frappe.ui.form.on("Auto Outstanding", {
     refresh:function(frm) {
         set_css(frm)	
@@ -10,10 +9,7 @@ frappe.ui.form.on("Auto Outstanding", {
                     account_type: 'Bank'
                 }
             };
-        };
-        
-        // sortOutstandings(frm);
-
+        };    
     },
 
     msme: function (frm) {
@@ -32,15 +28,11 @@ frappe.ui.form.on("Auto Outstanding", {
                         response.message.forEach(function (invoice) {
                             // Check if the invoice is not already in the table
                             if (!isInvoiceAlreadyAdded(frm, invoice.name)) {
-
                                 var row = frappe.model.add_child(frm.doc, 'Outstanding Child', 'outstandings');
                                 row.invoice_number = invoice.name;
                                 row.party_name = invoice.party_name;
-                            }else{
-                                console.log("Already in child table")
                             }
                         });
-
                         frm.refresh_field('outstandings');
                     }
                 }
@@ -69,9 +61,8 @@ frappe.ui.form.on("Auto Outstanding", {
                     // Iterate through the sorted invoices and add rows to the child table
                     response.message.forEach(function(invoice) {
                         var row = frappe.model.add_child(frm.doc, 'Outstanding Child', 'outstandings');
-                        row.invoice_number = invoice.name; 
+                        row.invoice_number = invoice.name;  // Replace with actual field names
                     });
-                    sortOutstandings(frm);
 
                     frm.refresh_field('outstandings');
                 }
@@ -122,7 +113,7 @@ frappe.ui.form.on("Auto Outstanding", {
                             if (existingInvoices.length > 0) {
                                 frappe.msgprint(__('Invoices already in the table: ') + existingInvoices.join(', '));
                             }
-
+                        
                             frm.refresh_field('outstandings'); // Refresh the child table
                             console.log("Selected invoices:", selections);
                             d.$wrapper.hide();
@@ -132,8 +123,8 @@ frappe.ui.form.on("Auto Outstanding", {
             }
         });
     }
-});
 
+});
 
 // Helper function to check if an invoice is already added
 function isInvoiceAlreadyAdded(frm, invoiceNumber) {
@@ -185,3 +176,5 @@ function set_css(frm){
 	document.querySelectorAll("[data-fieldname = 'not_due']")[1].style.color = 'white';
 
 }
+
+
