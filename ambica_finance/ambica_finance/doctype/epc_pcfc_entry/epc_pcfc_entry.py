@@ -9,40 +9,47 @@ class EPCPCFCEntry(Document):
 
 @frappe.whitelist()
 def create_Journal_entry():
-    date = frappe.form_dict['date']
-    due_date = frappe.form_dict['due_date']
-    company = frappe.form_dict['company']
-    bank_name = frappe.form_dict['bank_name']
-    reference_number = frappe.form_dict['reference_number']
-    amount = frappe.form_dict['amount']
-    
-    sql = "SELECT c.abbr FROM `tabCompany` as c WHERE c.name = %s"
-    abbr = frappe.db.sql(sql, company, as_dict=True)
-    abbr_value = abbr[0].get('abbr')
+    try:
+        date = frappe.form_dict['date']
+        due_date = frappe.form_dict['due_date']
+        company = frappe.form_dict['company']
+        bank_name = frappe.form_dict['bank_name']
+        reference_number = frappe.form_dict['reference_number']
+        amount = frappe.form_dict['amount']
+        
+        sql = "SELECT c.abbr FROM `tabCompany` as c WHERE c.name = %s"
+        abbr = frappe.db.sql(sql, company, as_dict=True)
+        abbr_value = abbr[0].get('abbr')
 
-    
-    journal_entry = frappe.new_doc('Journal Entry')
+        
+        journal_entry = frappe.new_doc('Journal Entry')
 
-    # Set the fields
-    journal_entry.voucher_type = "Journal Entry"
-    journal_entry.posting_date = date
-    journal_entry.due_date = due_date
-    journal_entry.company = company
-    journal_entry.cheque_no = reference_number
-    journal_entry.cheque_date = date
+        # Set the fields
+        journal_entry.voucher_type = "Journal Entry"
+        journal_entry.posting_date = date
+        journal_entry.due_date = due_date
+        journal_entry.company = company
+        journal_entry.cheque_no = reference_number
+        journal_entry.cheque_date = date
 
-    # Add accounts and amounts based on your requirements
-    # For example, you might have a debit and credit entry
-    journal_entry.append('accounts', {
-        'account': bank_name,
-        'debit_in_account_currency': amount
-    })
-    journal_entry.append('accounts', {
-        'account': f"Export Packing Credit - {abbr_value}",
-        'credit_in_account_currency': amount,
-    })
-    # Add more accounts as needed
+        # Add accounts and amounts based on your requirements
+        # For example, you might have a debit and credit entry
+        journal_entry.append('accounts', {
+            'account': bank_name,
+            'debit_in_account_currency': amount
+        })
+        journal_entry.append('accounts', {
+            'account': f"Export Packing Credit - {abbr_value}",
+            'credit_in_account_currency': amount,
+        })
+        # Add more accounts as needed
 
-    # Save the Journal Entry
-    journal_entry.insert()
-    frappe.db.commit()
+        # Save the Journal Entry
+        journal_entry.insert()
+        frappe.db.commit()
+        return "Journal Entry created successfully"
+
+    except Exception as e:
+        frappe.log_error(f"Error in create_Journal_entry: {e}")
+        frappe.db.rollback()
+        return frappe.throw("Error occurred while creating journal Entry")

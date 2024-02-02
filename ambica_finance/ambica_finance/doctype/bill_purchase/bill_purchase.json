@@ -5,6 +5,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "company",
   "type",
   "date",
   "bank_account",
@@ -12,6 +13,7 @@
   "amount",
   "column_break_igft",
   "no",
+  "treasury_bill",
   "spread",
   "subsequent",
   "interest",
@@ -165,12 +167,23 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "treasury_bill",
+   "fieldtype": "Float",
+   "label": "Treasury Bill(%)"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-12-25 18:23:35.873208",
+ "modified": "2024-02-02 12:56:36.929437",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "Bill Purchase",

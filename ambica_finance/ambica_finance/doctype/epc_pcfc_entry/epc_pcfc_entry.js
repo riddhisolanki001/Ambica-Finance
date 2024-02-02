@@ -2,15 +2,14 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('EPC PCFC Entry', {
-    refresh: function(frm) {
-        // Add a trigger on value change of start_date or days_to_add
-        frm.fields_dict['date'].$input.on('change', function() {
-            calculateDueDate(frm);
-        });
 
-        frm.fields_dict['days'].$input.on('change', function() {
-            calculateDueDate(frm);
-        });
+    date:function(frm){
+        calculateDueDate(frm);
+
+    },
+    days:function(frm){
+        calculateDueDate(frm);
+
     },
 
     finance_effect: function(frm) {
@@ -25,7 +24,7 @@ frappe.ui.form.on('EPC PCFC Entry', {
                 'amount':frm.doc.amount
             },
             callback: function(r){
-                console.log(r)
+                frappe.msgprint(r.message)
             }
         });
     }
