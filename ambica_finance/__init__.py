@@ -1,3 +1,6 @@
 
 __version__ = '0.0.1'
-
+import india_compliance.gst_india.report.hsn_wise_summary_of_outward_supplies.hsn_wise_summary_of_outward_supplies
+import ambica_finance.hsn_wise_summary_of_outward_supplies
+india_compliance.gst_india.report.hsn_wise_summary_of_outward_supplies.hsn_wise_summary_of_outward_supplies.get_items = ambica_finance.hsn_wise_summary_of_outward_supplies.get_items
+india_compliance.gst_india.report.hsn_wise_summary_of_outward_supplies.hsn_wise_summary_of_outward_supplies.get_hsn_data = ambica_finance.hsn_wise_summary_of_outward_supplies.get_hsn_data

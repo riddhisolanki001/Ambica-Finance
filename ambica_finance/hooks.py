@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ambica_finance/css/ambica_finance.css"
-# app_include_js = "/assets/ambica_finance/public/js/hsn_wise_inward.js"
+# app_include_js = "/assets/ambica_finance/js/delete.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/ambica_finance/css/ambica_finance.css"
@@ -28,10 +28,8 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {
-    "Supplier" : "public/js/supplier_custom.js",
-    "EPC PCFC Entry" : "public/js/EPC.js"
-              }
+doctype_js = {"Supplier" : "public/js/supplier_custom.js","EPC PCFC Entry" : "public/js/EPC.js","Payment Entry":"/public/js/payment_entery.js","Journal Entry":"/public/js/journal_entery.js","Sales Invoice":"/public/js/sales_invoice.js","Purchase Invoice":"/public/js/purchase_invoice.js"}
+
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
