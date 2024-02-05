@@ -10,7 +10,9 @@ frappe.ui.form.on("TDS deduction selection", {
         frappe.call({
             method: "ambica_finance.ambica_finance.doctype.tds_deduction_selection.tds_deduction_selection.Tdsdeductionselection",
             args:{
-                'category':frm.doc.category
+                'category':frm.doc.category,
+                'from_date':frm.doc.from_date,
+                'to_date':frm.doc.to_date
             },
             callback:function(r){
                 console.log(r.message)
@@ -32,6 +34,8 @@ frappe.ui.form.on("TDS deduction selection", {
 
                 // Refresh the child table
                 frm.refresh_field('tds_deduction');
+
+
             }
         });
     }
