@@ -1,0 +1,21 @@
+{
+ "content": null,
+ "creation": "2024-01-31 17:58:42.142495",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "",
+ "idx": 0,
+ "modified": "2024-01-31 17:58:42.142495",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "modification-log-rep",
+ "owner": "Administrator",
+ "page_name": "modification-log-rep",
+ "restrict_to_domain": "Manufacturing",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Modification Log Report"
+}
