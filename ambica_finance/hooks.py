@@ -28,7 +28,8 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Supplier" : "public/js/supplier_custom.js","Payment Entry":"/public/js/payment_entery.js","Journal Entry":"/public/js/journal_entery.js","Sales Invoice":"/public/js/sales_invoice.js","Purchase Invoice":"/public/js/purchase_invoice.js"}
+doctype_js = {"Supplier" : "public/js/supplier_custom.js","EPC PCFC Entry" : "public/js/EPC.js","Payment Entry":"/public/js/payment_entery.js","Journal Entry":"/public/js/journal_entery.js","Sales Invoice":"/public/js/sales_invoice.js","Purchase Invoice":"/public/js/purchase_invoice.js"}
+
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -264,7 +265,30 @@ fixtures=[
             ]
         ]
     ]},
-    
+        {
+        "dt": "Workflow",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Purchase Invoice Workflow",
+                ],
+            ]
+        ],
+    },
+    {
+        "dt": "Workflow State",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Draft",
+                ],
+            ]
+        ],
+    },
     
     
         
