@@ -4,6 +4,7 @@
   "doctype": "Workflow",
   "document_type": "Purchase Invoice",
   "is_active": 1,
+
   "modified": "2024-01-31 10:49:16.698079",
   "name": "Purchase Invoice Workflow",
   "override_status": 1,
@@ -35,6 +36,7 @@
     "parentfield": "states",
     "parenttype": "Workflow",
     "state": "Approved",
+
     "update_field": "workflow_state",
     "update_value": "Approved",
     "workflow_builder_id": null

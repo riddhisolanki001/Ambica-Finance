@@ -1,13 +1,40 @@
-frappe.ui.form.on('Sales Invoice', {
+frappe.ui.form.on("Sales Invoice", {
+    before_save: function(frm) {
+        if (!frm.is_new() && !localStorage.getItem('values')) {
+            frappe.prompt([
+                {
+                    fieldtype: 'Data',
+                    label: __('Audit Log Remark'),
+                    fieldname: 'user_input',
+                    reqd: true
+                }
+            ], function(values){
+                localStorage.setItem('values', values.user_input);
+                frm.save();
+            }, ('What is the reason for this modification?'), ('Submit'));
+            if (!localStorage.getItem('values')) {
+                frappe.validated = false;
+            }
+        }
+    },
+    after_save: function(frm) {
+        frappe.call({
+            method: "ambica_finance.public.py.version.version_remark",
+            args: {"remark": localStorage.getItem('values')},
+            callback: function() {
+                localStorage.removeItem('values');
+            }
+        });
+    },
     refresh: function (frm) {
         cur_frm.add_custom_button(__('Delete'), function () {
             let title = cur_frm.doc.name;
             let doctype = cur_frm.doctype;
-            var dr_acocunt_name = cur_frm.doc.debit_to;
-            var cr_acocunt_name = ""
+            var dr_account_name = cur_frm.doc.debit_to;
+            var cr_account_name = "";
             frm.doc.items.forEach(function(child2) {
                 if (child2.income_account) {
-                    cr_acocunt_name = child2.income_account;
+                    cr_account_name = child2.income_account;
                 }
             });
             if (cur_frm.doc.docstatus == 1) {
@@ -30,7 +57,6 @@ frappe.ui.form.on('Sales Invoice', {
                                 remark: values.remark
                             },
                             callback: function (r, rt) {
-
                                 frappe.call({
                                     method: "ambica_finance.delete_doc.add_to_deleted_document",
                                     args: {
@@ -38,24 +64,22 @@ frappe.ui.form.on('Sales Invoice', {
                                         name: title,
                                         remark: values.remark,
                                         custom_owner: cur_frm.doc.owner,
-                                        dr_acocunt_name: dr_acocunt_name,
-                                        cr_acocunt_name:cr_acocunt_name,
-                                        creation:cur_frm.doc.creation,
-                                        voucher_date:cur_frm.doc.posting_date,
-                                        dr_amount:cur_frm.doc.grand_total,
-                                        cr_amount:cur_frm.doc.grand_total
+                                        dr_account_name: dr_account_name,
+                                        cr_account_name: cr_account_name,
+                                        creation: cur_frm.doc.creation,
+                                        voucher_date: cur_frm.doc.posting_date,
+                                        dr_amount: cur_frm.doc.grand_total,
+                                        cr_amount: cur_frm.doc.grand_total
                                     },
                                     callback: function (r) {
                                         frappe.set_route("List", doctype);
                                     }
                                 })
-
                             },
                         });
                     });
                 }, __("Enter Reason"));
             }
-
         });
     }
-})
+});

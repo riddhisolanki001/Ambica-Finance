@@ -1,6 +1,22 @@
 [
  {
   "default_value": null,
+  "doc_type": "Party Type",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "account_type",
+  "is_system_generated": 0,
+  "modified": "2024-01-29 17:11:54.153849",
+  "module": "Ambica Finance",
+  "name": "Party Type-account_type-options",
+  "property": "options",
+  "property_type": "Select",
+  "row_name": null,
+  "value": "Payable\nReceivable\nPayable/Receivable"
+ },
+ {
+  "default_value": null,
   "doc_type": "Payment Term",
   "docstatus": 0,
   "doctype": "Property Setter",

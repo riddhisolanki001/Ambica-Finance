@@ -28,7 +28,19 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Supplier" : "public/js/supplier_custom.js","EPC PCFC Entry" : "public/js/EPC.js","Payment Entry":"/public/js/payment_entery.js","Journal Entry":"/public/js/journal_entery.js","Sales Invoice":"/public/js/sales_invoice.js","Purchase Invoice":"/public/js/purchase_invoice.js"}
+doctype_js = {
+    "Bank Account": "/public/js/bank_account.js",
+    "Journel Entry": "/public/js/journel_entry.js",
+    "Payment Entry": "/public/js/payment_entry.js",
+    "Purchase Invoice": "/public/js/purchase_invoice.js",
+    "Purchase Order": "/public/js/purchase_order.js",
+    "Purchase Receipt": "/public/js/purchase_receipt.js",
+    "Request for Quotation": "/public/js/request_for_quotation.js",
+    "Sales Invoice": "/public/js/sales_invoice.js",
+    "Sales Order": "/public/js/sales_order.js",
+    "Supplier": "/public/js/supplier_custom.js",
+    "Supplier Quotation": "/public/js/supplier_quotation.js",
+}
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -114,9 +126,9 @@ doctype_js = {"Supplier" : "public/js/supplier_custom.js","EPC PCFC Entry" : "pu
 # DocType Class
 # ---------------
 # Override standard doctype classes
-override_doctype_class = {
-	"Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice"
-}
+# override_doctype_class = {
+# 	"Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice"
+# }
 # Document Events
 # ---------------
 # Hook on document methods and events
@@ -218,53 +230,50 @@ override_doctype_class = {
 # auth_hooks = [
 #	"ambica_finance.auth.validate"
 # ]
-fixtures=[
-    "Custom DocPerm",   
-    
-    {"dt":"Report","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+fixtures = [
+    "Custom DocPerm",
+    {"dt": "Report", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Property Setter", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Client Script", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Server Script", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Custom Field", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {
+        "dt": "Workspace",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Ambika Accounts",
+                ],
             ]
-        ]
-    ]},
-    
-    {"dt":"Property Setter","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+        ],
+    },
+    {
+        "dt": "Role",
+        "filters": [
+            [
+                "role_name",
+                "in",
+                [
+                    "Finance Approver"
+                ],
             ]
-        ]
-    ]},
-    {"dt":"Client Script","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+        ],
+    },
+    {
+        "dt": "Workflow",
+        "filters": [
+            [
+                "workflow_name",
+                "in",
+                [
+                    "Purchase Invoice Workflow"
+                ],
             ]
-        ]
-    ]},
-    {"dt":"Server Script","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
-            ]
-        ]
-    ]},
-    {"dt":"Custom Field","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
-            ]
-        ]
-    ]},
-     {"dt":"Workspace","filters":[
-        [
-            "name","in",[
-               "Ambika Accounts",
-               
-            ]
-        ]
-    ]},
+
+        ],
+    },
         {
         "dt": "Workflow",
         "filters": [
@@ -292,4 +301,6 @@ fixtures=[
     
     
         
+
 ]
+on_session_creation = f"{app_name}.after_login_script.execute"
