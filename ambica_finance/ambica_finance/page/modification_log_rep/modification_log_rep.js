@@ -76,8 +76,9 @@ frappe.pages['modification-log-rep'].on_page_load = function(wrapper) {
 			let records = response.message;
 			for (let record of records){
 				record.data = JSON.parse(record.data);
-				console.log(record.data)
-				
+				for (let aded of record.data.added){	
+					aded[1] = JSON.stringify(aded[1]);
+				}
 			}
 			company = frappe.defaults.get_user_default("Company")
 			$(frappe.render_template("modification_log_rep", { company, records})).appendTo(page.body);

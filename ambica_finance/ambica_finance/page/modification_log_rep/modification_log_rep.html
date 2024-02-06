@@ -47,7 +47,7 @@
             <tbody>
                 {% counter = 0 %}
                 {% for record in records %}
-                    <!-- {% for idx in record.data.changed %}
+                    {% for idx in record.data.changed %}
                         {% counter += 1 %}
                         <tr>
                             <td>{{ counter }}</td>
@@ -65,44 +65,42 @@
                             <td>{{record.modified_by}}</td>
                             <td>{{record.ref_doctype}}</td>
                         </tr>
-                    {% endfor %} -->
+                    {% endfor %}
                     {% for idx in record.data.row_changed %}
-                        {% counter += 1 %}
-                        <tr>
-                            <td>{{ counter }}</td>
-                            <td>{{record.name}}</td>
-                            <td>{{record.voucher_date}}</td>
-                            <td style="max-width: 130px;">{{record.po_c}}{{record.so_c}}{{record.pe_c}}{{record.ge_c}}{{record.pi_c}}{{record.si_c}}</td>
-                            <td style="max-width: 130px;">{{record.modified}}</td>
-                            <td style="max-width: 80px;">{{record.module}}</td>
-                            <td>row_changed</td>
-                            <td>{{idx[0]}}</td>
-                            <td>{{idx[1]}}</td>
-                            <td>{{idx[2]}}</td>
-                            <td>{{record.custom_audit_log_remark}}</td>
-                            <td>{{record.po_o}}{{record.so_o}}{{record.pe_o}}{{record.ge_o}}{{record.pi_o}}{{record.si_o}}</td>
-                            <td>{{record.modified_by}}</td>
-                            <td>{{record.ref_doctype}}</td>
-                        </tr>
+                            {% counter += 1 %}
+                            <tr>
+                                <td>{{ counter }}</td>
+                                <td>{{record.name}}</td>
+                                <td>{{record.voucher_date}}</td>
+                                <td style="max-width: 130px;">{{record.po_c}}{{record.so_c}}{{record.pe_c}}{{record.ge_c}}{{record.pi_c}}{{record.si_c}}</td>
+                                <td style="max-width: 130px;">{{record.modified}}</td>
+                                <td style="max-width: 80px;">{{record.module}}</td>
+                                <td>Row Changed</td>
+                                <td>{{idx[0]}}</td>
+                                <td colspan="2">{{idx[3]}}</td>
+                                <td>{{record.custom_audit_log_remark}}</td>
+                                <td>{{record.po_o}}{{record.so_o}}{{record.pe_o}}{{record.ge_o}}{{record.pi_o}}{{record.si_o}}</td>
+                                <td>{{record.modified_by}}</td>
+                                <td>{{record.ref_doctype}}</td>
+                            </tr>
                     {% endfor %}
                     {% for idx in record.data.added %}
-                        {% counter += 1 %}
-                        <tr>
-                            <td>{{ counter }}</td>
-                            <td>{{record.name}}</td>
-                            <td>{{record.voucher_date}}</td>
-                            <td style="max-width: 130px;">{{record.po_c}}{{record.so_c}}{{record.pe_c}}{{record.ge_c}}{{record.pi_c}}{{record.si_c}}</td>
-                            <td style="max-width: 130px;">{{record.modified}}</td>
-                            <td style="max-width: 80px;">{{record.module}}</td>
-                            <td>added</td>
-                            <td>{{idx[0]}}</td>
-                            <td>{{idx[1][0]}}</td>
-                            <td>{{idx[1][1]}}</td>
-                            <td>{{record.custom_audit_log_remark}}</td>
-                            <td>{{record.po_o}}{{record.so_o}}{{record.pe_o}}{{record.ge_o}}{{record.pi_o}}{{record.si_o}}</td>
-                            <td>{{record.modified_by}}</td>
-                            <td>{{record.ref_doctype}}</td>
-                        </tr>
+                            {% counter += 1 %}
+                            <tr>
+                                <td>{{ counter }}</td>
+                                <td>{{record.name}}</td>
+                                <td>{{record.voucher_date}}</td>
+                                <td style="max-width: 130px;">{{record.po_c}}{{record.so_c}}{{record.pe_c}}{{record.ge_c}}{{record.pi_c}}{{record.si_c}}</td>
+                                <td style="max-width: 130px;">{{record.modified}}</td>
+                                <td style="max-width: 80px;">{{record.module}}</td>
+                                <td>Added</td>
+                                <td>{{idx[0]}}</td>
+                                <td colspan="2">{{idx[1]}}</td>
+                                <td>{{record.custom_audit_log_remark}}</td>
+                                <td>{{record.po_o}}{{record.so_o}}{{record.pe_o}}{{record.ge_o}}{{record.pi_o}}{{record.si_o}}</td>
+                                <td>{{record.modified_by}}</td>
+                                <td>{{record.ref_doctype}}</td>
+                            </tr>
                     {% endfor %}
                 {% endfor %}
             </tbody>
