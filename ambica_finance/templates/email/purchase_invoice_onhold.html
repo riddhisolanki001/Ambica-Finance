@@ -1,0 +1,19 @@
+<p style="color: black;">Dear {{ owner_username }},</p>
+
+<p style="color: black;">We Wish to inform you that your Purchase Invoice ({{ doc.name }}) has been temporarily placed ON HOLD for the following reason. Kindly Take the Required Action</p>
+
+<p style="color: black;">Reason:</p>
+<ul>
+    <li style="color: black; font-weight: bold;">{{ doc.hold_comment }}</li>
+</ul>
+
+<p style="color: black;">To view the Purchase Invoice and address the situation promptly, please click the link below:</p>
+<br>
+<a href="{{ frappe.utils.get_url_to_form('Purchase Invoice', doc.name) }}" target="_blank" style="padding: 10px; background-color: black; color: white; text-decoration: none; display: inline-block;">View Purchase Invoice</a>
+<br>
+<br>
+<p style="color: black;">Thank you for your immediate attention to this matter. Should you have any questions or require further assistance, feel free to reach out.</p>
+<br>
+
+<p style="color: black;">Best Regards,</p>
+<p style="color: black;"> {{ username }} </p>

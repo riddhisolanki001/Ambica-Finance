@@ -367,7 +367,8 @@
   ]
  },
  {
-  "add_total_row": 1,
+
+  "add_total_row": 0,
   "columns": [],
   "disabled": 0,
   "docstatus": 0,
@@ -377,25 +378,26 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2024-01-31 13:05:40.707729",
+  "modified": "2024-01-29 14:06:46.568614",
   "module": "Ambica Finance",
-  "name": "HSN-wise-summary of outward supplies Custom",
+  "name": "Fund Transfer",
   "prepared_report": 0,
   "query": null,
-  "ref_doctype": "Sales Invoice",
+  "ref_doctype": "Payment Entry",
   "reference_report": null,
-  "report_name": "HSN-wise-summary of outward supplies Custom",
+  "report_name": "Fund Transfer",
   "report_script": null,
   "report_type": "Script Report",
   "roles": [
    {
+
     "parent": "HSN-wise-summary of outward supplies Custom",
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Accounts Manager"
    },
    {
-    "parent": "HSN-wise-summary of outward supplies Custom",
+    "parent": "Fund Transfer",
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Accounts User"
@@ -461,10 +463,10 @@
   "report_type": "Query Report",
   "roles": [
    {
-    "parent": "Bill Purchase Register Report",
+    "parent": "Fund Transfer",
     "parentfield": "roles",
     "parenttype": "Report",
-    "role": "System Manager"
+    "role": "Accounts Manager"
    }
   ]
  }

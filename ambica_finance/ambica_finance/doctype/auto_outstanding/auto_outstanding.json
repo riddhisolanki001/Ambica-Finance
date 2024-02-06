@@ -6,7 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_htvm",
-  "bank_income",
+  "bank_name",
   "column_break_af8r",
   "due_date",
   "column_break_s8h8",
@@ -81,7 +81,7 @@
    "options": "Outstanding Child"
   },
   {
-   "fieldname": "bank_income",
+   "fieldname": "bank_name",
    "fieldtype": "Link",
    "label": "Bank Name",
    "options": "Account"
@@ -90,7 +90,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-12-28 11:51:37.674973",
+ "modified": "2024-01-29 17:12:56.476593",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "Auto Outstanding",

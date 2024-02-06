@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ambica_finance/css/ambica_finance.css"
-# app_include_js = "/assets/ambica_finance/public/js/hsn_wise_inward.js"
+# app_include_js = "/assets/ambica_finance/js/delete.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/ambica_finance/css/ambica_finance.css"
@@ -41,6 +41,7 @@ doctype_js = {
     "Supplier": "/public/js/supplier_custom.js",
     "Supplier Quotation": "/public/js/supplier_quotation.js",
 }
+
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -270,7 +271,36 @@ fixtures = [
                     "Purchase Invoice Workflow"
                 ],
             ]
+
         ],
     },
+        {
+        "dt": "Workflow",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Purchase Invoice Workflow",
+                ],
+            ]
+        ],
+    },
+    {
+        "dt": "Workflow State",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Draft",
+                ],
+            ]
+        ],
+    },
+    
+    
+        
+
 ]
 on_session_creation = f"{app_name}.after_login_script.execute"

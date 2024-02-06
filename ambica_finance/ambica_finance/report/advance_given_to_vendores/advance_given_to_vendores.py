@@ -1,4 +1,3 @@
-
 # Copyright (c) 2023, riddhi and contributors
 # For license information, please see license.txt
 
@@ -35,7 +34,7 @@ def execute(filters=None):
         },
         {
             "fieldname": "tentative_date",
-            "fieldtype": "Date",
+            "fieldtype": "Data",
             "label": "Tentative Date",
         },
         {
@@ -46,7 +45,7 @@ def execute(filters=None):
     ]
 
     sql = """
-       SELECT 
+        SELECT 
             pe.party_name,
             pe.name,
             pe.posting_date,
@@ -57,7 +56,7 @@ def execute(filters=None):
                 WHEN per.reference_doctype = 'Purchase Order' THEN
                     (SELECT so.schedule_date FROM `tabPurchase Order` so WHERE so.name = per.reference_name)
                 ELSE
-                    pe.reference_date
+                    NULL
             END as tentative_date,
             pe.remarks
         FROM 
@@ -68,8 +67,7 @@ def execute(filters=None):
             `tabDocType` as dt ON dt.name = per.reference_doctype
         WHERE
             pe.payment_type = "Pay" and pe.party_type = "Supplier"
-            
-        """
+    """
 
     conditions = []
 
