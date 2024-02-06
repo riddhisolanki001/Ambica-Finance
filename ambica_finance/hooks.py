@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ambica_finance/css/ambica_finance.css"
-# app_include_js = "/assets/ambica_finance/js/delete.js"
+# app_include_js = "/assets/ambica_finance/js/payment_entery.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/ambica_finance/css/ambica_finance.css"
@@ -256,7 +256,7 @@ fixtures = [
                 "role_name",
                 "in",
                 [
-                    "Finance Approver"
+                    "Finance Approver","Office User","Store User"
                 ],
             ]
         ],
@@ -268,22 +268,10 @@ fixtures = [
                 "workflow_name",
                 "in",
                 [
-                    "Purchase Invoice Workflow"
+                    "Purchase Invoice"
                 ],
             ]
 
-        ],
-    },
-        {
-        "dt": "Workflow",
-        "filters": [
-            [
-                "name",
-                "in",
-                [
-                "Purchase Invoice Workflow",
-                ],
-            ]
         ],
     },
     {
