@@ -1,14 +1,15 @@
-# Copyright (c) 2023, Riddhi and contributors
+# Copyright (c) 2024, riddhi and contributors
 # For license information, please see license.txt
 
 import frappe
 import json
-from frappe.model.document import Document
 import locale
+from frappe.model.document import Document
 
 
-class AutoOutstanding(Document):
+class AutoOutstandings(Document):
 	pass
+
 
 @frappe.whitelist()
 def get_msme_invoices(bank_name,due_date):

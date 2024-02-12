@@ -1,8 +1,8 @@
 // Copyright (c) 2023, riddhi and contributors
 // For license information, please see license.txt
-
+var symbol = "0";
+var TOTAL = 0
 frappe.ui.form.on('Bill Purchase', {
-
     treasury_bill: function(frm) {
         calculateNetInterest(frm);
     },
@@ -26,7 +26,7 @@ frappe.ui.form.on('Bill Purchase', {
                             doctype: "Sales Invoice",
                             target: frm,
                             setters: {
-                                status: 'Unpaid'
+                                status: 'Overdue'
                             },
                             get_query() {
                                 return {
@@ -47,7 +47,11 @@ frappe.ui.form.on('Bill Purchase', {
                                         row.invoice_date = invoice.posting_date;
                                         row.invoice_due_date = invoice.due_date;
                                         row.exchange_rate = invoice.conversion_rate;
-                                        row.grand_total = invoice.grand_total;
+                                        row.grand_total = invoice.total;
+                                        symbol = invoice.symbol
+                                        TOTAL += invoice.grand_total
+                                        console.log(symbol)
+                                        console.log(TOTAL+ "<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>")
                                     }
                                 });
                             
@@ -64,15 +68,19 @@ frappe.ui.form.on('Bill Purchase', {
 
     before_save: function(frm) {
         // Calculate sum of grand_total from table_vnvs
-        var totalAmount = frm.doc.table_vnvs.reduce(function(sum, row) {
-            return sum + (row.grand_total || 0);
-        }, 0);
+        // var totalAmount = frm.doc.table_vnvs.reduce(function(sum, row) {
+        //     // console.log(symbol + "__________________________")
+        //     // totality =  sum + (row.grand_total);
+        //     // console.log(totality)
+        //     return sum + (row.grand_total || 0);
+        // }, 0);
 
         // Set the calculated total amount in the 'amount' field
+        totalAmount = symbol + " " + TOTAL;
         frm.doc.amount = totalAmount;
-
         // Refresh the 'amount' field
         frm.refresh_field('amount');
+        TOTAL = 0;
     },
 
     on_submit: function(frm) {

@@ -3,7 +3,6 @@ import frappe
 from frappe import _
 
 def execute():
-    # Your script logic here
     party_type = frappe.get_doc({"doctype":"Party Type", "party_type": "Customer-Supplier", "account_type": "Payable/Receivable"})
     party_type.insert(
         ignore_permissions=True, # ignore write permissions during insert

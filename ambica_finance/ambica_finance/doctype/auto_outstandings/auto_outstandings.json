@@ -1,32 +1,34 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-12-25 13:44:56.175599",
+ "autoname": "format: {DD}-{MM}-{YY}-{####}",
+ "creation": "2024-02-07 18:24:58.894459",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_htvm",
   "bank_name",
-  "column_break_af8r",
+  "column_break_qzho",
   "due_date",
-  "column_break_s8h8",
+  "column_break_yqhp",
   "payment_date",
-  "section_break_znip",
+  "section_break_hdmo",
   "not_due",
-  "column_break_lvsz",
+  "column_break_iniq",
   "get_invoices",
-  "column_break_b9pf",
+  "column_break_quju",
   "msme",
-  "section_break_qxps",
+  "section_break_wvjh",
   "outstandings"
  ],
  "fields": [
   {
-   "fieldname": "section_break_htvm",
-   "fieldtype": "Section Break"
+   "fieldname": "bank_name",
+   "fieldtype": "Link",
+   "label": "Bank Name",
+   "options": "Account"
   },
   {
-   "fieldname": "column_break_af8r",
+   "fieldname": "column_break_qzho",
    "fieldtype": "Column Break"
   },
   {
@@ -35,7 +37,7 @@
    "label": "Due Date"
   },
   {
-   "fieldname": "column_break_s8h8",
+   "fieldname": "column_break_yqhp",
    "fieldtype": "Column Break"
   },
   {
@@ -44,7 +46,7 @@
    "label": "Payment Date"
   },
   {
-   "fieldname": "section_break_znip",
+   "fieldname": "section_break_hdmo",
    "fieldtype": "Section Break"
   },
   {
@@ -53,7 +55,7 @@
    "label": "Not Due"
   },
   {
-   "fieldname": "column_break_lvsz",
+   "fieldname": "column_break_iniq",
    "fieldtype": "Column Break"
   },
   {
@@ -62,7 +64,7 @@
    "label": "Get Invoices"
   },
   {
-   "fieldname": "column_break_b9pf",
+   "fieldname": "column_break_quju",
    "fieldtype": "Column Break"
   },
   {
@@ -72,36 +74,32 @@
    "label": "MSME"
   },
   {
-   "fieldname": "section_break_qxps",
+   "fieldname": "section_break_wvjh",
    "fieldtype": "Section Break"
   },
   {
    "fieldname": "outstandings",
    "fieldtype": "Table",
    "options": "Outstanding Child"
-  },
-  {
-   "fieldname": "bank_name",
-   "fieldtype": "Link",
-   "label": "Bank Name",
-   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
- "issingle": 1,
  "links": [],
- "modified": "2024-01-29 17:12:56.476593",
+ "modified": "2024-02-08 10:52:53.522214",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
- "name": "Auto Outstanding",
+ "name": "Auto Outstandings",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
    "email": 1,
+   "export": 1,
    "print": 1,
    "read": 1,
+   "report": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1

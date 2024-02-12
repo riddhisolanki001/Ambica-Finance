@@ -2,7 +2,7 @@ frappe.ui.form.on('Payment Entry', {
 	party_type(frm) {
         if (frm.doc.party_type == "Supplier") {
             frappe.call({
-                method: "ambica_finance.public.py.block_supplier.block_supplier",
+                method: "ambica_finance.backend_code.block_supplier.block_supplier",
                 args: {
                     all: 'All',
                     other: 'Payments'
@@ -23,27 +23,48 @@ frappe.ui.form.on('Payment Entry', {
             frm.set_query("party", null);
         }
 	},
-    before_save: function(frm) {
-        if  (! frm.is_new() && !localStorage.getItem('values')) {
-            frappe.prompt([
-                {
-                    fieldtype: 'Data',
-                    label: __('Audit Log Remark'),
-                    fieldname: 'user_input',
-                    reqd: true
-                }
-            ], function(values){
-                localStorage.setItem('values', values.user_input);
-                frm.save();
-            }, __('What is the reason for this modification?'), __('Submit'));
-            if  (!localStorage.getItem('values')) {
-                frappe.validated = false;
-            }
-        }
-    },
+    // before_save: function(frm) {
+    //     if  (! frm.is_new() && !localStorage.getItem('values') && frm.is_dirty()) {
+    //         frappe.prompt([
+    //             {
+    //                 fieldtype: 'Data',
+    //                 label: __('Audit Log Remark'),
+    //                 fieldname: 'user_input',
+    //                 reqd: true
+    //             }
+    //         ], function(values){
+    //             localStorage.setItem('values', values.user_input);
+    //             frm.save();
+    //         }, __('What is the reason for this modification?'), __('Submit'));
+    //         if  (!localStorage.getItem('values')) {
+    //             frappe.validated = false;
+    //         }
+    //     }
+    // },
+
+	before_save: function(frm) {
+			console.log(frm.doc.references);
+			console.log(frm.doc.references.length);
+			if (frm.doc.references.length == 0) {
+				console.log("Hola amigos");
+				console.log(frm.doc.remarks,">>>>>>>>>>>>>>>>>>")
+				frm.set_value('custom_remarks', 1);
+				frm.refresh_field('custom_remarks');
+				if(frm.doc.remarks == 'undefined'){
+					frappe.validated = false;
+				}
+				frappe.validated = true;	
+			}
+			if (frm.doc.references.length != 0) {
+				console.log("Hola amigos");
+				frm.set_value('custom_remarks', 0);
+				frm.refresh_field('custom_remarks');
+			}
+		},
+	
     after_save: function(frm) {
         frappe.call ({
-            method: "ambica_finance.public.py.version.version_remark",
+            method: "ambica_finance.backend_code.version.version_remark",
             args: {"remark":  localStorage.getItem('values')},
             callback: function() {
                 localStorage.removeItem('values');

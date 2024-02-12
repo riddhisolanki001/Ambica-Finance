@@ -1,9 +1,9 @@
-# Copyright (c) 2023, riddhi and Contributors
+# Copyright (c) 2024, riddhi and Contributors
 # See license.txt
 
 # import frappe
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestTDSdeductionselection(FrappeTestCase):
+class TestTDSDeductionSelection(FrappeTestCase):
 	pass

@@ -1,6 +1,6 @@
 frappe.ui.form.on("Sales Invoice", {
     before_save: function(frm) {
-        if (!frm.is_new() && !localStorage.getItem('values')) {
+        if (!frm.is_new() && !localStorage.getItem('values') && frm.is_dirty()) {
             frappe.prompt([
                 {
                     fieldtype: 'Data',
@@ -19,8 +19,17 @@ frappe.ui.form.on("Sales Invoice", {
     },
     after_save: function(frm) {
         frappe.call({
-            method: "ambica_finance.public.py.version.version_remark",
+            method: "ambica_finance.backend_code.version.version_remark",
             args: {"remark": localStorage.getItem('values')},
+            callback: function() {
+                localStorage.removeItem('values');
+            }
+        });
+    },
+    on_submit:function(frm){
+        frappe.call({
+            method: "ambica_finance.backend_code.delete_not_approve_gl_entery.delete_entry",
+            args: {"name": cur_frm.doc.name},
             callback: function() {
                 localStorage.removeItem('values');
             }

@@ -1,0 +1,242 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-07 11:14:18.082492",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "transaction_date",
+  "account",
+  "party_type",
+  "party",
+  "cost_center",
+  "debit",
+  "credit",
+  "account_currency",
+  "debit_in_account_currency",
+  "credit_in_account_currency",
+  "against",
+  "against_voucher_type",
+  "against_voucher",
+  "voucher_type",
+  "voucher_subtype",
+  "voucher_no",
+  "project",
+  "remarks",
+  "is_opening",
+  "is_advance",
+  "fiscal_year",
+  "company",
+  "finance_book",
+  "to_rename",
+  "due_date",
+  "is_cancelled",
+  "transaction_currency",
+  "debit_in_transaction_currency",
+  "credit_in_transaction_currency",
+  "transaction_exchange_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "label": "Transaction Date"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "label": "Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "label": "Party Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "label": "Party",
+   "options": "party_type"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "debit",
+   "fieldtype": "Currency",
+   "label": "Debit Amount",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "credit",
+   "fieldtype": "Currency",
+   "label": "Credit Amount",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "account_currency",
+   "fieldtype": "Link",
+   "label": "Account Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "debit_in_account_currency",
+   "fieldtype": "Currency",
+   "label": "Debit Amount in Account Currency"
+  },
+  {
+   "fieldname": "credit_in_account_currency",
+   "fieldtype": "Currency",
+   "label": "Credit Amount in Account Currency"
+  },
+  {
+   "fieldname": "against",
+   "fieldtype": "Text",
+   "label": "Against"
+  },
+  {
+   "fieldname": "against_voucher_type",
+   "fieldtype": "Link",
+   "label": "Against Voucher Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "against_voucher",
+   "fieldtype": "Dynamic Link",
+   "label": "Against Voucher",
+   "options": "against_voucher_type"
+  },
+  {
+   "fieldname": "voucher_type",
+   "fieldtype": "Link",
+   "label": "Voucher Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "voucher_subtype",
+   "fieldtype": "Small Text",
+   "label": "Voucher Subtype"
+  },
+  {
+   "fieldname": "voucher_no",
+   "fieldtype": "Dynamic Link",
+   "label": "Voucher No",
+   "options": "voucher_type"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "is_opening",
+   "fieldtype": "Select",
+   "label": "Is Opening",
+   "options": "No\nYes"
+  },
+  {
+   "fieldname": "is_advance",
+   "fieldtype": "Select",
+   "label": "Is Advance",
+   "options": "No\nYes"
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "label": "Fiscal Year",
+   "options": "Fiscal Year"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "finance_book",
+   "fieldtype": "Link",
+   "label": "Finance Book",
+   "options": "Finance Book"
+  },
+  {
+   "default": "0",
+   "fieldname": "to_rename",
+   "fieldtype": "Check",
+   "label": "To Rename"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_cancelled",
+   "fieldtype": "Check",
+   "label": "Is Cancelled"
+  },
+  {
+   "fieldname": "transaction_currency",
+   "fieldtype": "Link",
+   "label": "Transaction Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "debit_in_transaction_currency",
+   "fieldtype": "Currency",
+   "label": "Debit Amount in Transaction Currency",
+   "options": "transaction_currency"
+  },
+  {
+   "fieldname": "credit_in_transaction_currency",
+   "fieldtype": "Currency",
+   "label": "Credit Amount in Transaction Currency"
+  },
+  {
+   "fieldname": "transaction_exchange_rate",
+   "fieldtype": "Float",
+   "label": "Transaction Exchange Rate"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-07 11:52:48.123949",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Not Approve GL Entery",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

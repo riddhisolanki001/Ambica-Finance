@@ -1,29 +1,28 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-11-28 12:29:06.228201",
- "default_view": "List",
+ "autoname": "format: {category_name}-{MM}-{####}",
+ "creation": "2024-02-07 17:34:45.404436",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "from_date",
   "category",
   "category_name",
-  "column_break_bsdq",
+  "column_break_llvz",
   "to_date",
   "retrive",
-  "section_break_j5of",
+  "tds_deduction_section",
   "tds_deduction",
-  "section_break_gnlq",
+  "tds_reference_section",
   "tds_reference",
   "total_base_amount",
   "total_tds_amount",
-  "challan_details_section",
+  "section_break_ttui",
   "challan_date",
   "bank_code",
   "interest",
-  "column_break_ievk",
+  "column_break_vcee",
   "challan_number",
   "others"
  ],
@@ -34,19 +33,7 @@
    "label": "From Date"
   },
   {
-   "fieldname": "category",
-   "fieldtype": "Link",
-   "label": "Category",
-   "options": "Tax Withholding Category"
-  },
-  {
-   "fetch_from": "category.category_name",
-   "fieldname": "category_name",
-   "fieldtype": "Data",
-   "label": "category_name"
-  },
-  {
-   "fieldname": "column_break_bsdq",
+   "fieldname": "column_break_llvz",
    "fieldtype": "Column Break"
   },
   {
@@ -55,30 +42,14 @@
    "label": "To Date"
   },
   {
-   "fieldname": "retrive",
-   "fieldtype": "Button",
-   "label": "Retrive",
-   "options": "tds_account"
-  },
-  {
-   "fieldname": "section_break_j5of",
+   "fieldname": "tds_deduction_section",
    "fieldtype": "Section Break",
    "label": "TDS Deduction"
   },
   {
-   "fieldname": "tds_deduction",
-   "fieldtype": "Table",
-   "options": "TDS Deduction"
-  },
-  {
-   "fieldname": "section_break_gnlq",
+   "fieldname": "tds_reference_section",
    "fieldtype": "Section Break",
    "label": "TDS Reference"
-  },
-  {
-   "fieldname": "tds_reference",
-   "fieldtype": "Table",
-   "options": "TDS Reference"
   },
   {
    "fieldname": "total_base_amount",
@@ -91,7 +62,7 @@
    "label": "Total TDS Amount"
   },
   {
-   "fieldname": "challan_details_section",
+   "fieldname": "section_break_ttui",
    "fieldtype": "Section Break",
    "label": "Challan Details"
   },
@@ -99,6 +70,24 @@
    "fieldname": "challan_date",
    "fieldtype": "Date",
    "label": "Challan Date"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "label": "Category",
+   "options": "Tax Withholding Category"
+  },
+  {
+   "fetch_from": "category.category_name",
+   "fieldname": "category_name",
+   "fieldtype": "Data",
+   "label": "Category Name"
+  },
+  {
+   "fieldname": "retrive",
+   "fieldtype": "Button",
+   "label": "Retrive",
+   "options": "tds_account"
   },
   {
    "fieldname": "bank_code",
@@ -111,35 +100,47 @@
    "label": "Interest"
   },
   {
-   "fieldname": "column_break_ievk",
+   "fieldname": "column_break_vcee",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "challan_number",
-   "fieldtype": "Currency",
+   "fieldtype": "Data",
    "label": "Challan Number"
   },
   {
    "fieldname": "others",
    "fieldtype": "Currency",
    "label": "Others"
+  },
+  {
+   "fieldname": "tds_deduction",
+   "fieldtype": "Table",
+   "options": "TDS Deduction"
+  },
+  {
+   "fieldname": "tds_reference",
+   "fieldtype": "Table",
+   "options": "TDS Reference"
   }
  ],
  "index_web_pages_for_search": 1,
- "issingle": 1,
  "links": [],
- "modified": "2023-12-25 18:23:36.190780",
+ "modified": "2024-02-09 11:02:42.442095",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
- "name": "TDS deduction selection",
+ "name": "TDS Deduction Selection",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
    "email": 1,
+   "export": 1,
    "print": 1,
    "read": 1,
+   "report": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1

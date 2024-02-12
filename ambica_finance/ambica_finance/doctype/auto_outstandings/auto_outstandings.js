@@ -1,4 +1,7 @@
-frappe.ui.form.on("Auto Outstanding", {
+// Copyright (c) 2024, riddhi and contributors
+// For license information, please see license.txt
+
+frappe.ui.form.on("Auto Outstandings", {
     refresh:function(frm) {
         set_css(frm)	
 
@@ -17,7 +20,7 @@ frappe.ui.form.on("Auto Outstanding", {
             console.log("shouldn't add msme when it's not selected")
         } else {
             frappe.call({
-                method: 'ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.get_msme_invoices',
+                method: 'ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.get_msme_invoices',
                 args: {
                     bank_name: frm.doc.bank_name,
                     due_date: frm.doc.due_date
@@ -47,7 +50,7 @@ frappe.ui.form.on("Auto Outstanding", {
 
     get_invoices: function(frm) {
         frappe.call({
-            method: 'ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.get_invoices',
+            method: 'ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.get_invoices',
             args: {
                 bank_name: frm.doc.bank_name,
                 due_date: frm.doc.due_date
@@ -72,7 +75,7 @@ frappe.ui.form.on("Auto Outstanding", {
 
     not_due: function (frm) {
         frappe.call({
-            method: "ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.get_not_due_invoices",
+            method: "ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.get_not_due_invoices",
             args: {
                 bank_name: frm.doc.bank_name,
                 due_date: frm.doc.due_date
@@ -144,7 +147,7 @@ frappe.ui.form.on('Outstanding Child', {
 
                 // Call server script to handle payment entry creation
                 frappe.call({
-                    method: 'ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.create_payment_entry',
+                    method: 'ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.create_payment_entry',
                     args: {
                         selected_rows: selected_rows,
                         bank_name: bank_name,
@@ -176,5 +179,3 @@ function set_css(frm){
 	document.querySelectorAll("[data-fieldname = 'not_due']")[1].style.color = 'white';
 
 }
-
-

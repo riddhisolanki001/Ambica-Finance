@@ -17,15 +17,40 @@ def get_sales_invoice_for_bill_purchase(customer):
             si.posting_date,
             si.due_date,
             si.conversion_rate,
-            si.grand_total
+            si.grand_total,
+            si.currency,
+            C.symbol
         FROM
             `tabSales Invoice` as si
+        INNER JOIN `tabCurrency` AS C ON C.name = si.currency
         WHERE 
-            si.currency != 'INR' AND si.customer=%s
+            si.currency != 'INR' and si.customer=%s
     """
+    invoices = frappe.db.sql(sql,customer, as_dict=True)
 
-    invoices = frappe.db.sql(sql, customer, as_dict=True)
-    return invoices
+    for invoice in invoices:
+        total = invoice.get('grand_total')
+        symbol = invoice.get('currency')
+        a = frappe.utils.fmt_money(total, currency=symbol)
+        invoice['total'] = a
+
+    return invoices 
+
+    # sql = """
+    #     SELECT 
+    #         si.name,
+    #         si.posting_date,
+    #         si.due_date,
+    #         si.conversion_rate,
+    #         si.grand_total
+    #     FROM
+    #         `tabSales Invoice` as si
+    #     WHERE 
+    #         si.currency != 'INR' AND si.customer=%s
+    # """
+
+    # invoices = frappe.db.sql(sql, customer, as_dict=True)
+    # return invoices
 
 
 @frappe.whitelist()

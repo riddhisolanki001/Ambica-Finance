@@ -40,6 +40,7 @@ doctype_js = {
     "Sales Order": "/public/js/sales_order.js",
     "Supplier": "/public/js/supplier_custom.js",
     "Supplier Quotation": "/public/js/supplier_quotation.js",
+    "Tax Withholding Category":"/public/js/tax_withholding_category.js"
 }
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
@@ -126,9 +127,10 @@ doctype_js = {
 # DocType Class
 # ---------------
 # Override standard doctype classes
-# override_doctype_class = {
-# 	"Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice"
-# }
+override_doctype_class = {
+	"Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice",
+    # "Sales Invoice": "ambica_finance.backend_code.sales_invoice.SalesInvoice"
+}
 # Document Events
 # ---------------
 # Hook on document methods and events
@@ -144,7 +146,13 @@ doctype_js = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
+     "change_date": {
+        "1 0 * * *": ["ambica_finance.backend_code.currency_exchange.change_date"]
+    },
+     "send_tenure_reminder": {
+        "0 10 * * *": ["ambica_finance.backend_code.tenure_reminder.send_tenure_reminder"]
+    },
 #	"all": [
 #		"ambica_finance.tasks.all"
 #	],
@@ -160,7 +168,7 @@ doctype_js = {
 #	"monthly": [
 #		"ambica_finance.tasks.monthly"
 #	],
-# }
+}
 
 # Testing
 # -------
@@ -291,4 +299,4 @@ fixtures = [
         
 
 ]
-on_session_creation = f"{app_name}.after_login_script.execute"
+on_session_creation = f"{app_name}.backend_code.after_login_script.execute"

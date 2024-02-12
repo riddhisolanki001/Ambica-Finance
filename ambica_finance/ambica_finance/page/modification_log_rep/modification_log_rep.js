@@ -1,5 +1,6 @@
 frappe.pages['modification-log-rep'].on_page_load = function(wrapper) {
-	var page = frappe.ui.make_app_page({
+	var page = frappe.ui.make_app_page({ 
+
 		parent: wrapper,
 		title: 'Modification Log Report',
 		single_column: true
@@ -20,16 +21,13 @@ frappe.pages['modification-log-rep'].on_page_load = function(wrapper) {
     
     function convert_date_format(date){
         var inputDate = new Date(date);
-        // Format the date using toLocaleDateString with the appropriate options
         var formattedDate = inputDate.toLocaleDateString('en-GB'); // 'en-GB' for dd/mm/yyyy format
         return formattedDate;
     }
 
-	// Apply filters from localStorage after reloading
 	function applyFiltersFromLocalStorage() {
 		fromDate = localStorage.getItem('fromDate');
 		toDate = localStorage.getItem('toDate');
-        // Set values in date fields if they exist
         if (page.fields_dict['from']) {
             page.fields_dict['from'].set_input(fromDate);
         }
@@ -40,10 +38,8 @@ frappe.pages['modification-log-rep'].on_page_load = function(wrapper) {
 	
 	fields.forEach(field => {
 		let filterField = page.add_field(field);
-		// Add an event listener for the "blur" event instead of "change"
 		filterField.$input.on('blur', function() {
 			var changing_value = filterField.get_value();
-			// The code inside this block will be executed when the date is selected
 			if (field.fieldname === 'from' && fromDate != changing_value && changing_value) {
 				localStorage.setItem('fromDate', changing_value);
 				if (toDate) {
@@ -81,7 +77,7 @@ frappe.pages['modification-log-rep'].on_page_load = function(wrapper) {
 				}
 			}
 			company = frappe.defaults.get_user_default("Company")
-			$(frappe.render_template("modification_log_rep", { company, records})).appendTo(page.body);
+			$(frappe.render_template("modification_log_rep", { company, records })).appendTo(page.body);
 		}
 	});
 }

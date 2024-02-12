@@ -1,7 +1,7 @@
 frappe.ui.form.on("Purchase Order", {
     refresh: function(frm) {
         frappe.call({
-            method: "ambica_finance.public.py.block_supplier.block_supplier",
+            method: "ambica_finance.backend_code.block_supplier.block_supplier",
             args: {
                 all: 'All',
                 other: 'Purchase Order'
@@ -19,7 +19,7 @@ frappe.ui.form.on("Purchase Order", {
         });
     },
     before_save: function(frm) {
-        if  (! frm.is_new() && !localStorage.getItem('values')) {
+        if  (! frm.is_new() && !localStorage.getItem('values') && frm.is_dirty()) {
             frappe.prompt([
                 {
                     fieldtype: 'Data',
@@ -38,7 +38,7 @@ frappe.ui.form.on("Purchase Order", {
     },
     after_save: function(frm) {
         frappe.call ({
-            method: "ambica_finance.public.py.version.version_remark",
+            method: "ambica_finance.backend_code.version.version_remark",
             args: {"remark":  localStorage.getItem('values')},
             callback: function() {
                 localStorage.removeItem('values');

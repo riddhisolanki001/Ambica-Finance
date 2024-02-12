@@ -179,5 +179,10 @@ frappe.ui.form.on("Supplier", {
         else{
             frm.set_value('custom_hold_type', "");
         }
+	},
+	validate:function(frm){
+		if (cur_frm.doc.custom_import == 0 && cur_frm.doc.pan == undefined){
+			frappe.throw("Please fill in at least one mandatory fields.")
+		}
 	}
 });

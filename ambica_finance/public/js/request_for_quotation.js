@@ -1,7 +1,7 @@
 frappe.ui.form.on('Request for Quotation', {
     refresh: function(frm) {
         frappe.call({
-            method: "ambica_finance.public.py.block_supplier.block_supplier",
+            method: "ambica_finance.backend_code.block_supplier.block_supplier",
             args: {
                 all: 'All',
                 other: 'All'
