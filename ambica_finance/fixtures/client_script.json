@@ -202,7 +202,7 @@
   "doctype": "Client Script",
   "dt": "Payment Entry",
   "enabled": 0,
-  "modified": "2024-01-31 12:38:10.533166",
+  "modified": "2024-02-12 15:36:35.983152",
   "module": "Ambica Finance",
   "name": "Payment entry epc dialogbox",
   "script": "frappe.ui.form.on('Payment Entry', {\n    refresh(frm) {\n        frm.add_custom_button(__('Get Items From EPC'), function() {\n            new frappe.ui.form.MultiSelectDialog({\n                doctype: \"EPC PCFC Entry\",\n                target: frm,\n                setters: {\n                    // schedule_date: null,\n                    // status: null\n                    bank_name: null,\n                    amount:null,\n                    date:null,\n                    due_date:null\n                },\n                size: 'large', \n                add_filters_group: 1,\n                date_field: \"date\",\n                // allow_child_item_selection: 1,\n                // child_fieldname: \"items\", // child table fieldname, whose records will be shown &amp; can be filtered\n                // child_columns: [\"item_code\", \"qty\"], // child item columns to be displayed\n                get_query() {\n                    return {\n                        // filters: { docstatus: ['!=', 2] }\n                    };\n                },\n                action(selections, args) {\n                    // console.log(args.filtered_children); // list of selected item names\n                }\n            });\n        });\n    }\n});\n",

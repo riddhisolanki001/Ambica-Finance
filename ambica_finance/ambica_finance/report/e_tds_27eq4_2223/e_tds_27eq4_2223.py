@@ -278,40 +278,42 @@ def get_data(filters):
         data = frappe.db.sql(sql,'TCS%',as_dict=True)
         return data
     elif filters.get("select") == "Deductee Details":
+        # category_pattern = frappe.get_list()
         sql = """
-			SELECT
-                ROW_NUMBER() OVER (ORDER BY TDS.name) AS "party_serial_no",
-                CASE WHEN @prev_tds_name != TDS.name THEN @challan_serial_ref := @challan_serial_ref + 1 ELSE @challan_serial_ref END AS "challan_serial_ref",
-                @prev_tds_name := TDS.name AS "tds_name",
-                C.custom_company_status AS "party_code",
-                C.pan AS "deducte_pan",
-                C.name AS "party_name",
-                TWC.custom_section AS "section_code",
-                TDS.challan_date AS "pay_credit_date",
-                "amount_paid",
-                (TDS.total_tds_amount+TDS.interest+TDS.others) AS "tcs",
-                "surcharge",
-                "education_cess",
-                (TDS.total_tds_amount+TDS.interest+TDS.others) AS "total_tax_collected",
-                (TDS.total_tds_amount+TDS.interest+TDS.others) AS "total_tax_deposited",
-                TWR.tax_withholding_rate AS "collection_rate"
-            FROM
-                (SELECT @prev_tds_name := NULL, @challan_serial_ref := 1) vars,
-                `tabTDS Deduction Selection` AS TDS
-            INNER JOIN 
-                `tabSales Invoice` AS SI 
+                SELECT
+                    ROW_NUMBER() OVER (ORDER BY TDS.name) AS "party_serial_no",
+                    CASE WHEN @prev_tds_name != TDS.name THEN @challan_serial_ref := @challan_serial_ref + 1 ELSE @challan_serial_ref END AS "challan_serial_ref",
+                    @prev_tds_name := TDS.name AS "tds_name",
+                    C.custom_company_status AS "party_code",
+                    C.pan AS "deducte_pan",
+                    C.name AS "party_name",
+                    TWC.custom_section AS "section_code",
+                    TDS.challan_date AS "pay_credit_date",
+                    "amount_paid",
+                    SIT.tax_amount AS "tcs",
+                    "surcharge",
+                    "education_cess",
+                    (TDS.total_tds_amount+TDS.interest+TDS.others) AS "total_tax_collected",
+                    (TDS.total_tds_amount+TDS.interest+TDS.others) AS "total_tax_deposited",
+                    SIT.rate AS "collection_rate"
+                FROM
+                    (SELECT @prev_tds_name := NULL, @challan_serial_ref := 1) vars,
+                    `tabTDS Deduction Selection` AS TDS
+                INNER JOIN 
+                    `tabSales Invoice` AS SI 
                 ON ((SI.posting_date BETWEEN TDS.from_date AND TDS.to_date) 
-                    AND (SI.custom_tax_withholding_category = TDS.category OR )) 
-            LEFT JOIN 
-                `tabCustomer` AS C 
-                ON C.name = SI.customer 
-            LEFT JOIN 
-                `tabTax Withholding Category` AS TWC 
-                ON TWC.name = TDS.category
-            LEFT JOIN 
-                `tabTax Withholding Rate` AS TWR 
-                ON TWR.parent = TWC.name
-
+                    AND (SI.custom_tax_withholding_category LIKE CONCAT(SUBSTRING_INDEX(TDS.category, ' - ', 3), '%'))) 
+                INNER JOIN
+                    `tabSales Taxes and Charges` AS SIT ON SIT.parent = SI.name
+                LEFT JOIN 
+                    `tabCustomer` AS C 
+                    ON C.name = SI.customer 
+                LEFT JOIN 
+                    `tabTax Withholding Category` AS TWC 
+                    ON TWC.name = TDS.category
+                LEFT JOIN 
+                    `tabTax Withholding Rate` AS TWR 
+                    ON TWR.parent = TWC.name
         """
         data = frappe.db.sql(sql,as_dict=True)
         return data

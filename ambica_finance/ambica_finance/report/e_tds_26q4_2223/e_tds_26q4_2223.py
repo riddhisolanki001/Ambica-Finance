@@ -300,7 +300,7 @@ def get_data(filters):
             INNER JOIN 
                 `tabPurchase Invoice` AS PI 
                 ON ((PI.posting_date BETWEEN TDS.from_date AND TDS.to_date) 
-                    AND PI.tax_withholding_category = TDS.category) 
+                    AND (PI.tax_withholding_category LIKE CONCAT (SUBSTRING_INDEX(TDS.category, ' - ',3), '%'))) 
             LEFT JOIN 
                 `tabSupplier` AS S 
                 ON S.name = PI.supplier 

@@ -36,5 +36,43 @@
   "reference_doctype": "Purchase Invoice",
   "script": "if doc.doctype == \"Purchase Invoice\" and doc.custom_effective_date and doc.hold_comment:\n    \n    owner_username = frappe.db.get_value(\"User\",doc.owner,\"username\")\n    username = frappe.db.get_value(\"User\",frappe.session.user,\"username\")\n    \n    frappe.sendmail(\n        recipients = doc.owner,\n        subject='Purchase Invoice On Hold',\n        template = 'purchase_invoice_onhold',\n        sender = frappe.frappe.session.user,\n        header=_(\"Purchase Invoice On Hold\"),\n        delayed=False,\n        args={'doc': doc, 'owner_username':owner_username,'username':username}\n    )\n",
   "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Insert",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2024-02-12 17:55:57.961813",
+  "module": "Ambica Finance",
+  "name": "Auto Account Entry for Supplier",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Supplier",
+  "script": "com = frappe.db.get_list('Company', pluck='name')\ndata = frappe.new_doc(\"Account\")\nrec = \"Accounts Payable\"\nfor i in range(len(com)):\n    if com[i] == doc.custom_company:\n        frappe.msgprint(com[i])\n        dt = frappe.db.sql(\"SELECT name FROM `tabAccount` WHERE name LIKE %s and company=%s\", ('%' + rec + '%', com[i]), as_dict=True)\n        data.company = doc.custom_company\n        data.account_name = doc.name\n        data.account_type = \"Payable\"\n        data.parent_account = dt[0][\"name\"]\n        data.save()",
+  "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Insert",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2024-02-12 15:32:40.923084",
+  "module": "Ambica Finance",
+  "name": "Auto Account Entry for Customer",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Customer",
+  "script": "com = frappe.db.get_list('Company', pluck='name')\ndata = frappe.new_doc(\"Account\")\nrec = \"Accounts Receivable\"\nfor i in range(len(com)):\n   \n    if com[i] == doc.custom_comapny:\n        frappe.msgprint(com[i])\n        dt = frappe.db.sql(\"SELECT name FROM `tabAccount` WHERE name LIKE %s and company=%s\", ('%' + rec + '%', com[i]), as_dict=True)\n        frappe.msgprint(str(dt))\n        data.company = doc.custom_comapny\n        data.account_name = doc.name\n        data.account_type = \"Receivable\"\n        data.parent_account = dt[0][\"name\"]\n        data.save()\n\n# Uncomment the line below to commit changes to the database\n# frappe.db.commit()\n",
+  "script_type": "DocType Event"
  }
 ]

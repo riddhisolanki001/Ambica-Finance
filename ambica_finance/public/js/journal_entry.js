@@ -88,4 +88,14 @@ frappe.ui.form.on('Journal Entry', {
             }
         });
     },
+    on_submit:function(frm){
+        alert("cfdnjgfn")
+        frappe.call({
+            method: "ambica_finance.backend_code.delete_not_approve_gl_entery.delete_entry",
+            args: {"name": cur_frm.doc.name},
+            callback: function() {
+                localStorage.removeItem('values');
+            }
+        });
+    },
 })

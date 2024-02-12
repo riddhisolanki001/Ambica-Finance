@@ -30,7 +30,7 @@ app_license = "mit"
 # include js in doctype views
 doctype_js = {
     "Bank Account": "/public/js/bank_account.js",
-    "Journel Entry": "/public/js/journel_entry.js",
+    "Journal Entry": "/public/js/journal_entry.js",
     "Payment Entry": "/public/js/payment_entry.js",
     "Purchase Invoice": "/public/js/purchase_invoice.js",
     "Purchase Order": "/public/js/purchase_order.js",
@@ -128,8 +128,11 @@ doctype_js = {
 # ---------------
 # Override standard doctype classes
 override_doctype_class = {
-	"Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice",
-    # "Sales Invoice": "ambica_finance.backend_code.sales_invoice.SalesInvoice"
+	# "Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice",
+    "Sales Invoice": "ambica_finance.backend_code.sales_invoice.SalesInvoice",
+    "Payment Entry": "ambica_finance.backend_code.payment_entry.PaymentEntry",
+    "Purchase Invoice": "ambica_finance.backend_code.purchase_invoice.PurchaseInvoice",
+    "Journal Entry":"ambica_finance.backend_code.journal_entry.JournalEntry",
 }
 # Document Events
 # ---------------

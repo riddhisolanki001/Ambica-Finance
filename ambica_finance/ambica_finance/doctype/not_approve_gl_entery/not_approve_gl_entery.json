@@ -62,9 +62,8 @@
   },
   {
    "fieldname": "party",
-   "fieldtype": "Dynamic Link",
-   "label": "Party",
-   "options": "party_type"
+   "fieldtype": "Data",
+   "label": "Party"
   },
   {
    "fieldname": "cost_center",
@@ -130,7 +129,7 @@
   },
   {
    "fieldname": "voucher_no",
-   "fieldtype": "Dynamic Link",
+   "fieldtype": "Data",
    "label": "Voucher No",
    "options": "voucher_type"
   },
@@ -217,7 +216,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-07 11:52:48.123949",
+ "modified": "2024-02-12 16:56:01.200048",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "Not Approve GL Entery",

@@ -104,7 +104,7 @@ frappe.ui.form.on("TDS Deduction Selection", {
                             }
                         });
                     }else{
-                        // Fetch list of purchase invoices with tax withholding category
+                        // Fetch list of Sales invoices with tax withholding category
                         frappe.call({
                             method: "frappe.client.get_list",
                             args: {

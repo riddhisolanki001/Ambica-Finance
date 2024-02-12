@@ -1173,8 +1173,9 @@ class SalesInvoice(SellingController):
 
 				self.make_exchange_gain_loss_journal()
 			elif self.docstatus == 2:
+				doc_status=self.docstatus
 				cancel_exchange_gain_loss_journal(frappe._dict(doctype=self.doctype, name=self.name))
-				make_reverse_gl_entries(voucher_type=self.doctype, voucher_no=self.name)
+				make_reverse_gl_entries(doc_status,voucher_type=self.doctype, voucher_no=self.name)
 
 			if update_outstanding == "No":
 				from erpnext.accounts.doctype.gl_entry.gl_entry import update_outstanding_amt
@@ -1188,7 +1189,8 @@ class SalesInvoice(SellingController):
 				)
 
 		elif self.docstatus == 2 and cint(self.update_stock) and cint(auto_accounting_for_stock):
-			make_reverse_gl_entries(voucher_type=self.doctype, voucher_no=self.name)
+			doc_status=self.docstatus
+			make_reverse_gl_entries(doc_status,voucher_type=self.doctype, voucher_no=self.name)
 
 	def get_gl_entries(self, warehouse_account=None):
 		from erpnext.accounts.general_ledger import merge_similar_entries

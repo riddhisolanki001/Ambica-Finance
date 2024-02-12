@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format: EPC-{#####}-{YY}",
  "creation": "2023-12-22 16:19:16.435553",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -13,6 +14,7 @@
   "subsequent",
   "spread",
   "interest",
+  "status",
   "column_break_nweb",
   "date",
   "due_date",
@@ -20,7 +22,8 @@
   "reference_number",
   "treasury_bill_",
   "month",
-  "finance_effect"
+  "finance_effect",
+  "amended_from"
  ],
  "fields": [
   {
@@ -105,14 +108,32 @@
    "fieldname": "finance_effect",
    "fieldtype": "Button",
    "label": "Finance Effect"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "EPC PCFC Entry",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nAdjusted\nUnadjusted\nCancelled"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2023-12-25 18:23:36.045988",
+ "modified": "2024-02-12 17:09:31.312888",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "EPC PCFC Entry",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -130,5 +151,18 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [
+  {
+   "color": "Orange",
+   "title": "Draft"
+  },
+  {
+   "color": "Green",
+   "title": "Adjusted"
+  },
+  {
+   "color": "Blue",
+   "title": "Un-Adjusted"
+  }
+ ]
 }

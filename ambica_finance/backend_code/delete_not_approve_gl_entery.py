@@ -5,7 +5,7 @@ def delete_entry(name):
     
     for i in range(len(data)):
         doc = frappe.get_doc("Not Approve GL Entery", data[i]["name"])
-        print("\n\n\n\n" , doc.docstatus,"\n",doc.name,"\n\n\n")
+        
         # Check if the document is in the "Submitted" status
         if doc.docstatus == 1:
             # Set the document status to "Cancelled"
@@ -15,8 +15,8 @@ def delete_entry(name):
             # frappe.db.commit()
             doc.cancel()
             
-           
-        
-            frappe.delete_doc("Not Approve GL Entery", data[i]["name"], ignore_missing=True)
+            print("\n\n\n\n" , doc.docstatus,"\n",doc.name,"\n\n\n")
+            # frappe.db.delete(doc_type, doc_name, ignore_missing=True)
+            frappe.db.delete("Not Approve GL Entery", data[i]["name"])
         
     
