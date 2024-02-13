@@ -65,15 +65,18 @@ def get_columns(filters):
 def get_data(filters):
 
 	sql = """
-		SELECT 
-            # ROW_NUMBER() OVER (ORDER BY EPC.name) AS "sr_no",
-			CASE WHEN @prev_epc_name != EPC.name THEN @sr_no := @sr_no + 1
-				ELSE @sr_no END AS "sr_no",
-				@prev_epc_name := EPC.name AS "epc_name",
-			EPC.name AS epc_no,
+    CASE 
+        WHEN @prev_epc_name != EPC.name THEN @sr_no := @sr_no + 1
+    END AS "sr_no", 
+    CASE 
+        WHEN (@prev_epc_name != EPC.name OR @sr_no = 1) THEN @epc_amt := EPC.amount
+        ELSE @epc_amt
+    END AS "epc_amt", 
+    @prev_epc_name := EPC.name AS "epc_name",
+    EPC.name AS epc_no,
 			EPC.date AS epc_date,
 			EPC.due_date AS epc_due_date,
-			EPC.amount AS epc_amt,
+			# EPC.amount AS epc_amt,
 			PEE.amount AS epc_adj_amt,
 			PE.posting_date AS epc_adj_date,
 			EPC.amount-PEE.amount AS balance,
@@ -86,7 +89,9 @@ def get_data(filters):
 		JOIN
 			`tabPayment Entry` AS PE ON PE.name = PEE.parent
 		WHERE
-			EPC.docstatus = 1
+			EPC.docstatus = 1 AND PE.docstatus = 1
 	"""
+
+
 	data = frappe.db.sql(sql, as_dict=True)
 	return data
