@@ -147,7 +147,10 @@ frappe.ui.form.on('Payment Entry', {
 				action(selections) {
 					// Ensure the child table is empty before adding new rows
 					frm.doc.custom_epc_references = [];
-		
+		            if (selections.length > 1) {
+						frappe.msgprint(__('You can only select one row.'));
+						return;
+					}
 					selections.forEach(epcName => {
 						// Find the corresponding EPC object based on epcName
 						frappe.call({
@@ -165,14 +168,14 @@ frappe.ui.form.on('Payment Entry', {
 								var date = epcDetails.date;
 								var due_date = epcDetails.due_date;
 								var bank_name = epcDetails.bank_name;
-								var amount = epcDetails.amount;
+								var balance = epcDetails.balance ;
 						
 								// Assuming frm is your current form object
 								var row = frappe.model.add_child(frm.doc, 'custom_epc_references');
 								row.epc_name = name;
 								row.date = date;
 								row.due_date = due_date;
-								row.amount = amount;
+								row.amount = balance;
 								row.bank_name = bank_name;
 						
 								// Refresh the form to show the newly added child row
@@ -183,9 +186,8 @@ frappe.ui.form.on('Payment Entry', {
 							}
 							}
 						});
-						
 					});
-					d.$wrapper.hide();
+					d.dialog.hide();
 				},
 			});
 		});
@@ -275,24 +277,35 @@ frappe.ui.form.on('Payment Entry', {
     },
 	before_submit: function(frm) {
 		
-		// Iterate through the child table and collect epc_names
-		var epcNames = [];
-		frm.doc.custom_epc_references.forEach(function(row) {
-		  epcNames.push(row.epc_name);
-		});
-		console.log(epcNames)
-		// Update the 'status' field in 'EPC PCFC Entry' documents
-		frappe.call({
-            method: "ambica_finance.public.py.payment_entry.update_epc_status",
-		    args: {
-				'epcNames': epcNames
-		  	},
-		  	callback: function(response) {
-				if (response.message) {
-			  	// Handle the response if needed
-			  	console.log('Status updated successfully');
+		// // Iterate through the child table and collect epc_names
+		// var epcData = frm.doc.custom_epc_references.map(function(row) {
+		// 	return {
+		// 		epc_name: row.epc_name,
+		// 		amount: row.amount
+		// 	};
+		// });
+
+		var customEpcReferencesTable = frm.doc.custom_epc_references || [];
+
+		customEpcReferencesTable.forEach(function(row) {
+			// Accessing values for each row
+			console.log(row.epc_name + "_____________________________-" + row.amount);
+		
+			// Update the 'status' field in 'EPC PCFC Entry' documents for each row
+			frappe.call({
+				method: "ambica_finance.backend_code.update_epc.update_epc",
+				args: {
+					'epc_name': row.epc_name,
+					'amount': row.amount
+				},
+				callback: function(response) {
+					if (response.message) {
+						// Handle the response if needed
+						console.log('Status updated successfully for row: ' + row.epc_name);
+					}
 				}
-		  	}
+			});
 		});
-	  }
+		
+	}
 });

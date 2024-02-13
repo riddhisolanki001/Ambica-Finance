@@ -98,7 +98,6 @@ class PaymentEntry(AccountsController):
 		self.set_status()
 		self.set_total_in_words()
 	def after_insert(self):
-		frappe.msgprint("hfbhfbf")
 		self.make_gl_entries()
 
 	def on_submit(self):

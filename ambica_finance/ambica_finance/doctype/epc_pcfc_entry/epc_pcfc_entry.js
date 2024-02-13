@@ -12,6 +12,10 @@ frappe.ui.form.on('EPC PCFC Entry', {
 
     },
 
+    amount: function(frm){
+        setBalance(frm);
+    },
+
     finance_effect: function(frm) {
         frappe.call({
             method: 'ambica_finance.ambica_finance.doctype.epc_pcfc_entry.epc_pcfc_entry.create_Journal_entry',
@@ -21,15 +25,22 @@ frappe.ui.form.on('EPC PCFC Entry', {
                 'company':frm.doc.custom_company,
                 'bank_name':frm.doc.bank_name,
                 'reference_number':frm.doc.reference_number,
-                'amount':frm.doc.amount
+                'amount':frm.doc.amount,
+                'epc_name':frm.doc.name
             },
             callback: function(r){
                 frappe.msgprint(r.message)
             }
         });
+    },
+    after_save:function(frm){
+        setBalance(frm);
     }
 });
-
+function setBalance(frm){
+    var amount = frm.doc.amount;
+    frm.set_value('balance',amount);
+}
 function calculateDueDate(frm) {
     var date = frm.doc.date;
     var days = frm.doc.days;

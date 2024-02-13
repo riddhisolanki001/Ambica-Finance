@@ -35,7 +35,7 @@
    "label": "Due Date"
   },
   {
-   "fetch_from": "epc_name.amount",
+   "fetch_from": ".amount",
    "fieldname": "amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -53,7 +53,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-02-12 16:34:21.902202",
+ "modified": "2024-02-13 10:57:11.917495",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "Payment Entry EPC",

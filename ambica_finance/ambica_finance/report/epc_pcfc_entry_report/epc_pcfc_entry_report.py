@@ -49,12 +49,14 @@ def get_columns(filters):
 		{
 			"fieldname": "balance",
 			"fieldtype": "Currency",
-			"label": "Balance",
+			"label": "Balance",	
+            "width": "110"
 		},
 		{
 			"fieldname": "party_name",
 			"fieldtype": "Data",
 			"label": "Party Name",
+            "width": "220"
 		},
 	]
 
