@@ -712,5 +712,35 @@
     "role": "System Manager"
    }
   ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-15 15:10:41.096090",
+  "module": "Ambica Finance",
+  "name": "Auto Payment not Paid Remarks",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Auto Outstandings",
+  "reference_report": null,
+  "report_name": "Auto Payment not Paid Remarks",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Auto Payment not Paid Remarks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
  }
 ]

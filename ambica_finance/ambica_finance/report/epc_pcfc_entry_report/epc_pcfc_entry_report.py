@@ -3,7 +3,6 @@
 
 import frappe
 
-
 def execute(filters=None):
     columns = get_columns(filters)
     data = get_data(filters)
@@ -14,12 +13,13 @@ def get_columns(filters):
 		{
 			"fieldname": "sr_no",
 			"fieldtype": "Data",
-			"label": "Sr. No.",
+			"label": "EPC Sr",
 		},
 		{
 			"fieldname": "epc_no",
-			"fieldtype": "Data",
+			"fieldtype": "Link",
 			"label": "EPC No",
+			"options": "EPC PCFC Entry"
 		},
 		{
 			"fieldname": "epc_date",
@@ -35,11 +35,19 @@ def get_columns(filters):
 			"fieldname": "epc_amt",
 			"fieldtype": "Currency",
 			"label": "EPC Amt",
+            "width": "120"
+		},
+		{
+			"fieldname": "pe_no",
+			"fieldtype": "Link",
+			"label": "Payment Entry No",
+			"options": "Payment Entry"
 		},
 		{
 			"fieldname": "epc_adj_amt",
 			"fieldtype": "Currency",
 			"label": "EPC Adj Amt",
+            "width": "120"
 		},
 		{
 			"fieldname": "epc_adj_date",
@@ -50,48 +58,50 @@ def get_columns(filters):
 			"fieldname": "balance",
 			"fieldtype": "Currency",
 			"label": "Balance",	
-            "width": "110"
+            "width": "120"
 		},
 		{
 			"fieldname": "party_name",
-			"fieldtype": "Data",
+			"fieldtype": "Link",
 			"label": "Party Name",
-            "width": "220"
+			"options": "Customer",
+            "width": "200",
+    		"align": "left"
 		},
 	]
-
 	return columns
 
 def get_data(filters):
+	epc_pcfc_docs = frappe.get_list(
+		'EPC PCFC Entry',
+		filters={'docstatus': 1},
+		order_by='creation'
+	)
+	payment_entry_docs = frappe.get_list(
+		'Payment Entry',
+		filters={'docstatus': 1},
+		order_by='creation'
+	)
 
-	sql = """
-    CASE 
-        WHEN @prev_epc_name != EPC.name THEN @sr_no := @sr_no + 1
-    END AS "sr_no", 
-    CASE 
-        WHEN (@prev_epc_name != EPC.name OR @sr_no = 1) THEN @epc_amt := EPC.amount
-        ELSE @epc_amt
-    END AS "epc_amt", 
-    @prev_epc_name := EPC.name AS "epc_name",
-    EPC.name AS epc_no,
-			EPC.date AS epc_date,
-			EPC.due_date AS epc_due_date,
-			# EPC.amount AS epc_amt,
-			PEE.amount AS epc_adj_amt,
-			PE.posting_date AS epc_adj_date,
-			EPC.amount-PEE.amount AS balance,
-			PE.party AS party_name
-		FROM
-            (SELECT @prev_epc_name := NULL, @sr_no := 1) vars,
-			`tabEPC PCFC Entry` AS EPC
-		JOIN
-			`tabPayment Entry EPC` AS PEE ON PEE.epc_name = EPC.name
-		JOIN
-			`tabPayment Entry` AS PE ON PE.name = PEE.parent
-		WHERE
-			EPC.docstatus = 1 AND PE.docstatus = 1
-	"""
-
-
-	data = frappe.db.sql(sql, as_dict=True)
+	data = []
+	sr_no = 0
+	for epc_doc in epc_pcfc_docs:
+		epc_doc = frappe.get_doc('EPC PCFC Entry', epc_doc)
+		sr_no += 1
+		inner_data = [sr_no, epc_doc.name, epc_doc.date, epc_doc.due_date, epc_doc.amount, None, None, None, epc_doc.amount, None]
+		has_pe, is_first = False, True
+		for pe_doc in payment_entry_docs:
+			pe_doc = frappe.get_doc('Payment Entry', pe_doc)
+			for epc in pe_doc.custom_epc_references:
+				if epc.epc_name == epc_doc.name:
+					if is_first:
+						epc_doc_balance = epc_doc.amount - epc.amount
+						inner_data = [sr_no, epc_doc.name, epc_doc.date, epc_doc.due_date, epc_doc.amount, pe_doc.name, epc.amount, pe_doc.posting_date, epc_doc_balance, pe_doc.party]
+						is_first = False
+					else:
+						inner_data = [None, None, None, None, epc_doc_balance, pe_doc.name, epc.amount, pe_doc.posting_date, epc_doc_balance - epc.amount, pe_doc.party]
+						epc_doc_balance = epc_doc_balance - epc.amount
+					has_pe = True
+					data.append(inner_data)
+		data.append(inner_data) if not has_pe else None
 	return data

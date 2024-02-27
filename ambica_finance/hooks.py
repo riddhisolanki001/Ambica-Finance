@@ -40,7 +40,8 @@ doctype_js = {
     "Sales Order": "/public/js/sales_order.js",
     "Supplier": "/public/js/supplier_custom.js",
     "Supplier Quotation": "/public/js/supplier_quotation.js",
-    "Tax Withholding Category":"/public/js/tax_withholding_category.js"
+    "Tax Withholding Category":"/public/js/tax_withholding_category.js",
+    "Customer":"/public/js/customer.js"
 }
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}

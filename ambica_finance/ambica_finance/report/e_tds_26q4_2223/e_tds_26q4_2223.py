@@ -245,7 +245,7 @@ def get_data(filters):
         """
         data = frappe.db.sql(sql, company, as_dict=True)
         return data
-       # Add more conditions if needed for other values of "select"
+        
     elif filters.get("select") == "Challan Details":
         sql = """
 			SELECT
@@ -280,16 +280,16 @@ def get_data(filters):
                 TWC.custom_section AS "section_code",
                 TDS.challan_date AS "pay_credit_date",
                 "amount_paid",
-                (TDS.total_tds_amount+TDS.interest+TDS.others) AS "tds",
+                PIT.tax_amount AS "tds",
                 "surcharge",
                 "education_cess",
-                (TDS.total_tds_amount+TDS.interest+TDS.others) AS "total_tax_deducted",
-                (TDS.total_tds_amount+TDS.interest+TDS.others) AS "total_tax_deposited",
-                CASE 
-                    WHEN LDC.rate IS NOT NULL THEN LDC.rate 
-                    ELSE TWR.tax_withholding_rate
-                END AS "deduction_rate",
-                LDC.rate AS "deduction_rate",
+                PIT.tax_amount AS "total_tax_deducted",
+                PIT.tax_amount AS "total_tax_deposited",
+                # CASE 
+                #     WHEN LDC.rate IS NOT NULL THEN LDC.rate 
+                #     ELSE TWR.tax_withholding_rate
+                # END AS "deduction_rate",
+                PIT.tax_amount*100/PI.total AS "deduction_rate",
                 LDC.custom_reason AS "lower_deduction_reason",
                 LDC.name AS "certificate_no",
                 TDS.name AS "amount_excess_1cr_Sec194n",
@@ -300,7 +300,11 @@ def get_data(filters):
             INNER JOIN 
                 `tabPurchase Invoice` AS PI 
                 ON ((PI.posting_date BETWEEN TDS.from_date AND TDS.to_date) 
-                    AND (PI.tax_withholding_category LIKE CONCAT (SUBSTRING_INDEX(TDS.category, ' - ',3), '%'))) 
+                    AND (PI.tax_withholding_category LIKE CONCAT (SUBSTRING_INDEX(TDS.category, ' - ',3), '%'))
+                    AND PI.docstatus = 1) 
+            JOIN
+                `tabPurchase Taxes and Charges` AS PIT
+                ON PIT.parent = PI.name
             LEFT JOIN 
                 `tabSupplier` AS S 
                 ON S.name = PI.supplier 

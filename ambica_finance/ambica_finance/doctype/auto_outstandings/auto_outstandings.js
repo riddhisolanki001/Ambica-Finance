@@ -1,18 +1,65 @@
 // Copyright (c) 2024, riddhi and contributors
 // For license information, please see license.txt
 
+// Create a script element
+const script = document.createElement('script');
+// Set the source attribute to the CDN URL of the xlsx library
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js';
+// Append the script element to the document's head
+document.head.appendChild(script);
+
+
 frappe.ui.form.on("Auto Outstandings", {
     refresh:function(frm) {
-        set_css(frm)	
-
-        frm.fields_dict['bank_name'].get_query = function(doc, cdt, cdn) {
-            console.log("bank accounts")
-            return {
-                filters: {
-                    account_type: 'Bank'
-                }
-            };
-        };    
+        set_css(frm)
+        
+        frm.add_custom_button('Export Unadjusted', () => {
+            frappe.call({ 
+                method: "ambica_finance.ambica_finance.report.auto_payment_not_paid_remarks.auto_payment_not_paid_remarks.auto_payment_not_paid_remarks",
+                callback: function(r) {
+                    var data = r.message;
+                    console.log(data)
+                    let downloadCounter = localStorage.getItem('downloadCounter') || 1;
+        
+                    if (data.length > 1) {
+                        // Combine report columns and data into one object
+                        const jsonData = data;
+                        const workbook = XLSX.utils.book_new();
+                        const worksheet = XLSX.utils.json_to_sheet(jsonData, { skipHeader: true }); // Skip the first row
+                        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+                        // Convert workbook to binary Excel format
+                        const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                        // Convert binary Excel data to Blob
+                        const blob = new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        // Create download link
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        if (downloadCounter > 1) {
+                            a.download = `auto_payment_not_paid_remarks_${downloadCounter}.xlsx`;
+                        } else {
+                            a.download = 'auto_payment_not_paid_remarks.xlsx';
+                        }
+                        // Set href attribute of download link
+                        a.href = window.URL.createObjectURL(blob);
+                        a.click();
+                        document.body.removeChild(a);
+                        downloadCounter++;
+                        localStorage.setItem('downloadCounter', downloadCounter);
+                    } else {
+                        frappe.msgprint(__('No data found in the report.'));
+                    }
+                }                
+            });
+        });
+        // frm.fields_dict['bank_name'].get_query = function(doc, cdt, cdn) {
+        //     console.log("bank accounts")
+        //     return {
+        //         filters: {
+        //             account_type: 'Bank'
+        //         }
+        //     };
+        // };    
     },
 
     msme: function (frm) {
@@ -125,7 +172,14 @@ frappe.ui.form.on("Auto Outstandings", {
                 }
             }
         });
-    }
+    },
+
+    // after_save: function (frm) {
+    //     frappe.msgprint("You de button")
+    //     frm.add_custom_button('Click Me', () => {
+    //         frappe.msgprint("You clicked button")
+    //     })
+    // },
 
 });
 
@@ -156,10 +210,20 @@ frappe.ui.form.on('Outstanding Child', {
                     callback: function(response) {
                         if (!response.exc) {
                             frappe.msgprint('Payment entries created successfully');
+                    
+                            // Loop through selected rows and set "Payment Entry" checkbox to true
+                            $.each(selected_rows, function(index, row) {
+                                // Assuming the checkbox fieldname is "payment_entry"
+                                frappe.model.set_value(row.doctype, row.name, 'payment_entry', 1);
+                            });
+                    
+                            // Refresh the form to reflect the changes
+                            frm.refresh();
                         } else {
                             frappe.msgprint('Error creating payment entries: ' + response.exc);
                         }
                     }
+                    
                 });
             } else {
                 frappe.msgprint('No rows selected.');

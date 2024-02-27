@@ -51,6 +51,17 @@ frappe.ui.form.on("Supplier", {
 				};
 			});
 		}
+		frm.set_query('custom_default_party_bank_account', function(doc, cdt, cdn) {
+            let d = locals[cdt][cdn];
+            return {
+                filters: {
+                    'party': frm.doc.name,
+                    // "is_group": "1",
+
+
+                }
+            };
+        });
 	},
 	custom_msme:function(frm){
 		if (cur_frm.doc.custom_msme == "Yes") {
@@ -80,6 +91,7 @@ frappe.ui.form.on("Supplier", {
 		}
 	},
 	refresh: function (frm) {
+		
 		frappe.dynamic_link = { doc: frm.doc, fieldname: 'name', doctype: 'Supplier' }
 
 		if (frappe.defaults.get_default("supp_master_name") != "Naming Series") {
@@ -126,6 +138,9 @@ frappe.ui.form.on("Supplier", {
 
 			// indicators
 			erpnext.utils.set_party_dashboard_indicators(frm);
+		}
+		if(cur_frm.doc.tax_withholding_category!=undefined){
+			find_section(frm)
 		}
 	},
 	get_supplier_group_details: function (frm) {
@@ -221,12 +236,39 @@ frappe.ui.form.on("Supplier", {
 			frappe.throw("Please fill in at least one mandatory fields.")
 		}
 	},
-	after_save:function(frm){
-		if(cur_frm.doc.country=="India"){
-			if(cur_frm.doc.default_bank_account==undefined){
-				frappe.throw("Please Enter Bank Account")
+	after_save: function(frm) {
+		if (cur_frm.doc.country == "India") {
+			if (!cur_frm.doc.custom_default_party_bank_account) {
+				var bankAccount = frappe.new_doc('Bank Account',fields={"party_type":"Supplier","party":cur_frm.doc.name});
+				frappe.msgprint("Please Add Bank Account Details");
+				
 			}
-
 		}
+	},
+	tax_withholding_category:function(frm){
+		find_section(frm)
 	}
+	
+	
 });
+function find_section(frm){
+	frappe.call({
+		method: "frappe.client.get_value",
+		args: {
+			doctype: "Tax Withholding Category",
+			fieldname: ["custom_section"],
+			filters: {
+				"name": cur_frm.doc.tax_withholding_category
+			},
+		},
+		callback: function(r) {
+			// alert(r)
+			var custom_section = r.message.custom_section;
+			if (custom_section=="194Q"){
+				frm.set_df_property("pan", "reqd", "1");
+				// frm.set_value("payment_terms", custom_allow_msme);
+			}
+		},
+	});
+	
+}

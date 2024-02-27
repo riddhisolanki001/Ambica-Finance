@@ -71,15 +71,6 @@ frappe.ui.form.on('Payment Entry', {
     },
     refresh: function (frm) {
 
-		frm.fields_dict['custom_generate_om'].grid.get_field('exchange_rate').df.onchange = function(doc, cdt, cdn) {
-            var child = locals[cdt][cdn];
-            calculateInrAmount(child);
-        };
-
-        frm.fields_dict['custom_generate_om'].grid.get_field('fc_amount').df.onchange = function(doc, cdt, cdn) {
-            var child = locals[cdt][cdn];
-            calculateInrAmount(child);
-        };
 
 		cur_frm.add_custom_button(__('Delete'), function () {
 			let title = cur_frm.doc.name;
@@ -319,22 +310,30 @@ frappe.ui.form.on('Payment Entry', {
 		});
 		
 	},
-    // custom_generate_om_add: function(frm) {
-	// 	frm.fields_dict['custom_generate_om'].grid.get_field('exchange_rate').df.onchange = frappe.model.curry(calculateInrAmount);
-	// 	frm.fields_dict['custom_generate_om'].grid.get_field('fc_amount').df.onchange = frappe.model.curry(calculateInrAmount);
-		
-    // }
+
 });
+frappe.ui.form.on('Generate Om', {
+    exchange_rate: function (doc, cdt, cdn) {
+        console.log('triggered');
+        var child = locals[cdt][cdn];
+        calculateInrAmount(child);
+    },
+    fc_amount: function (doc, cdt, cdn) {
+        var child = locals[cdt][cdn];
+        calculateInrAmount(child);
+    }
+});
+
 function calculateInrAmount(child) {
-    console.log('Calculating InrAmount');
     var exchangeRate = child.exchange_rate;
     var fcAmount = child.fc_amount;
 
-    console.log('Exchange Rate:', exchangeRate);
-    console.log('FC Amount:', fcAmount);
-
     var inrAmount = exchangeRate * fcAmount;
-    console.log('Calculated InrAmount:', inrAmount);
 
+    // Assuming 'inr_amount' is a field in the child table
     frappe.model.set_value(child.doctype, child.name, 'inr_amount', inrAmount);
 }
+
+
+
+

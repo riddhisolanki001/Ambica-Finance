@@ -1704,8 +1704,8 @@ class PurchaseInvoice(BuyingController):
 			elif self.docstatus == 1:
 				if self.is_internal_transfer():
 					self.status = "Internal Transfer"
-				elif is_overdue(self, total):
-					self.status = "Overdue"
+				# elif is_overdue(self, total):
+				# 	self.status = "Overdue"
 				elif 0 < outstanding_amount < total:
 					self.status = "Partly Paid"
 				elif outstanding_amount > 0 and getdate(self.due_date) >= getdate():
@@ -1720,7 +1720,7 @@ class PurchaseInvoice(BuyingController):
 				elif outstanding_amount <= 0:
 					self.status = "Paid"
 				else:
-					self.status = "Submitted"
+					self.status = "Overdue"
 			else:
 				self.status = "Draft"
 

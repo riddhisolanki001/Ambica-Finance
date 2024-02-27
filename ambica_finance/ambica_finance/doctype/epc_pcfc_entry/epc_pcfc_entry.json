@@ -79,6 +79,7 @@
    "label": "Date"
   },
   {
+   "depends_on": "eval: doc.date && doc.days",
    "fieldname": "due_date",
    "fieldtype": "Date",
    "label": "Due Date"
@@ -132,6 +133,7 @@
    "allow_on_submit": 1,
    "fieldname": "balance",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Balance",
    "read_only": 1
   }
@@ -139,7 +141,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-13 14:34:06.115301",
+ "modified": "2024-02-13 18:24:23.665145",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "EPC PCFC Entry",

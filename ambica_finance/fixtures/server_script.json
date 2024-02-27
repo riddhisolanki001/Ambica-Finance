@@ -47,13 +47,13 @@
   "doctype_event": "After Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-02-12 17:55:57.961813",
+  "modified": "2024-02-13 17:08:37.481041",
   "module": "Ambica Finance",
   "name": "Auto Account Entry for Supplier",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Supplier",
-  "script": "com = frappe.db.get_list('Company', pluck='name')\ndata = frappe.new_doc(\"Account\")\nrec = \"Accounts Payable\"\nfor i in range(len(com)):\n    if com[i] == doc.custom_company:\n        frappe.msgprint(com[i])\n        dt = frappe.db.sql(\"SELECT name FROM `tabAccount` WHERE name LIKE %s and company=%s\", ('%' + rec + '%', com[i]), as_dict=True)\n        data.company = doc.custom_company\n        data.account_name = doc.name\n        data.account_type = \"Payable\"\n        data.parent_account = dt[0][\"name\"]\n        data.save()",
+  "script": "com = frappe.db.get_list('Company', pluck='name')\ndata = frappe.new_doc(\"Account\")\nrec = \"Accounts Payable\"\nfor i in range(len(com)):\n    if com[i] == doc.custom_company:\n        frappe.msgprint(com[i])\n        dt = frappe.db.sql(\"SELECT name FROM `tabAccount` WHERE name LIKE %s and company=%s\", ('%' + rec + '%', com[i]), as_dict=True)\n        data.company = doc.custom_company\n        data.account_name = doc.name\n        data.account_type = \"Payable\"\n        data.parent_account = dt[0][\"name\"]\n        data.save()\n        doc.custom_default_company_account=data.name\n        doc.save()",
   "script_type": "DocType Event"
  },
  {
