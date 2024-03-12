@@ -1,19 +1,19 @@
 [
  {
   "default_value": null,
-  "doc_type": "Account",
+  "doc_type": "Party Type",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
   "field_name": "account_type",
   "is_system_generated": 0,
-  "modified": "2023-12-27 18:46:51.097409",
+  "modified": "2024-01-29 17:11:54.153849",
   "module": "Ambica Finance",
-  "name": "Account-account_type-options",
+  "name": "Party Type-account_type-options",
   "property": "options",
-  "property_type": "Small Text",
+  "property_type": "Select",
   "row_name": null,
-  "value": "\nAccumulated Depreciation\nAsset Received But Not Billed\nBank\nCash\nChargeable\nCapital Work in Progress\nCost of Goods Sold\nDepreciation\nEquity\nExpense Account\nExpenses Included In Asset Valuation\nExpenses Included In Valuation\nFixed Asset\nIncome Account\nPayable\nReceivable\nPayable/Receivable\nRound Off\nStock\nStock Adjustment\nStock Received But Not Billed\nService Received But Not Billed\nTax\nTemporary\nEmployee\nLibility\nSales\nPurchase\nPreliminary"
+  "value": "Payable\nReceivable\nPayable/Receivable"
  },
  {
   "default_value": null,

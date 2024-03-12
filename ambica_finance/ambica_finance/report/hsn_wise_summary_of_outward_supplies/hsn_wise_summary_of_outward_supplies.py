@@ -70,7 +70,7 @@ def execute(filters=None):
             d.description,
             d.uqc,
             d.stock_qty,
-            tax_rate,
+            str("tax_rate")+" %",
             d.taxable_value + total_tax,
             d.taxable_value,
         ]

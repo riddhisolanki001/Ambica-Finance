@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-12 13:06:53.448732",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "epc_name",
+  "date",
+  "due_date",
+  "amount",
+  "bank_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "epc_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "EPC Name",
+   "options": "EPC PCFC Entry"
+  },
+  {
+   "fetch_from": "epc_name.date",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date"
+  },
+  {
+   "fetch_from": "epc_name.due_date",
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Due Date"
+  },
+  {
+   "fetch_from": ".amount",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "fetch_from": "epc_name.bank_name",
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Bank Name",
+   "options": "Account"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-02-13 10:57:11.917495",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "Payment Entry EPC",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

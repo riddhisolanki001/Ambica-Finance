@@ -1,0 +1,26 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2024-02-09 15:20:20.136575",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2024-02-09 15:20:20.136575",
+ "modified_by": "Administrator",
+ "module": "Ambica Finance",
+ "name": "e-TDS-27EQ4-2223",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "TDS Deduction Selection",
+ "report_name": "e-TDS-27EQ4-2223",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}

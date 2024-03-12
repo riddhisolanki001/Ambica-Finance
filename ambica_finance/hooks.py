@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ambica_finance/css/ambica_finance.css"
-# app_include_js = "/assets/ambica_finance/public/js/hsn_wise_inward.js"
+# app_include_js = "/assets/ambica_finance/js/payment_entery.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/ambica_finance/css/ambica_finance.css"
@@ -28,7 +28,22 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Supplier" : "public/js/supplier_custom.js"}
+doctype_js = {
+    "Bank Account": "/public/js/bank_account.js",
+    "Journal Entry": "/public/js/journal_entry.js",
+    "Payment Entry": "/public/js/payment_entry.js",
+    "Purchase Invoice": "/public/js/purchase_invoice.js",
+    "Purchase Order": "/public/js/purchase_order.js",
+    "Purchase Receipt": "/public/js/purchase_receipt.js",
+    "Request for Quotation": "/public/js/request_for_quotation.js",
+    "Sales Invoice": "/public/js/sales_invoice.js",
+    "Sales Order": "/public/js/sales_order.js",
+    "Supplier": "/public/js/supplier_custom.js",
+    "Supplier Quotation": "/public/js/supplier_quotation.js",
+    "Tax Withholding Category":"/public/js/tax_withholding_category.js",
+    "Customer":"/public/js/customer.js"
+}
+
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -114,7 +129,11 @@ doctype_js = {"Supplier" : "public/js/supplier_custom.js"}
 # ---------------
 # Override standard doctype classes
 override_doctype_class = {
-	"Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice"
+	# "Purchase Invoice": "ambica_finance.ambica_finance.purchase_invoice.PurchaseInvoice",
+    "Sales Invoice": "ambica_finance.backend_code.sales_invoice.SalesInvoice",
+    "Payment Entry": "ambica_finance.backend_code.payment_entry.PaymentEntry",
+    "Purchase Invoice": "ambica_finance.backend_code.purchase_invoice.PurchaseInvoice",
+    "Journal Entry":"ambica_finance.backend_code.journal_entry.JournalEntry",
 }
 # Document Events
 # ---------------
@@ -131,7 +150,13 @@ override_doctype_class = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
+     "change_date": {
+        "1 0 * * *": ["ambica_finance.backend_code.currency_exchange.change_date"]
+    },
+     "send_tenure_reminder": {
+        "0 10 * * *": ["ambica_finance.backend_code.tenure_reminder.send_tenure_reminder"]
+    },
 #	"all": [
 #		"ambica_finance.tasks.all"
 #	],
@@ -147,7 +172,7 @@ override_doctype_class = {
 #	"monthly": [
 #		"ambica_finance.tasks.monthly"
 #	],
-# }
+}
 
 # Testing
 # -------
@@ -217,55 +242,65 @@ override_doctype_class = {
 # auth_hooks = [
 #	"ambica_finance.auth.validate"
 # ]
-fixtures=[
-    "Custom DocPerm",   
-    
-    {"dt":"Report","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+fixtures = [
+    "Custom DocPerm",
+    {"dt": "Report", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Property Setter", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Client Script", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Server Script", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {"dt": "Custom Field", "filters": [["module", "in", ["Ambica Finance"]]]},
+    {
+        "dt": "Workspace",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Ambika Accounts",
+                ],
             ]
-        ]
-    ]},
-    
-    {"dt":"Property Setter","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+        ],
+    },
+    {
+        "dt": "Role",
+        "filters": [
+            [
+                "role_name",
+                "in",
+                [
+                    "Finance Approver","Office User","Store User"
+                ],
             ]
-        ]
-    ]},
-    {"dt":"Client Script","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+        ],
+    },
+    {
+        "dt": "Workflow",
+        "filters": [
+            [
+                "workflow_name",
+                "in",
+                [
+                    "Purchase Invoice"
+                ],
             ]
-        ]
-    ]},
-    {"dt":"Server Script","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
+
+        ],
+    },
+    {
+        "dt": "Workflow State",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                "Draft",
+                ],
             ]
-        ]
-    ]},
-    {"dt":"Custom Field","filters":[
-        [
-            "module","in",[
-               "Ambica Finance"
-            ]
-        ]
-    ]},
-     {"dt":"Workspace","filters":[
-        [
-            "name","in",[
-               "Ambika Accounts",
-               
-            ]
-        ]
-    ]},
-    
+        ],
+    },
     
     
         
+
 ]
+on_session_creation = f"{app_name}.backend_code.after_login_script.execute"

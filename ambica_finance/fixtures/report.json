@@ -1,5 +1,70 @@
 [
  {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-07 18:25:30.570332",
+  "module": "Ambica Finance",
+  "name": "Purchase register for Tax Audit Report",
+  "prepared_report": 0,
+  "query": "SELECT\n    PI.bill_type AS 'Purchase Type',\n    PI.name AS 'Document Code',\n    PI.posting_date AS 'Document Date',\n    PI.bill_no AS 'Bill No.',\n    PI.bill_date AS 'Bill Date',\n    PII.expense_account AS 'Name of Expense',\n    PII.item_name AS 'Item Name',\n    PII.gst_hsn_code AS 'HSN Code',\n    PI.supplier AS 'Party Name',\n    S.gst_category AS 'GST Category',\n    S.gstin AS 'GST No.',\n    POI.qty AS 'PO Qty.',\n    PII.uom AS 'UOM',\n    PII.qty AS 'Invoice Qty.',\n    PII.rate AS 'Basic Rate',\n    PII.discount_percentage AS 'Disc. Per.',\n    PII.discount_amount AS 'Item Wise Disc.',\n    PII.amount AS 'Gross Amount',\n    PI.additional_discount_percentage AS 'All Disc. Per.',\n    PI.discount_amount AS 'Discount Amt.',\n    (PII.amount-PII.discount_amount) AS 'Basic Amt.',\n    PI.currency AS 'Freight (P)',\n    PI.currency AS 'Other Chg.',\n    PI.currency AS 'Pack && For Chrgs.',\n    PI.rounding_adjustment AS 'R.Off (P-M)',\n    PI.rounding_adjustment AS 'R.Off (P-P)',\n    PI.grand_total AS 'Net Taxable Amt.',\n    (PII.cgst_rate+PII.sgst_rate+PII.igst_rate) AS 'Per. of Tax',\n    PII.cgst_amount AS 'CGST (P)',\n    PII.sgst_amount AS 'SGST (P)',\n    PII.igst_amount AS 'IGST (P)',\n    PI.currency AS 'Other Charges w/o GST',\n    PI.rounded_total AS 'Total Amount',\n    CASE\n        WHEN PI.tax_category='Out-State' THEN 'Inter-State'\n        WHEN PI.tax_category='In-State' THEN 'Local'\n    END AS 'GST Type',\n    PII.purchase_order AS 'PO No.',\n    PI.owner AS 'Entered By',\n    PI.owner AS 'Passed By',\n    PI.modified_by AS 'Approved By'\nFROM\n    `tabPurchase Invoice` AS PI\nLEFT JOIN\n    `tabPurchase Invoice Item` AS PII ON PI.name = PII.parent\nLEFT JOIN\n    `tabSupplier` AS S ON S.name = PI.supplier\nLEFT JOIN\n    `tabPurchase Order` AS PO ON PO.name = PII.purchase_order\nLEFT JOIN\n    `tabPurchase Order Item` AS POI ON PO.name = POI.parent AND PII.item_code = POI.item_code\nORDER BY\n    PI.creation DESC;",
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": "",
+  "report_name": "Purchase register for Tax Audit Report",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": []
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-01-31 13:05:40.707729",
+  "module": "Ambica Finance",
+  "name": "HSN-wise-summary of outward supplies Custom",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "HSN-wise-summary of outward supplies Custom",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "HSN-wise-summary of outward supplies Custom",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "HSN-wise-summary of outward supplies Custom",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "HSN-wise-summary of outward supplies Custom",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
   "add_total_row": 0,
   "columns": [],
   "disabled": 1,
@@ -245,7 +310,7 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2024-01-04 18:03:12.711799",
+  "modified": "2024-01-31 12:39:24.877918",
   "module": "Ambica Finance",
   "name": "HSN Wise Summary of Outward Supplies Detailed",
   "prepared_report": 0,
@@ -392,13 +457,289 @@
     "parent": "Fund Transfer",
     "parentfield": "roles",
     "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Fund Transfer",
+    "parentfield": "roles",
+    "parenttype": "Report",
     "role": "Accounts User"
    },
    {
     "parent": "Fund Transfer",
     "parentfield": "roles",
     "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-05 10:59:29.578877",
+  "module": "Ambica Finance",
+  "name": "GST Credit Import Report",
+  "prepared_report": 0,
+  "query": "SELECT \n    entry_number AS 'Entry Number',\n    status AS 'Status',\n    remark AS 'Remark'\nFROM\n    `tabGST Credit Import`",
+  "ref_doctype": "GST Credit Import",
+  "reference_report": null,
+  "report_name": "GST Credit Import Report",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "GST Credit Import Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-05 12:06:43.924543",
+  "module": "Ambica Finance",
+  "name": "Bill Purchase Register Report",
+  "prepared_report": 0,
+  "query": "SELECT\n    P.name AS 'ID',\n    P.date AS 'Date',\n    P.bank_account AS 'Bank Account',\n    P.customer AS 'Customer',\n    P.amount AS 'Amount',\n    P.no AS 'No',\n    P.spread AS 'Spread Percentage',\n    P.subsequent AS 'Subsequent Percentage',\n    P.interest AS 'Interest Percentage',\n    P.total AS 'Total',\n    P.currency AS 'Currency',\n    P.amount_in_currency AS 'Amount in Currency',\n    P.exchange_rate AS 'Total Exchange rate',\n    PC.invoice_number AS 'Invoice Number ',\n    PC.invoice_due_date AS 'Invoice Due Date ',\n    PC.exchange_rate AS 'Exchange Rate '\nFROM\n    `tabBill Purchase` AS P\nLEFT JOIN\n    `tabBill Purchase Child` AS PC ON P.name = PC.parent\nWHERE\n    P.docstatus = 1;",
+  "ref_doctype": "Bill Purchase",
+  "reference_report": null,
+  "report_name": "Bill Purchase Register Report",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Bill Purchase Register Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
     "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-07 16:55:08.917070",
+  "module": "Ambica Finance",
+  "name": "Not Approve Balance Sheet",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Not Approve GL Entery",
+  "reference_report": null,
+  "report_name": "Not Approve Balance Sheet",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Not Approve Balance Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-07 17:01:22.430444",
+  "module": "Ambica Finance",
+  "name": "Not Approve Profit and Loss Statement",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Not Approve GL Entery",
+  "reference_report": null,
+  "report_name": "Not Approve Profit and Loss Statement",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Not Approve Profit and Loss Statement",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-07 18:30:35.539909",
+  "module": "Ambica Finance",
+  "name": "TDS Payment and Challan generation Report",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "TDS Deduction Selection",
+  "reference_report": null,
+  "report_name": "TDS Payment and Challan generation Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "TDS Payment and Challan generation Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-08 11:46:53.831143",
+  "module": "Ambica Finance",
+  "name": "e-TDS-26Q4-2223",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "TDS Deduction Selection",
+  "reference_report": null,
+  "report_name": "e-TDS-26Q4-2223",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "e-TDS-26Q4-2223",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-09 15:20:20.136575",
+  "module": "Ambica Finance",
+  "name": "e-TDS-27EQ4-2223",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "TDS Deduction Selection",
+  "reference_report": null,
+  "report_name": "e-TDS-27EQ4-2223",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "e-TDS-27EQ4-2223",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-12 16:56:30.601025",
+  "module": "Ambica Finance",
+  "name": "EPC PCFC Entry Report",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "EPC PCFC Entry",
+  "reference_report": null,
+  "report_name": "EPC PCFC Entry Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "EPC PCFC Entry Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-02-15 15:10:41.096090",
+  "module": "Ambica Finance",
+  "name": "Auto Payment not Paid Remarks",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Auto Outstandings",
+  "reference_report": null,
+  "report_name": "Auto Payment not Paid Remarks",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Auto Payment not Paid Remarks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
    }
   ]
  }

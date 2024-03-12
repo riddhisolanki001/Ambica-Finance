@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:section",
  "creation": "2023-11-29 13:39:29.552055",
@@ -29,7 +30,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-27 13:52:35.320348",
+ "modified": "2024-02-09 11:22:07.712719",
  "modified_by": "Administrator",
  "module": "Ambica Finance",
  "name": "TDS Master",

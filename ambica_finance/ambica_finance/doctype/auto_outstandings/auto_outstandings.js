@@ -1,19 +1,65 @@
+// Copyright (c) 2024, riddhi and contributors
+// For license information, please see license.txt
 
-frappe.ui.form.on("Auto Outstanding", {
+// Create a script element
+const script = document.createElement('script');
+// Set the source attribute to the CDN URL of the xlsx library
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js';
+// Append the script element to the document's head
+document.head.appendChild(script);
+
+
+frappe.ui.form.on("Auto Outstandings", {
     refresh:function(frm) {
-        set_css(frm)	
-
-        frm.fields_dict['bank_name'].get_query = function(doc, cdt, cdn) {
-            console.log("bank accounts")
-            return {
-                filters: {
-                    account_type: 'Bank'
-                }
-            };
-        };
+        set_css(frm)
         
-        // sortOutstandings(frm);
-
+        frm.add_custom_button('Export Unadjusted', () => {
+            frappe.call({ 
+                method: "ambica_finance.ambica_finance.report.auto_payment_not_paid_remarks.auto_payment_not_paid_remarks.auto_payment_not_paid_remarks",
+                callback: function(r) {
+                    var data = r.message;
+                    console.log(data)
+                    let downloadCounter = localStorage.getItem('downloadCounter') || 1;
+        
+                    if (data.length > 1) {
+                        // Combine report columns and data into one object
+                        const jsonData = data;
+                        const workbook = XLSX.utils.book_new();
+                        const worksheet = XLSX.utils.json_to_sheet(jsonData, { skipHeader: true }); // Skip the first row
+                        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+                        // Convert workbook to binary Excel format
+                        const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                        // Convert binary Excel data to Blob
+                        const blob = new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        // Create download link
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        if (downloadCounter > 1) {
+                            a.download = `auto_payment_not_paid_remarks_${downloadCounter}.xlsx`;
+                        } else {
+                            a.download = 'auto_payment_not_paid_remarks.xlsx';
+                        }
+                        // Set href attribute of download link
+                        a.href = window.URL.createObjectURL(blob);
+                        a.click();
+                        document.body.removeChild(a);
+                        downloadCounter++;
+                        localStorage.setItem('downloadCounter', downloadCounter);
+                    } else {
+                        frappe.msgprint(__('No data found in the report.'));
+                    }
+                }                
+            });
+        });
+        // frm.fields_dict['bank_name'].get_query = function(doc, cdt, cdn) {
+        //     console.log("bank accounts")
+        //     return {
+        //         filters: {
+        //             account_type: 'Bank'
+        //         }
+        //     };
+        // };    
     },
 
     msme: function (frm) {
@@ -21,7 +67,7 @@ frappe.ui.form.on("Auto Outstanding", {
             console.log("shouldn't add msme when it's not selected")
         } else {
             frappe.call({
-                method: 'ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.get_msme_invoices',
+                method: 'ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.get_msme_invoices',
                 args: {
                     bank_name: frm.doc.bank_name,
                     due_date: frm.doc.due_date
@@ -32,15 +78,11 @@ frappe.ui.form.on("Auto Outstanding", {
                         response.message.forEach(function (invoice) {
                             // Check if the invoice is not already in the table
                             if (!isInvoiceAlreadyAdded(frm, invoice.name)) {
-
                                 var row = frappe.model.add_child(frm.doc, 'Outstanding Child', 'outstandings');
                                 row.invoice_number = invoice.name;
                                 row.party_name = invoice.party_name;
-                            }else{
-                                console.log("Already in child table")
                             }
                         });
-
                         frm.refresh_field('outstandings');
                     }
                 }
@@ -55,7 +97,7 @@ frappe.ui.form.on("Auto Outstanding", {
 
     get_invoices: function(frm) {
         frappe.call({
-            method: 'ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.get_invoices',
+            method: 'ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.get_invoices',
             args: {
                 bank_name: frm.doc.bank_name,
                 due_date: frm.doc.due_date
@@ -69,9 +111,8 @@ frappe.ui.form.on("Auto Outstanding", {
                     // Iterate through the sorted invoices and add rows to the child table
                     response.message.forEach(function(invoice) {
                         var row = frappe.model.add_child(frm.doc, 'Outstanding Child', 'outstandings');
-                        row.invoice_number = invoice.name; 
+                        row.invoice_number = invoice.name;  // Replace with actual field names
                     });
-                    sortOutstandings(frm);
 
                     frm.refresh_field('outstandings');
                 }
@@ -81,7 +122,7 @@ frappe.ui.form.on("Auto Outstanding", {
 
     not_due: function (frm) {
         frappe.call({
-            method: "ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.get_not_due_invoices",
+            method: "ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.get_not_due_invoices",
             args: {
                 bank_name: frm.doc.bank_name,
                 due_date: frm.doc.due_date
@@ -122,7 +163,7 @@ frappe.ui.form.on("Auto Outstanding", {
                             if (existingInvoices.length > 0) {
                                 frappe.msgprint(__('Invoices already in the table: ') + existingInvoices.join(', '));
                             }
-
+                        
                             frm.refresh_field('outstandings'); // Refresh the child table
                             console.log("Selected invoices:", selections);
                             d.$wrapper.hide();
@@ -131,9 +172,16 @@ frappe.ui.form.on("Auto Outstanding", {
                 }
             }
         });
-    }
-});
+    },
 
+    // after_save: function (frm) {
+    //     frappe.msgprint("You de button")
+    //     frm.add_custom_button('Click Me', () => {
+    //         frappe.msgprint("You clicked button")
+    //     })
+    // },
+
+});
 
 // Helper function to check if an invoice is already added
 function isInvoiceAlreadyAdded(frm, invoiceNumber) {
@@ -153,7 +201,7 @@ frappe.ui.form.on('Outstanding Child', {
 
                 // Call server script to handle payment entry creation
                 frappe.call({
-                    method: 'ambica_finance.ambica_finance.doctype.auto_outstanding.auto_outstanding.create_payment_entry',
+                    method: 'ambica_finance.ambica_finance.doctype.auto_outstandings.auto_outstandings.create_payment_entry',
                     args: {
                         selected_rows: selected_rows,
                         bank_name: bank_name,
@@ -162,10 +210,20 @@ frappe.ui.form.on('Outstanding Child', {
                     callback: function(response) {
                         if (!response.exc) {
                             frappe.msgprint('Payment entries created successfully');
+                    
+                            // Loop through selected rows and set "Payment Entry" checkbox to true
+                            $.each(selected_rows, function(index, row) {
+                                // Assuming the checkbox fieldname is "payment_entry"
+                                frappe.model.set_value(row.doctype, row.name, 'payment_entry', 1);
+                            });
+                    
+                            // Refresh the form to reflect the changes
+                            frm.refresh();
                         } else {
                             frappe.msgprint('Error creating payment entries: ' + response.exc);
                         }
                     }
+                    
                 });
             } else {
                 frappe.msgprint('No rows selected.');

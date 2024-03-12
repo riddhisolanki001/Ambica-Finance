@@ -14,6 +14,7 @@
   "links": [
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -30,6 +31,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -46,6 +48,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -62,6 +65,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -78,6 +82,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -94,6 +99,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -110,6 +116,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -126,6 +133,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -142,6 +150,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -158,6 +167,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -174,6 +184,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -190,6 +201,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -206,6 +218,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -222,12 +235,13 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
     "label": "TDS Deduction Selection",
     "link_count": 0,
-    "link_to": "TDS deduction selection",
+    "link_to": "TDS DeductionSelection",
     "link_type": "DocType",
     "onboard": 0,
     "only_for": null,
@@ -238,6 +252,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
@@ -254,6 +269,7 @@
    },
    {
     "dependencies": null,
+    "description": null,
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
